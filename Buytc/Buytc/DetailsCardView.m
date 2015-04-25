@@ -91,15 +91,19 @@
     [self.dislikeButton addTarget:self action:@selector(disLikeAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.cardView addSubview:self.dislikeButton];
     
-    self.buyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.buyButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [self.buyButton setBackgroundColor:[UIColor whiteColor]];
     self.buyButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.buyButton setTitle:@"Buy now" forState:UIControlStateNormal];
-    [self.buyButton setTitleColor:[UIColor colorWithRed:204.0f/255.0f green:204.0f/255.0f blue:255.0f/255.0f alpha:1.0]
+    [self.buyButton setTitleColor:NAV_BAR_COLOR
                          forState:UIControlStateNormal];
-    [self.buyButton setTitleColor:[UIColor colorWithRed:204.0f/255.0f green:204.0f/255.0f blue:255.0f/255.0f alpha:0.6]
+    [self.buyButton setTitleColor:NAV_BAR_COLOR
                          forState:UIControlStateHighlighted];
+    self.buyButton.layer.cornerRadius = 10.0f;
+    self.buyButton.layer.borderWidth = 1.0f;
     [self.buyButton addTarget:self action:@selector(buyAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.visualEffectView addSubview:self.buyButton];
+    
     
     self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.cancelButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -151,11 +155,11 @@
                                                     relatedBy:NSLayoutRelationEqual
                                                        toItem:effectView
                                                     attribute:NSLayoutAttributeBottom
-                                                    multiplier:1.0f constant:-20.0f]];
-    [effectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[buyButton(==140.0)]"
+                                                    multiplier:1.0f constant:-35.0f]];
+    [effectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[buyButton(==89.0)]"
                                                                       options:0
                                                                        metrics:metrics views:viewsDict]];
-    [effectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[buyButton(==70.0)]"
+    [effectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[buyButton(==35.0)]"
                                                                        options:0
                                                                        metrics:metrics views:viewsDict]];
     
