@@ -61,7 +61,7 @@
             edgeImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Chat_record_circle"]];
         
         self.subTitleLabel.center = CGPointMake([[UIScreen mainScreen] bounds].size.width/2,[[UIScreen mainScreen] bounds].size.height/2);
-        self.subTitleLabel.text = @"Recording";
+        self.subTitleLabel.text = @"Processing...";
         self.subTitleLabel.textAlignment = NSTextAlignmentCenter;
         self.subTitleLabel.font = [UIFont boldSystemFontOfSize:18];
         self.subTitleLabel.textColor = [UIColor whiteColor];
