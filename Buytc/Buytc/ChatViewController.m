@@ -234,6 +234,7 @@
     [cell.cardImageView sd_setImageWithURL:[NSURL URLWithString:@"http://myntra.myntassets.com/image/style/properties/142338/Kook-N-Keech-Disney-Men-Black-Mickey-T-shirt_1_473001cb64df1a49ef6e74fa969b2d3e.jpg"] placeholderImage:[UIImage imageNamed:@"placeholder-small"]];
     cell.sizeLabel.text = @"Size: 36";
     cell.priceLabel.text = @"Rs. 500";
+    cell.nameLabel.text = @"HRX Men Indigo Blue Jeans";
     return cell;
 }
 
