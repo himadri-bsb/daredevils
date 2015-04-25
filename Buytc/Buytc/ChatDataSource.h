@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class CardModel;
+
 @interface ChatDataSource : NSObject
 
 + (id)sharedDataSource;
@@ -15,5 +17,6 @@
 @property (nonatomic, strong) NSMutableArray *dataArray;
 
 - (void)addSpecifiedItem:(NSDictionary *)dic;
+- (void)addCard:(CardModel *)card;
 
 @end

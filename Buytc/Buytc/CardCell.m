@@ -43,13 +43,14 @@
     
     self.detailsBgView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
     self.detailsBgView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.detailsBgView.layer.cornerRadius = 6.0f;
+    self.detailsBgView.layer.cornerRadius = 8.0f;
     self.detailsBgView.clipsToBounds = YES;
     [self.bgView addSubview:self.detailsBgView];
     
     self.nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.nameLabel setFont:[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:14.0f]];
+    self.nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self.detailsBgView addSubview:self.nameLabel];
     
     self.sizeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -82,10 +83,10 @@
                                                                  options:0
                                                                  metrics:nil views:viewsDict]];
     
-    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[cardImageView(==192)]"
+    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[cardImageView(==196)]"
                                                                             options:0
                                                                              metrics:nil views:viewsDict]];
-    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[cardImageView(==232)]"
+    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[cardImageView(==236)]"
                                                                              options:0
                                                                              metrics:nil views:viewsDict]];
     
@@ -93,18 +94,18 @@
                                                       attribute:NSLayoutAttributeLeft
                                                       relatedBy:NSLayoutRelationEqual
                                                          toItem:bgView
-                                                       attribute:NSLayoutAttributeLeft multiplier:1.0f constant:4.0f]];
+                                                       attribute:NSLayoutAttributeLeft multiplier:1.0f constant:2.0f]];
     [bgView addConstraint:[NSLayoutConstraint constraintWithItem:cardImageView
                                                        attribute:NSLayoutAttributeTop
                                                        relatedBy:NSLayoutRelationEqual
                                                           toItem:bgView
-                                                       attribute:NSLayoutAttributeTop multiplier:1.0f constant:4.0f]];
+                                                       attribute:NSLayoutAttributeTop multiplier:1.0f constant:2.0f]];
     
-    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(4)-[detailsBgView]-(4)-|"
+    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(2)-[detailsBgView]-(2)-|"
                                                                      options:0
                                                                      metrics:nil
                                                                         views:viewsDict]];
-    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[detailsBgView(==40.0)]-(4)-|"
+    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[detailsBgView(==40.0)]-(2)-|"
                                                                       options:0
                                                                       metrics:nil
                                                                    views:viewsDict]];
@@ -121,6 +122,7 @@
                                                                 toItem:detailsBgView
                                                              attribute:NSLayoutAttributeTop
                                                              multiplier:1.0f constant:2.0f]];
+    nameLabel.preferredMaxLayoutWidth = 236.0f;
     
     [detailsBgView addConstraint:[NSLayoutConstraint constraintWithItem:sizeLabel
                                                               attribute:NSLayoutAttributeLeft

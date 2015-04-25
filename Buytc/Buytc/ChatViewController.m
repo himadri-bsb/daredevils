@@ -63,7 +63,7 @@
     [self loadBaseViewsAndData];
 
     //TODO - Remove later
-    //[self performSelector:@selector(loadDummyHttp) withObject:nil afterDelay:2.0];
+    [self performSelector:@selector(loadDummyHttp) withObject:nil afterDelay:2.0];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -215,38 +215,47 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    UUMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
-//    if (cell == nil) {
-//        cell = [[UUMessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellID"];
-//        cell.delegate = self;
-//    }
-//    
-//    UUMessageFrame * messageFrame = [[UUMessageFrame alloc] init];
-//    UUMessage *message = [[UUMessage alloc] init];
-//    [message setWithDict:[[ChatDataSource sharedDataSource] dataArray][indexPath.row]];
-//    [messageFrame setMessage:message];
-//    [cell setMessageFrame:messageFrame];
-//    return cell;
     
-    CardCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CardCell"];
-    if (cell == nil) {
-        cell = [[CardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CardCell"];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSDictionary *messageDict = [[ChatDataSource sharedDataSource] dataArray][indexPath.row];
+    if ([messageDict valueForKey:@"type"] && [[messageDict valueForKey:@"type"] integerValue] == UUMessageTypeCard) {
+        CardCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CardCell"];
+        if (cell == nil) {
+            cell = [[CardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CardCell"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        [cell.cardImageView sd_setImageWithURL:[NSURL URLWithString:[messageDict objectForKey:@"imageUrl"]] placeholderImage:[UIImage imageNamed:@"placeholder-small"]];
+        cell.sizeLabel.text = [messageDict objectForKey:@"size"];
+        cell.priceLabel.text = [NSString stringWithFormat:@"Rs.%@",[[messageDict objectForKey:@"price"] stringValue]];
+        cell.nameLabel.text = [messageDict objectForKey:@"brandName"];
+        return cell;
+    } else {
+        UUMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
+        if (cell == nil) {
+            cell = [[UUMessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellID"];
+            cell.delegate = self;
+        }
+        
+        UUMessageFrame * messageFrame = [[UUMessageFrame alloc] init];
+        UUMessage *message = [[UUMessage alloc] init];
+        [message setWithDict:[[ChatDataSource sharedDataSource] dataArray][indexPath.row]];
+        [messageFrame setMessage:message];
+        [cell setMessageFrame:messageFrame];
+        return cell;
     }
-    [cell.cardImageView sd_setImageWithURL:[NSURL URLWithString:@"http://myntra.myntassets.com/image/style/properties/142338/Kook-N-Keech-Disney-Men-Black-Mickey-T-shirt_1_473001cb64df1a49ef6e74fa969b2d3e.jpg"] placeholderImage:[UIImage imageNamed:@"placeholder-small"]];
-    cell.sizeLabel.text = @"Size: 36";
-    cell.priceLabel.text = @"Rs. 500";
-    cell.nameLabel.text = @"HRX Men Indigo Blue Jeans";
-    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    UUMessageFrame * messageFrame = [[UUMessageFrame alloc] init];
-//    UUMessage *message = [[UUMessage alloc] init];
-//    [message setWithDict:[[ChatDataSource sharedDataSource] dataArray][indexPath.row]];
-//    [messageFrame setMessage:message];
-//    return [messageFrame cellHeight];
-    return 280.0f;
+    
+    NSDictionary *messageDict = [[ChatDataSource sharedDataSource] dataArray][indexPath.row];
+    if ([messageDict valueForKey:@"type"] && [[messageDict valueForKey:@"type"] integerValue] == UUMessageTypeCard) {
+        return 280.0f;
+    } else {
+        UUMessage *message = [[UUMessage alloc] init];
+        UUMessageFrame * messageFrame = [[UUMessageFrame alloc] init];
+        [message setWithDict:messageDict];
+        [messageFrame setMessage:message];
+        return [messageFrame cellHeight];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -348,9 +357,15 @@
             model.size = dict[@"sizes"];
             model.disCount = dict[@"dre_discount_label"];
             [array addObject:model];
-
+            
+//            [[ChatDataSource sharedDataSource] addCard:model];
         }
-        NSLog(@"");
+        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.chatTableView reloadData];
+//            [self tableViewScrollToBottom];
+//        });
+        
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Http"
