@@ -151,8 +151,4 @@
                                                              multiplier:1.0f constant:0.0f]];
 }
 
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-}
 @end
