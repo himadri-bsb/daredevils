@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		012103081AEBB859000E0FE2 /* DetailsCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 012103071AEBB859000E0FE2 /* DetailsCardView.m */; };
 		2676F23B1AEB91860092CF4A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2676F23A1AEB91860092CF4A /* main.m */; };
 		2676F23E1AEB91860092CF4A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2676F23D1AEB91860092CF4A /* AppDelegate.m */; };
 		2676F2441AEB91860092CF4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2676F2421AEB91860092CF4A /* Main.storyboard */; };
@@ -91,6 +92,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		012103061AEBB859000E0FE2 /* DetailsCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsCardView.h; sourceTree = "<group>"; };
+		012103071AEBB859000E0FE2 /* DetailsCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsCardView.m; sourceTree = "<group>"; };
 		2676F2351AEB91860092CF4A /* Buytc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Buytc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2676F2391AEB91860092CF4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2676F23A1AEB91860092CF4A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -281,6 +284,8 @@
 				B16467AA1AEBA27100CC78DD /* ChatViewController.xib */,
 				B16467AB1AEBA27100CC78DD /* ChatModel.h */,
 				B16467AC1AEBA27100CC78DD /* ChatModel.m */,
+				012103061AEBB859000E0FE2 /* DetailsCardView.h */,
+				012103071AEBB859000E0FE2 /* DetailsCardView.m */,
 				2676F2451AEB91860092CF4A /* Images.xcassets */,
 				2676F2471AEB91860092CF4A /* LaunchScreen.xib */,
 				2676F2381AEB91860092CF4A /* Supporting Files */,
@@ -610,6 +615,7 @@
 				B164677B1AEBA03200CC78DD /* UIWebView+AFNetworking.m in Sources */,
 				B164672F1AEB9FB700CC78DD /* UUMessageCell.m in Sources */,
 				B16467531AEBA00400CC78DD /* AFURLSessionManager.m in Sources */,
+				012103081AEBB859000E0FE2 /* DetailsCardView.m in Sources */,
 				B16467321AEB9FB700CC78DD /* UUProgressHUD.m in Sources */,
 				B16467621AEBA01400CC78DD /* MJRefreshHeaderView.m in Sources */,
 				B16467501AEBA00400CC78DD /* AFURLConnectionOperation.m in Sources */,

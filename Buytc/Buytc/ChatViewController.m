@@ -16,6 +16,7 @@
 #import "ChatDataSource.h"
 #import <SpeechKit/SpeechKit.h>
 #import "CardIO.h"
+#import "DetailsCardView.h"
 
 @interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate, SKVocalizerDelegate, CardIOPaymentViewControllerDelegate>
 
@@ -69,6 +70,14 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tableViewScrollToBottom) name:UIKeyboardDidShowNotification object:nil];
+    
+//    DetailsCardView *cardView = [[DetailsCardView alloc] initWithFrame:self.view.frame];
+//    cardView.productNameLabel.text = @"Blue Jeans";
+//    cardView.sizeLabel.text = @"Size: 36";
+//    cardView.priceLabel.text = @"Rs. 500";
+//    cardView.discountLabel.text = @"50% off";
+//    cardView.imageView.image = [UIImage imageNamed:@"tempImg"];
+//    [self.view addSubview:cardView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
