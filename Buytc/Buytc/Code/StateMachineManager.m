@@ -104,7 +104,11 @@
 }
 
 - (void)userRepliedWithText:(NSString *)reply {
-    [self manageStatesForUserReply:reply];
+    if ([reply isEqualToString:@"Cancel"] || [reply isEqualToString:@"Done"] || [reply isEqualToString:@"Bye"]) {
+        [self resetStateMachine];
+    } else {
+        [self manageStatesForUserReply:reply];
+    }
 }
 
 - (NSArray *)calculateStatesTraversedDuringUserReply:(NSString *)userReply {
