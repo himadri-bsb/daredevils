@@ -105,9 +105,8 @@
                          forState:UIControlStateHighlighted];
     self.buyButton.layer.cornerRadius = 10.0f;
     self.buyButton.layer.borderWidth = 1.0f;
+    [self.buyButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0f]];
     [self.buyButton addTarget:self action:@selector(buyAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.buyButton setBackgroundColor:NAV_BAR_COLOR];
-    [self.buyButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 100, 0, 100)];
     self.buyButton.layer.cornerRadius = 10;
     [self.visualEffectView addSubview:self.buyButton];
     
@@ -163,10 +162,10 @@
                                                        toItem:effectView
                                                     attribute:NSLayoutAttributeBottom
                                                     multiplier:1.0f constant:-35.0f]];
-    [effectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[buyButton(==89.0)]"
+    [effectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[buyButton(==100.0)]"
                                                                       options:0
                                                                        metrics:metrics views:viewsDict]];
-    [effectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[buyButton(==35.0)]"
+    [effectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[buyButton(==40.0)]"
                                                                        options:0
                                                                        metrics:metrics views:viewsDict]];
     
