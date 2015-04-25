@@ -46,15 +46,18 @@
     
     self.cardView = [[UIView alloc] initWithFrame:CGRectZero];
     self.cardView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.cardView.layer.cornerRadius = 6.0f;
     self.cardView.backgroundColor = [UIColor whiteColor];
     [self.visualEffectView addSubview:self.cardView];
     
     self.imageView =[[UIImageView alloc] initWithFrame:CGRectZero];
     self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.cardView addSubview:self.imageView];
     
     self.productNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.productNameLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.productNameLabel.numberOfLines = 2;
     [self.productNameLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16.0f]];
     [self.cardView addSubview:self.productNameLabel];
     
@@ -197,16 +200,10 @@
                                                                     options:0
                                                                     metrics:metrics
                                                                        views:viewsDict]];
-    [cardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(6.0)-[imageview]"
+    [cardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(6.0)-[imageview(<=250@751)]"
                                                                     options:0
                                                                     metrics:metrics
                                                                        views:viewsDict]];
-    [cardView addConstraint:[NSLayoutConstraint constraintWithItem:imageview
-                                                        attribute:NSLayoutAttributeHeight
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:cardView
-                                                        attribute:NSLayoutAttributeHeight
-                                                        multiplier:1.0f constant:-100.0f]];
     
     [cardView addConstraint:[NSLayoutConstraint constraintWithItem:discountLabel
                                                         attribute:NSLayoutAttributeTop
@@ -240,7 +237,6 @@
                                                            toItem:productLabel
                                                         attribute:NSLayoutAttributeBottom
                                                         multiplier:1.0f constant:4.0f]];
-    
     [cardView addConstraint:[NSLayoutConstraint constraintWithItem:sizeLabel
                                                         attribute:NSLayoutAttributeLeft
                                                         relatedBy:NSLayoutRelationEqual
@@ -260,32 +256,26 @@
                                                             toItem:productLabel
                                                          attribute:NSLayoutAttributeLeft
                                                         multiplier:1.0f constant:0.0f]];
+    [cardView addConstraint:[NSLayoutConstraint constraintWithItem:productLabel
+                                                        attribute:NSLayoutAttributeWidth
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:cardView
+                                                        attribute:NSLayoutAttributeWidth
+                                                        multiplier:1.0f constant:-2*BG_VIEW_HORIZONTAL_PADING]];
     
     [cardView addConstraint:[NSLayoutConstraint constraintWithItem:likeButton
                                                         attribute:NSLayoutAttributeRight
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:cardView
                                                         attribute:NSLayoutAttributeRight
-                                                        multiplier:1.0f constant:-20.0f]];
+                                                        multiplier:1.0f constant:-10.0f]];
     [cardView addConstraint:[NSLayoutConstraint constraintWithItem:likeButton
-                                                        attribute:NSLayoutAttributeTop
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:imageview
                                                         attribute:NSLayoutAttributeBottom
-                                                        multiplier:1.0f constant:20.0f]];
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:cardView
+                                                        attribute:NSLayoutAttributeBottom
+                                                        multiplier:1.0f constant:-10.0f]];
     
-    [cardView addConstraint:[NSLayoutConstraint constraintWithItem:likeButton
-                                                         attribute:NSLayoutAttributeRight
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:cardView
-                                                         attribute:NSLayoutAttributeRight
-                                                        multiplier:1.0f constant:-20.0f]];
-    [cardView addConstraint:[NSLayoutConstraint constraintWithItem:likeButton
-                                                         attribute:NSLayoutAttributeTop
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:imageview
-                                                         attribute:NSLayoutAttributeBottom
-                                                        multiplier:1.0f constant:30.0f]];
     [cardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[likeButton(==30.0)]"
                                                                     options:0
                                                                     metrics:metrics views:viewsDict]];
@@ -300,11 +290,11 @@
                                                          attribute:NSLayoutAttributeLeft
                                                         multiplier:1.0f constant:-6.0f]];
     [cardView addConstraint:[NSLayoutConstraint constraintWithItem:dislikeButton
-                                                         attribute:NSLayoutAttributeTop
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:imageview
                                                          attribute:NSLayoutAttributeBottom
-                                                        multiplier:1.0f constant:30.0f]];
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:cardView
+                                                         attribute:NSLayoutAttributeBottom
+                                                        multiplier:1.0f constant:-10.0f]];
     [cardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[dislikeButton(==30.0)]"
                                                                      options:0
                                                                      metrics:metrics views:viewsDict]];
