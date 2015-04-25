@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChatViewController : UIViewController
+typedef NS_ENUM(NSInteger, ChatMode) {
+    ChatModeBot = 100,
+    ChatModeOneToOne
+};
 
+@interface ChatViewController : UIViewController
+- (instancetype)initWithMode:(ChatMode)chatMode;
 @end

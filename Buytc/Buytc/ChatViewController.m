@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *chatTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 @property (nonatomic, strong) SKVocalizer *vocalizer;
+@property (nonatomic, assign)ChatMode chatMode;
 
 @end
 
@@ -31,9 +32,27 @@
     UUInputFunctionView *IFView;
 }
 
+- (instancetype)initWithMode:(ChatMode)chatMode {
+    
+    self = [super initWithNibName:@"ChatViewController" bundle:nil];
+    if (self) {
+        _chatMode = chatMode;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    switch (self.chatMode) {
+        case ChatModeBot:
+            self.title = @"Mynt";
+            break;
+         case ChatModeOneToOne:
+            self.title = @"Mynt Customre Care";
+        default:
+            break;
+    }
     [self initBar];
     [self addRefreshViews];
     [self loadBaseViewsAndData];
@@ -60,13 +79,13 @@
 
 - (void)initBar
 {
-    UISegmentedControl *segment = [[UISegmentedControl alloc]initWithItems:@[@" private ",@" group "]];
+    UISegmentedControl *segment = [[UISegmentedControl alloc]initWithItems:@[@"Mynt",@"Mynt CS"]];
     [segment addTarget:self action:@selector(segmentChanged:) forControlEvents:UIControlEventValueChanged];
     segment.selectedSegmentIndex = 0;
     self.navigationItem.titleView = segment;
     
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:nil action:nil];
+    //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:nil action:nil];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:nil];
 }
 - (void)segmentChanged:(UISegmentedControl *)segment
@@ -165,7 +184,7 @@
 
 - (void)UUInputFunctionView:(UUInputFunctionView *)funcView sendPicture:(UIImage *)image
 {
-    NSDictionary *dic = @{@"picture": image,
+    NSDictionary *dic = @{@"picture": UIImageJPEGRepresentation(image, 1.0),
                           @"type": @(UUMessageTypePicture)};
     [self dealTheFunctionData:dic];
 }

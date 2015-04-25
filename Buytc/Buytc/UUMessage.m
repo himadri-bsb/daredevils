@@ -27,7 +27,7 @@
         
         case 1:
             self.type = UUMessageTypePicture;
-            self.picture = dict[@"picture"];
+            self.picture = [UIImage imageWithData:dict[@"picture"]];
             break;
         
         case 2:

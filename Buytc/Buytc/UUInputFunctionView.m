@@ -11,6 +11,7 @@
 #import "UUInputFunctionView.h"
 #import "UUProgressHUD.h"
 #import <SpeechKit/SpeechKit.h>
+#import "UUMessageFrame.h"
 
 @interface UUInputFunctionView ()<UITextViewDelegate, SKRecognizerDelegate>
 {
@@ -39,7 +40,7 @@
         self.isAbleToSendTextMessage = NO;
         [self.btnSendMessage setTitle:@"" forState:UIControlStateNormal];
         [self.btnSendMessage setBackgroundImage:[UIImage imageNamed:@"Chat_take_picture"] forState:UIControlStateNormal];
-        self.btnSendMessage.titleLabel.font = [UIFont systemFontOfSize:12];
+        self.btnSendMessage.titleLabel.font = [UIFont systemFontOfSize:14];
         [self.btnSendMessage addTarget:self action:@selector(sendMessage:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.btnSendMessage];
         
@@ -48,7 +49,7 @@
         self.btnChangeVoiceState.frame = CGRectMake(5, 5, 30, 30);
         isbeginVoiceRecord = NO;
         [self.btnChangeVoiceState setBackgroundImage:[UIImage imageNamed:@"chat_voice_record"] forState:UIControlStateNormal];
-        self.btnChangeVoiceState.titleLabel.font = [UIFont systemFontOfSize:12];
+        self.btnChangeVoiceState.titleLabel.font = [UIFont systemFontOfSize:14];
         [self.btnChangeVoiceState addTarget:self action:@selector(voiceRecord:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.btnChangeVoiceState];
 
@@ -75,6 +76,7 @@
         self.TextViewInput.delegate = self;
         self.TextViewInput.layer.borderWidth = 1;
         self.TextViewInput.layer.borderColor = [[[UIColor lightGrayColor] colorWithAlphaComponent:0.4] CGColor];
+        self.TextViewInput.font = ChatContentFont;
         [self addSubview:self.TextViewInput];
         
         //输入框的提示语

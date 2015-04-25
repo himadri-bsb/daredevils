@@ -64,7 +64,7 @@
     NSString *URLStr = @"http://img0.bdstatic.com/img/image/shouye/xinshouye/mingxing16.jpg";
     [dataDic setObject:@(UUMessageFromMe) forKey:@"from"];
     [dataDic setObject:[[NSDate date] description] forKey:@"strTime"];
-    [dataDic setObject:@"Hello,Sister" forKey:@"strName"];
+    [dataDic setObject:@"Me" forKey:@"strName"];
     [dataDic setObject:URLStr forKey:@"strIcon"];
     
     [self.dataArray addObject:dataDic];

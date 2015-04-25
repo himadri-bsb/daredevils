@@ -28,8 +28,9 @@ const unsigned char SpeechKitApplicationKey[] =
     // Override point for customization after application launch.
     [ChatDataSource sharedDataSource];
     
-    ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
-    [self.window setRootViewController:chatVC];
+    ChatViewController *chatVc = [[ChatViewController alloc] initWithMode:ChatModeBot];
+    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:chatVc];
+    [self.window setRootViewController:navVC];
 
     [SpeechKit setupWithID:@"NMDPTRIAL_himadrisj20120928234937"
                       host:@"sandbox.nmdp.nuancemobility.net"
