@@ -89,7 +89,7 @@
     segment.selectedSegmentIndex = 0;
     self.navigationItem.titleView = segment;
     
-    self.navigationController.navigationBar.tintColor = [UIColor grayColor];
+    self.navigationController.navigationBar.tintColor = NAV_BAR_COLOR;
     //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:nil action:nil];
     //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:nil];
 }

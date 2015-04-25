@@ -30,7 +30,7 @@
     
     self.bgView = [[UIView alloc] initWithFrame:CGRectZero];
     self.bgView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.bgView.backgroundColor = [UIColor colorWithRed:62.0f/255.0f green:180.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
+    self.bgView.backgroundColor = NAV_BAR_COLOR;
     self.bgView.layer.cornerRadius = 10.0f;
     [self.contentView addSubview:self.bgView];
     
@@ -83,10 +83,10 @@
                                                                  options:0
                                                                  metrics:nil views:viewsDict]];
     
-    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[cardImageView(==196)]"
+    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[cardImageView(==198)]"
                                                                             options:0
                                                                              metrics:nil views:viewsDict]];
-    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[cardImageView(==236)]"
+    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[cardImageView(==238)]"
                                                                              options:0
                                                                              metrics:nil views:viewsDict]];
     
@@ -94,18 +94,18 @@
                                                       attribute:NSLayoutAttributeLeft
                                                       relatedBy:NSLayoutRelationEqual
                                                          toItem:bgView
-                                                       attribute:NSLayoutAttributeLeft multiplier:1.0f constant:2.0f]];
+                                                       attribute:NSLayoutAttributeLeft multiplier:1.0f constant:1.0f]];
     [bgView addConstraint:[NSLayoutConstraint constraintWithItem:cardImageView
                                                        attribute:NSLayoutAttributeTop
                                                        relatedBy:NSLayoutRelationEqual
                                                           toItem:bgView
-                                                       attribute:NSLayoutAttributeTop multiplier:1.0f constant:2.0f]];
+                                                       attribute:NSLayoutAttributeTop multiplier:1.0f constant:1.0f]];
     
-    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(2)-[detailsBgView]-(2)-|"
+    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(1)-[detailsBgView]-(1)-|"
                                                                      options:0
                                                                      metrics:nil
                                                                         views:viewsDict]];
-    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[detailsBgView(==40.0)]-(2)-|"
+    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[detailsBgView(==40.0)]-(1)-|"
                                                                       options:0
                                                                       metrics:nil
                                                                    views:viewsDict]];
@@ -121,7 +121,7 @@
                                                              relatedBy:NSLayoutRelationEqual
                                                                 toItem:detailsBgView
                                                              attribute:NSLayoutAttributeTop
-                                                             multiplier:1.0f constant:2.0f]];
+                                                             multiplier:1.0f constant:1.0f]];
     nameLabel.preferredMaxLayoutWidth = 236.0f;
     
     [detailsBgView addConstraint:[NSLayoutConstraint constraintWithItem:sizeLabel
@@ -135,7 +135,7 @@
                                                               relatedBy:NSLayoutRelationEqual
                                                                  toItem:nameLabel
                                                               attribute:NSLayoutAttributeBottom
-                                                             multiplier:1.0f constant:2.0f]];
+                                                             multiplier:1.0f constant:1.0f]];
     
     [detailsBgView addConstraint:[NSLayoutConstraint constraintWithItem:priceLabel
                                                               attribute:NSLayoutAttributeRight
