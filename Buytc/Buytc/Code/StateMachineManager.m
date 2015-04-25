@@ -19,5 +19,12 @@
     return myManager;
 }
 
+- (void)resetStateMachine {
+    
+}
+
+- (void)userRepliedWithText:(NSString *)reply {
+    
+}
 
 @end
