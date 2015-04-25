@@ -18,5 +18,5 @@
 
 - (void)addSpecifiedItem:(NSDictionary *)dic;
 - (void)addCard:(CardModel *)card;
-
+- (void)writeDataToMemory;
 @end

@@ -22,8 +22,9 @@
 #import "AFNetworking.h"
 #import "CardModel.h"
 #import "StateMachineManager.h"
+#import "UUImageAvatarBrowser.h"
 
-@interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate, SKVocalizerDelegate, CardIOPaymentViewControllerDelegate, StateMachineManagerDelegate>
+@interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate, SKVocalizerDelegate, CardIOPaymentViewControllerDelegate,DetailsCardViewDelegate>
 
 @property (strong, nonatomic) MJRefreshHeaderView *head;
 
@@ -271,6 +272,42 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self.view endEditing:YES];
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if ([cell isKindOfClass:[CardCell class]]) {
+        CardCell *card = (CardCell *)cell;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSDictionary *messageDict = [[ChatDataSource sharedDataSource] dataArray][indexPath.row];
+            UIImageView* orginImageView = card.cardImageView;
+            CGRect oldframe=[orginImageView convertRect:orginImageView.bounds toView:self.navigationController.view];
+            DetailsCardView *detailView = [[DetailsCardView alloc] initWithFrame:oldframe];
+            detailView.imageView.image = card.cardImageView.image;
+            if (messageDict[@"brandName"]) {
+                detailView.productNameLabel.text = messageDict[@"brandName"];
+            }
+            if (messageDict[@"size"]) {
+                detailView.sizeLabel.text = [NSString stringWithFormat:@"Sizes: %@", messageDict[@"size"]];
+            }
+            
+            if (messageDict[@"discount"]) {
+                detailView.discountLabel.text = messageDict[@"discount"];
+            }
+            
+            if (messageDict[@"price"]) {
+                detailView.sizeLabel.text = [NSString stringWithFormat:@"Price: %@", messageDict[@"price"]];
+            }
+            
+            
+            [self.navigationController.view addSubview:detailView];
+            [detailView setDelegate:self];
+            [UIView animateWithDuration:0.3 animations:^{
+                detailView.frame = self.view.bounds;
+            } completion:^(BOOL finished) {
+                
+            }];
+            
+        });
+    }
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
@@ -366,13 +403,13 @@
             model.disCount = dict[@"dre_discount_label"];
             [array addObject:model];
             
-//            [[ChatDataSource sharedDataSource] addCard:model];
+            [[ChatDataSource sharedDataSource] addCard:model];
         }
         
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self.chatTableView reloadData];
-//            [self tableViewScrollToBottom];
-//        });
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.chatTableView reloadData];
+            [self tableViewScrollToBottom];
+        });
         
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -432,8 +469,8 @@
         finalUrl = [NSString stringWithFormat:@"http://developer.myntra.com/search/data/%@?%@",baseAPI,@"&p=1&userQuery=false"];
     }
 
-
-
+    
+    
     NSURL *url = [NSURL URLWithString:finalUrl];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self loadHttpRequest:request];
@@ -441,12 +478,27 @@
 
 - (NSString *)urlEncodeString:(NSString *)str {
     NSString* escaped_value = (__bridge_transfer NSString * ) CFURLCreateStringByAddingPercentEscapes(
-                                                                                  NULL, /* allocator */
-                                                                                  (CFStringRef)str,
-                                                                                  NULL, /* charactersToLeaveUnescaped */
-                                                                                  (CFStringRef)@":,",
-                                                                                  kCFStringEncodingUTF8);
+                                                                                                      NULL, /* allocator */
+                                                                                                      (CFStringRef)str,
+                                                                                                      NULL, /* charactersToLeaveUnescaped */
+                                                                                                      (CFStringRef)@":,",
+                                                                                                      kCFStringEncodingUTF8);
     return escaped_value;
+}
+
+- (void)didTapCancel:(id)sender {
+    [sender removeFromSuperview];
+}
+
+- (void)didTapLike:(id)sender {
+    
+}
+- (void)didTapDisLike:(id)sender {
+    
+}
+
+- (void)didTapBuy:(id)sender {
+    
 }
 
 @end

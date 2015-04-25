@@ -75,7 +75,7 @@
     [dataDic setObject:URLStr forKey:@"strIcon"];
     
     [self.dataArray addObject:dataDic];
-    [self writeDataToMemory];
+    //[self writeDataToMemory];
 }
 
 - (void)addCard:(CardModel *)card {
@@ -90,7 +90,7 @@
     [dataDict setObject:@(UUMessageTypeCard) forKey:@"type"];
     
     [self.dataArray addObject:dataDict];
-    [self writeDataToMemory];
+    //[self writeDataToMemory];
 }
 
 @end

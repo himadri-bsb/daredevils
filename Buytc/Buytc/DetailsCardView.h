@@ -10,10 +10,10 @@
 
 @protocol DetailsCardViewDelegate <NSObject>
 
-- (void)didTapLike;
-- (void)didTapDisLike;
-- (void)didTapCancel;
-- (void)didTapBuy;
+- (void)didTapLike:(id)sender;
+- (void)didTapDisLike:(id)sender;
+- (void)didTapCancel:(id)sender;
+- (void)didTapBuy:(id)sender;
 
 @end
 

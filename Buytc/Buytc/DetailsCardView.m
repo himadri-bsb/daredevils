@@ -233,6 +233,7 @@
                                                            toItem:productLabel
                                                         attribute:NSLayoutAttributeBottom
                                                         multiplier:1.0f constant:4.0f]];
+    
     [cardView addConstraint:[NSLayoutConstraint constraintWithItem:sizeLabel
                                                         attribute:NSLayoutAttributeLeft
                                                         relatedBy:NSLayoutRelationEqual
@@ -308,27 +309,28 @@
 #pragma mark - button actions
 
 - (void)likeAction:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(didTapLike)]) {
-        [self.delegate didTapLike];
+    if ([self.delegate respondsToSelector:@selector(didTapLike:)]) {
+        [self.delegate didTapLike:self];
     }
 }
 
 - (void)disLikeAction:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(didTapDisLike)]) {
-        [self.delegate didTapDisLike];
+    if ([self.delegate respondsToSelector:@selector(didTapDisLike:)]) {
+        [self.delegate didTapDisLike:self];
     }
 }
 
 - (void)buyAction:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(didTapBuy)]) {
-        [self.delegate didTapBuy];
+    if ([self.delegate respondsToSelector:@selector(didTapBuy:)]) {
+        [self.delegate didTapBuy:self];
     }
 }
 
 - (void)cancelAction:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(didTapCancel)]) {
-        [self.delegate didTapCancel];
+    if ([self.delegate respondsToSelector:@selector(didTapCancel:)]) {
+        [self.delegate didTapCancel:self];
     }
 }
+
 
 @end
