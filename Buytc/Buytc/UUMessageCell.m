@@ -159,9 +159,14 @@
     // 2、设置头像
     headImageBackView.frame = messageFrame.iconF;
     self.btnHeadImage.frame = CGRectMake(2, 2, ChatIconWH-4, ChatIconWH-4);
-    [self.btnHeadImage setBackgroundImageForState:UIControlStateNormal
-                                          withURL:[NSURL URLWithString:message.strIcon]
-                                 placeholderImage:[UIImage imageNamed:@"headImage.jpeg"]];
+    
+    if (message.from == UUMessageFromMe) {
+        [self.btnHeadImage setBackgroundImage:[UIImage imageNamed:@"jatin"] forState:UIControlStateNormal];
+    } else {
+        [self.btnHeadImage setBackgroundImageForState:UIControlStateNormal
+                                              withURL:[NSURL URLWithString:message.strIcon]
+                                     placeholderImage:[UIImage imageNamed:@"headImage.jpeg"]];;
+    }
     
     // 3、设置下标
     self.labelNum.text = message.strName;

@@ -14,7 +14,7 @@
 #define BG_VIEW_HORIZONTAL_PADING 20.0f
 #define BG_VIEW_BOTTOM_PADDING 100.0f
 
-@interface DetailsCardView()
+@interface DetailsCardView() <UIPickerViewDelegate>
 
 @property (nonatomic, strong) UIButton *likeButton;
 @property (nonatomic, strong) UIButton *dislikeButton;
@@ -22,6 +22,7 @@
 @property (nonatomic, strong) UIVisualEffectView *visualEffectView;
 @property (nonatomic, strong) UIButton *buyButton;
 @property (nonatomic, strong) UIButton *cancelButton;
+@property (nonatomic, strong) NSArray *pickerComponents;
 
 @end
 
@@ -46,15 +47,18 @@
     
     self.cardView = [[UIView alloc] initWithFrame:CGRectZero];
     self.cardView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.cardView.layer.cornerRadius = 6.0f;
     self.cardView.backgroundColor = [UIColor whiteColor];
     [self.visualEffectView addSubview:self.cardView];
     
     self.imageView =[[UIImageView alloc] initWithFrame:CGRectZero];
     self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.cardView addSubview:self.imageView];
     
     self.productNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.productNameLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.productNameLabel.numberOfLines = 2;
     [self.productNameLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16.0f]];
     [self.cardView addSubview:self.productNameLabel];
     
@@ -101,7 +105,9 @@
                          forState:UIControlStateHighlighted];
     self.buyButton.layer.cornerRadius = 10.0f;
     self.buyButton.layer.borderWidth = 1.0f;
+    [self.buyButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0f]];
     [self.buyButton addTarget:self action:@selector(buyAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.buyButton.layer.cornerRadius = 10;
     [self.visualEffectView addSubview:self.buyButton];
     
     
@@ -116,8 +122,8 @@
     
     UIView *effectView = self.visualEffectView;
     UIView *cardView = self.cardView;
-    UIImageView *imageview = self.imageView;
-    UILabel *productLabel = self.productNameLabel;
+    UIView *imageview = self.imageView;
+    UIView *productLabel = self.productNameLabel;
     UILabel *sizeLabel = self.sizeLabel;
     UILabel *priceLabel = self.priceLabel;
     UILabel *discountLabel = self.discountLabel;
@@ -156,10 +162,10 @@
                                                        toItem:effectView
                                                     attribute:NSLayoutAttributeBottom
                                                     multiplier:1.0f constant:-35.0f]];
-    [effectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[buyButton(==89.0)]"
+    [effectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[buyButton(==100.0)]"
                                                                       options:0
                                                                        metrics:metrics views:viewsDict]];
-    [effectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[buyButton(==35.0)]"
+    [effectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[buyButton(==40.0)]"
                                                                        options:0
                                                                        metrics:metrics views:viewsDict]];
     
@@ -194,16 +200,10 @@
                                                                     options:0
                                                                     metrics:metrics
                                                                        views:viewsDict]];
-    [cardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(6.0)-[imageview]"
+    [cardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(6.0)-[imageview(<=250@751)]"
                                                                     options:0
                                                                     metrics:metrics
                                                                        views:viewsDict]];
-    [cardView addConstraint:[NSLayoutConstraint constraintWithItem:imageview
-                                                        attribute:NSLayoutAttributeHeight
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:cardView
-                                                        attribute:NSLayoutAttributeHeight
-                                                        multiplier:1.0f constant:-100.0f]];
     
     [cardView addConstraint:[NSLayoutConstraint constraintWithItem:discountLabel
                                                         attribute:NSLayoutAttributeTop
@@ -237,7 +237,6 @@
                                                            toItem:productLabel
                                                         attribute:NSLayoutAttributeBottom
                                                         multiplier:1.0f constant:4.0f]];
-    
     [cardView addConstraint:[NSLayoutConstraint constraintWithItem:sizeLabel
                                                         attribute:NSLayoutAttributeLeft
                                                         relatedBy:NSLayoutRelationEqual
@@ -257,32 +256,26 @@
                                                             toItem:productLabel
                                                          attribute:NSLayoutAttributeLeft
                                                         multiplier:1.0f constant:0.0f]];
+    [cardView addConstraint:[NSLayoutConstraint constraintWithItem:productLabel
+                                                        attribute:NSLayoutAttributeWidth
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:cardView
+                                                        attribute:NSLayoutAttributeWidth
+                                                        multiplier:1.0f constant:-2*BG_VIEW_HORIZONTAL_PADING]];
     
     [cardView addConstraint:[NSLayoutConstraint constraintWithItem:likeButton
                                                         attribute:NSLayoutAttributeRight
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:cardView
                                                         attribute:NSLayoutAttributeRight
-                                                        multiplier:1.0f constant:-20.0f]];
+                                                        multiplier:1.0f constant:-10.0f]];
     [cardView addConstraint:[NSLayoutConstraint constraintWithItem:likeButton
-                                                        attribute:NSLayoutAttributeTop
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:imageview
                                                         attribute:NSLayoutAttributeBottom
-                                                        multiplier:1.0f constant:20.0f]];
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:cardView
+                                                        attribute:NSLayoutAttributeBottom
+                                                        multiplier:1.0f constant:-10.0f]];
     
-    [cardView addConstraint:[NSLayoutConstraint constraintWithItem:likeButton
-                                                         attribute:NSLayoutAttributeRight
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:cardView
-                                                         attribute:NSLayoutAttributeRight
-                                                        multiplier:1.0f constant:-20.0f]];
-    [cardView addConstraint:[NSLayoutConstraint constraintWithItem:likeButton
-                                                         attribute:NSLayoutAttributeTop
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:imageview
-                                                         attribute:NSLayoutAttributeBottom
-                                                        multiplier:1.0f constant:30.0f]];
     [cardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[likeButton(==30.0)]"
                                                                     options:0
                                                                     metrics:metrics views:viewsDict]];
@@ -297,11 +290,11 @@
                                                          attribute:NSLayoutAttributeLeft
                                                         multiplier:1.0f constant:-6.0f]];
     [cardView addConstraint:[NSLayoutConstraint constraintWithItem:dislikeButton
-                                                         attribute:NSLayoutAttributeTop
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:imageview
                                                          attribute:NSLayoutAttributeBottom
-                                                        multiplier:1.0f constant:30.0f]];
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:cardView
+                                                         attribute:NSLayoutAttributeBottom
+                                                        multiplier:1.0f constant:-10.0f]];
     [cardView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[dislikeButton(==30.0)]"
                                                                      options:0
                                                                      metrics:metrics views:viewsDict]];
@@ -325,8 +318,25 @@
 }
 
 - (void)buyAction:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(didTapBuy:)]) {
-        [self.delegate didTapBuy:self];
+    self.pickerComponents = [self.sizeLabel.text componentsSeparatedByString:@","];
+    if (self.pickerComponents.count > 1) {
+        UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.frame),
+                                                                                  CGRectGetMaxY(self.frame),
+                                                                                  CGRectGetWidth(self.frame),
+                                                                                  200.0f)];
+        pickerView.delegate = self;
+        pickerView.backgroundColor = [UIColor lightGrayColor];
+        [self addSubview:pickerView];
+        [UIView animateWithDuration:0.3 animations:^{
+           pickerView.frame = CGRectMake(CGRectGetMinX(pickerView.frame),
+                                         CGRectGetMaxY(self.frame)-180.0f,
+                                         CGRectGetWidth(pickerView.frame),
+                                         200.0f);
+        }];
+    } else {
+        if ([self.delegate respondsToSelector:@selector(didTapBuy:)]) {
+            [self.delegate didTapBuy:self];
+        }
     }
 }
 
@@ -336,5 +346,34 @@
     }
 }
 
+#pragma mark - UIPickerViewDelegate
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return self.pickerComponents.count;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView
+             titleForRow:(NSInteger)row
+            forComponent:(NSInteger)component {
+    return [self.pickerComponents objectAtIndex:row];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    [UIView animateWithDuration:0.3 animations:^{
+        pickerView.frame = CGRectMake(CGRectGetMinX(pickerView.frame),
+                                      CGRectGetMaxY(self.frame),
+                                      CGRectGetWidth(pickerView.frame),
+                                      CGRectGetHeight(pickerView.frame));
+        if ([self.delegate respondsToSelector:@selector(didTapBuy:)]) {
+            [self.delegate didTapBuy:self];
+        }
+    } completion:^(BOOL finished) {
+        [pickerView removeFromSuperview];
+    }];
+}
 
 @end
