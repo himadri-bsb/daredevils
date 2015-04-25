@@ -51,10 +51,10 @@ typedef NS_ENUM(NSUInteger, StateMachine_StateType) {
 @property (nonatomic, strong) NSMutableDictionary *parameterDictionary;
 @property (nonatomic, strong) NSString *baseAPIKeyGender;
 @property (nonatomic, strong) NSString *baseAPIKeyStyle;
-@property (nonatomic, strong) NSString *completeBaseAPI;
 
 + (StateMachineManager *)sharedInstance;
 - (void)resetStateMachine;
 - (void)userRepliedWithText:(NSString *)reply;
+- (NSString *)completeBaseAPI;
 
 @end

@@ -86,7 +86,7 @@
             break;
         case StateMachineManager_StateTypeCompletion:
         {
-            [self.chatDelegate makeHttpCallWithBaseAPI:self.completeBaseAPI parameterDictionary:self.parameterDictionary];
+            [self.chatDelegate makeHttpCallWithBaseAPI:[self completeBaseAPI] parameterDictionary:self.parameterDictionary];
             [self resetStateMachine];
         }
             break;
@@ -100,7 +100,6 @@
     [self.parameterDictionary removeAllObjects];
     self.baseAPIKeyGender = nil;
     self.baseAPIKeyStyle = nil;
-    self.completeBaseAPI = nil;
     self.statesToTraverse = [[NSMutableArray alloc] initWithObjects:@(1), @(2), @(3), @(4), @(5), @(6), nil];
 }
 
@@ -118,31 +117,31 @@
             
             if ([self parseForNumberInUserReply:userReply forParamDictKey:kSize]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypeSize)];
-            } else if ([self doesAnyKeyExistInUserReply:userReply inArray:listDictionary[key] forParamDictKey:kSize baseAPIKey:nil]) {
+            } else if ([self doesAnyKeyExistInUserReply:userReply inCollection:listDictionary[key] forParamDictKey:kSize baseAPIKey:nil]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypeSize)];                
             }
 
         } else if ([key isEqualToString:kPListTypeOfClothing]) {
             
-            if ([self doesAnyKeyExistInUserReply:userReply inArray:listDictionary[key] forParamDictKey:nil baseAPIKey:@"style"]) {
+            if ([self doesAnyKeyExistInUserReply:userReply inCollection:listDictionary[key] forParamDictKey:nil baseAPIKey:@"style"]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypeClothingType)];
             }
             
         } else if ([key isEqualToString:kPListBrands]) {
             
-            if ([self doesAnyKeyExistInUserReply:userReply inArray:listDictionary[key] forParamDictKey:kBrand baseAPIKey:nil]) {
+            if ([self doesAnyKeyExistInUserReply:userReply inCollection:listDictionary[key] forParamDictKey:kBrand baseAPIKey:nil]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypeBrands)];
             }
             
         } else if ([key isEqualToString:kPListGender]) {
             
-            if ([self doesAnyKeyExistInUserReply:userReply inArray:listDictionary[key] forParamDictKey:nil baseAPIKey:@"gender"]) {
+            if ([self doesAnyKeyExistInUserReply:userReply inCollection:listDictionary[key] forParamDictKey:nil baseAPIKey:@"gender"]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypeGender)];
             }
             
         } else if ([key isEqualToString:kPListColour]) {
             
-            if ([self doesAnyKeyExistInUserReply:userReply inArray:listDictionary[key] forParamDictKey:kColour baseAPIKey:nil]) {
+            if ([self doesAnyKeyExistInUserReply:userReply inCollection:listDictionary[key] forParamDictKey:kColour baseAPIKey:nil]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypeColor)];
             }
             
@@ -150,7 +149,7 @@
             
             if ([self parseForNumberInUserReply:userReply forParamDictKey:kPrice]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypePrice)];
-            } else if ([self doesAnyKeyExistInUserReply:userReply inArray:listDictionary[key] forParamDictKey:kPrice baseAPIKey:nil]) {
+            } else if ([self doesAnyKeyExistInUserReply:userReply inCollection:listDictionary[key] forParamDictKey:kPrice baseAPIKey:nil]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypePrice)];
             }
             
@@ -181,23 +180,43 @@
     return NO;
 }
 
-- (BOOL)doesAnyKeyExistInUserReply:(NSString *)userReply inArray:(NSArray *)array forParamDictKey:(NSString *)paramDictKey baseAPIKey:(NSString *)baseAPIKey {
+- (BOOL)doesAnyKeyExistInUserReply:(NSString *)userReply inCollection:(id)collection forParamDictKey:(NSString *)paramDictKey baseAPIKey:(NSString *)baseAPIKey {
     BOOL doesExist = NO;
-    for (NSString *str in array) {
-        if ([userReply containsString:str]) {
-            doesExist = YES;
-            if (paramDictKey) {
-                [self.parameterDictionary setValue:str forKey:paramDictKey];
-            } else {
-                if ([baseAPIKey isEqualToString:@"style"]) {
-                    self.baseAPIKeyStyle = str;
-                } else {
-                    self.baseAPIKeyGender =str;
-                }
+    
+    /**
+     If the baseAPIKey type is of type style then we have to iterate over a dictionary
+     else over an array
+    **/
+    
+    if ([baseAPIKey isEqualToString:@"style"]) {
+        
+        for (NSString *str in ((NSDictionary *)collection).allKeys) {
+            if ([userReply containsString:str]) {
+                doesExist = YES;
+                self.baseAPIKeyStyle = [collection valueForKey:str];
+                break;
             }
-            
-            break;
         }
+        
+    } else {
+        
+        for (NSString *str in collection) {
+            if ([userReply containsString:str]) {
+                doesExist = YES;
+                if (paramDictKey) {
+                    [self.parameterDictionary setValue:str forKey:paramDictKey];
+                } else {
+                    if ([baseAPIKey isEqualToString:@"style"]) {
+                        self.baseAPIKeyStyle = str;
+                    } else {
+                        self.baseAPIKeyGender =str;
+                    }
+                }
+                
+                break;
+            }
+        }
+        
     }
     
     return doesExist;
@@ -218,13 +237,7 @@
 }
 
 - (NSString *)completeBaseAPI {
-    if ([self.baseAPIKeyStyle isEqualToString:@"Shirt"]) {
-        _completeBaseAPI = @"men-casual-shirt";
-    } else {
-        _completeBaseAPI = [NSString stringWithFormat:@"%@-%@", self.baseAPIKeyGender, self.baseAPIKeyStyle];
-    }
-    
-    return _completeBaseAPI;
+    return [NSString stringWithFormat:@"%@-%@", self.baseAPIKeyGender, self.baseAPIKeyStyle];
 }
 
 @end

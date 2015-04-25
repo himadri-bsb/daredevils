@@ -18,11 +18,26 @@
 	</array>
 	<key>Type of clothing</key>
 	<array>
-		<string>Pant</string>
-		<string>Top</string>
-		<string>Jeans</string>
-		<string>T-Shirt</string>
-		<string>Shirt</string>
+		<dict>
+			<key>Pant</key>
+			<string>casual-shirts</string>
+		</dict>
+		<dict>
+			<key>Top</key>
+			<string>dresses</string>
+		</dict>
+		<dict>
+			<key>Jeans</key>
+			<string>jeans</string>
+		</dict>
+		<dict>
+			<key>T-Shirt</key>
+			<string>casual-shirts</string>
+		</dict>
+		<dict>
+			<key>Shirt</key>
+			<string>casual-shirts</string>
+		</dict>
 	</array>
 	<key>Brands </key>
 	<array>
