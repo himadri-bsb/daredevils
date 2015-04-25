@@ -37,11 +37,12 @@
         self.backgroundColor = [UIColor whiteColor];
         //发送消息
         self.btnSendMessage = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.btnSendMessage.frame = CGRectMake(Main_Screen_Width-40, 5, 30, 30);
+        self.btnSendMessage.frame = CGRectMake(Main_Screen_Width-50, 5, 40, 30);
         self.isAbleToSendTextMessage = NO;
-        [self.btnSendMessage setTitle:@"" forState:UIControlStateNormal];
-        [self.btnSendMessage setBackgroundImage:[[UIImage imageNamed:@"Chat_take_picture"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-        self.btnSendMessage.tintColor = NAV_BAR_COLOR;
+        [self.btnSendMessage setTitle:@"Send" forState:UIControlStateNormal];
+//        [self.btnSendMessage setBackgroundImage:[[UIImage imageNamed:@"Chat_take_picture"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [self.btnSendMessage setTitleColor:NAV_BAR_COLOR forState:UIControlStateNormal];
+        //self.btnSendMessage.tintColor = NAV_BAR_COLOR;
         self.btnSendMessage.titleLabel.font = [UIFont systemFontOfSize:14];
         [self.btnSendMessage addTarget:self action:@selector(sendMessage:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.btnSendMessage];
@@ -50,7 +51,7 @@
         self.btnChangeVoiceState = [UIButton buttonWithType:UIButtonTypeCustom];
         self.btnChangeVoiceState.frame = CGRectMake(5, 5, 30, 30);
         isbeginVoiceRecord = NO;
-        [self.btnChangeVoiceState setBackgroundImage:[[UIImage imageNamed:@"chat_voice_record"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [self.btnChangeVoiceState setImage:[[UIImage imageNamed:@"chat_voice_record"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
         self.btnVoiceRecord.tintColor = NAV_BAR_COLOR;
         self.btnChangeVoiceState.titleLabel.font = [UIFont systemFontOfSize:14];
         [self.btnChangeVoiceState addTarget:self action:@selector(voiceRecord:) forControlEvents:UIControlEventTouchUpInside];
@@ -74,7 +75,7 @@
         [self addSubview:self.btnVoiceRecord];
         
         //输入框
-        self.TextViewInput = [[UITextView alloc]initWithFrame:CGRectMake(45, 5, Main_Screen_Width-2*45, 30)];
+        self.TextViewInput = [[UITextView alloc]initWithFrame:CGRectMake(45, 5, Main_Screen_Width-2*45-10, 30)];
         self.TextViewInput.layer.cornerRadius = 4;
         self.TextViewInput.layer.masksToBounds = YES;
         self.TextViewInput.delegate = self;
@@ -85,6 +86,7 @@
         
         //输入框的提示语
         placeHold = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, 200, 30)];
+        [placeHold setFont:ChatContentFont];
         placeHold.text = @"Talk To Me For Buying";
         placeHold.textColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.8];
         [self.TextViewInput addSubview:placeHold];
@@ -262,10 +264,10 @@
     self.TextViewInput.hidden  = !self.TextViewInput.hidden;
     isbeginVoiceRecord = !isbeginVoiceRecord;
     if (isbeginVoiceRecord) {
-        [self.btnChangeVoiceState setBackgroundImage:[UIImage imageNamed:@"chat_ipunt_message"] forState:UIControlStateNormal];
+        [self.btnChangeVoiceState setImage:[UIImage imageNamed:@"chat_ipunt_message"] forState:UIControlStateNormal];
         [self.TextViewInput resignFirstResponder];
     }else{
-        [self.btnChangeVoiceState setBackgroundImage:[UIImage imageNamed:@"chat_voice_record"] forState:UIControlStateNormal];
+        [self.btnChangeVoiceState setImage:[UIImage imageNamed:@"chat_voice_record"] forState:UIControlStateNormal];
         [self.TextViewInput becomeFirstResponder];
     }
 
@@ -289,9 +291,9 @@
     self.isAbleToSendTextMessage = !isPhoto;
     //UIImage *buttonimage = [UIImage imageNamed:@"sendicon_2x"];
     [self.btnSendMessage setTitle:@"Send" forState:UIControlStateNormal];
-    self.btnSendMessage.frame = RECT_CHANGE_width(self.btnSendMessage, isPhoto?30:35);
-    UIImage *image = [[UIImage imageNamed:isPhoto?@"Chat_take_picture":@"chat_send_message"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    [self.btnSendMessage setBackgroundImage:image forState:UIControlStateNormal];
+//    self.btnSendMessage.frame = RECT_CHANGE_width(self.btnSendMessage, isPhoto?30:35);
+//    UIImage *image = [[UIImage imageNamed:isPhoto?@"Chat_take_picture":@"chat_send_message"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//    [self.btnSendMessage setBackgroundImage:image forState:UIControlStateNormal];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView

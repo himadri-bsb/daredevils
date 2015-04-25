@@ -20,7 +20,7 @@
 #define ChatContentRight 15 //文本内容与按钮右边缘间隔
 
 #define ChatTimeFont [UIFont systemFontOfSize:11]   //时间字体
-#define ChatContentFont [UIFont systemFontOfSize:16]//内容字体
+#define ChatContentFont [UIFont fontWithName:@"HelveticaNeue" size:14.0f]//内容字体
 
 #import <Foundation/Foundation.h>
 @class UUMessage;
@@ -35,5 +35,6 @@
 @property (nonatomic, assign, readonly) CGFloat cellHeight;
 @property (nonatomic, strong) UUMessage *message;
 @property (nonatomic, assign) BOOL showTime;
+
 
 @end
