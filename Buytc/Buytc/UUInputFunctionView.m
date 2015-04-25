@@ -29,7 +29,7 @@
 - (id)initWithSuperVC:(UIViewController *)superVC
 {
     self.superVC = superVC;
-    CGRect frame = CGRectMake(0, Main_Screen_Height-40, Main_Screen_Width, 40);
+    CGRect frame = CGRectMake(0, Main_Screen_Height-55, Main_Screen_Width, 45);
     
     self = [super initWithFrame:frame];
     if (self) {
@@ -37,7 +37,7 @@
         self.backgroundColor = [UIColor whiteColor];
         //发送消息
         self.btnSendMessage = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.btnSendMessage.frame = CGRectMake(Main_Screen_Width-50, 5, 40, 30);
+        self.btnSendMessage.frame = CGRectMake(Main_Screen_Width-50, 5, 40, 45);
         self.isAbleToSendTextMessage = NO;
         [self.btnSendMessage setTitle:@"Send" forState:UIControlStateNormal];
 //        [self.btnSendMessage setBackgroundImage:[[UIImage imageNamed:@"Chat_take_picture"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
@@ -55,11 +55,11 @@
         self.btnVoiceRecord.tintColor = NAV_BAR_COLOR;
         self.btnChangeVoiceState.titleLabel.font = [UIFont systemFontOfSize:14];
         [self.btnChangeVoiceState addTarget:self action:@selector(voiceRecord:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.btnChangeVoiceState];
+       // [self addSubview:self.btnChangeVoiceState];
 
         //语音录入键
         self.btnVoiceRecord = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.btnVoiceRecord.frame = CGRectMake(70, 5, Main_Screen_Width-70*2, 30);
+        self.btnVoiceRecord.frame = CGRectMake(70, 5, Main_Screen_Width-50, 45);
         self.btnVoiceRecord.hidden = YES;
         [self.btnVoiceRecord setBackgroundImage:[[UIImage imageNamed:@"chat_message_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
         self.btnVoiceRecord.tintColor = NAV_BAR_COLOR;
@@ -72,10 +72,10 @@
         [self.btnVoiceRecord addTarget:self action:@selector(cancelRecordVoice:) forControlEvents:UIControlEventTouchUpOutside | UIControlEventTouchCancel];
         [self.btnVoiceRecord addTarget:self action:@selector(RemindDragExit:) forControlEvents:UIControlEventTouchDragExit];
         [self.btnVoiceRecord addTarget:self action:@selector(RemindDragEnter:) forControlEvents:UIControlEventTouchDragEnter];
-        [self addSubview:self.btnVoiceRecord];
+       // [self addSubview:self.btnVoiceRecord];
         
         //输入框
-        self.TextViewInput = [[UITextView alloc]initWithFrame:CGRectMake(45, 5, Main_Screen_Width-2*45-10, 30)];
+        self.TextViewInput = [[UITextView alloc]initWithFrame:CGRectMake(2, 5, Main_Screen_Width-55, 45)];
         self.TextViewInput.layer.cornerRadius = 4;
         self.TextViewInput.layer.masksToBounds = YES;
         self.TextViewInput.delegate = self;
@@ -85,15 +85,15 @@
         [self addSubview:self.TextViewInput];
         
         //输入框的提示语
-        placeHold = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, 200, 30)];
+        placeHold = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, 200, 45)];
         [placeHold setFont:ChatContentFont];
         placeHold.text = @"Talk To Me For Buying";
         placeHold.textColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.8];
         [self.TextViewInput addSubview:placeHold];
         
         //分割线
-        self.layer.borderWidth = 1;
-        self.layer.borderColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.3].CGColor;
+        //self.layer.borderWidth = 1;
+        //self.layer.borderColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.3].CGColor;
         
         //添加通知
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textViewDidEndEditing:) name:UIKeyboardWillHideNotification object:nil];
@@ -248,15 +248,9 @@
 //发送消息（文字图片）
 - (void)sendMessage:(UIButton *)sender
 {
-    if (self.isAbleToSendTextMessage) {
-        NSString *resultStr = [self.TextViewInput.text stringByReplacingOccurrencesOfString:@"   " withString:@""];
-        [self.delegate UUInputFunctionView:self sendMessage:resultStr];
-    }
-    else{
-        [self.TextViewInput resignFirstResponder];
-        UIActionSheet *actionSheet= [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Images",nil];
-        [actionSheet showInView:self.window];
-    }
+    NSString *resultStr = [self.TextViewInput.text stringByReplacingOccurrencesOfString:@"   " withString:@""];
+    [self.delegate UUInputFunctionView:self sendMessage:resultStr];
+ 
 }
 
 - (void)toggleRecording {
