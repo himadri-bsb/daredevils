@@ -21,6 +21,7 @@
 		9159CB061AEBBED000E24F81 /* TKState.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CAFE1AEBBED000E24F81 /* TKState.m */; };
 		9159CB071AEBBED000E24F81 /* TKStateMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CB001AEBBED000E24F81 /* TKStateMachine.m */; };
 		9159CB081AEBBED000E24F81 /* TKTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CB021AEBBED000E24F81 /* TKTransition.m */; };
+		9159CB101AEBC55200E24F81 /* ClothingData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9159CB0F1AEBC55200E24F81 /* ClothingData.plist */; };
 		B164672B1AEB9FB700CC78DD /* UUImageAvatarBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = B164671C1AEB9FB700CC78DD /* UUImageAvatarBrowser.m */; };
 		B164672C1AEB9FB700CC78DD /* UUAVAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B164671E1AEB9FB700CC78DD /* UUAVAudioPlayer.m */; };
 		B164672D1AEB9FB700CC78DD /* UUInputFunctionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B16467201AEB9FB700CC78DD /* UUInputFunctionView.m */; };
@@ -113,6 +114,7 @@
 		9159CB021AEBBED000E24F81 /* TKTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTransition.m; sourceTree = "<group>"; };
 		9159CB031AEBBED000E24F81 /* TransitionKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TransitionKit-Prefix.pch"; sourceTree = "<group>"; };
 		9159CB041AEBBED000E24F81 /* TransitionKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionKit.h; sourceTree = "<group>"; };
+		9159CB0F1AEBC55200E24F81 /* ClothingData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ClothingData.plist; sourceTree = "<group>"; };
 		B164671B1AEB9FB700CC78DD /* UUImageAvatarBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUImageAvatarBrowser.h; sourceTree = "<group>"; };
 		B164671C1AEB9FB700CC78DD /* UUImageAvatarBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUImageAvatarBrowser.m; sourceTree = "<group>"; };
 		B164671D1AEB9FB700CC78DD /* UUAVAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUAVAudioPlayer.h; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 		2676F2371AEB91860092CF4A /* Buytc */ = {
 			isa = PBXGroup;
 			children = (
+				9159CB0F1AEBC55200E24F81 /* ClothingData.plist */,
 				9159CAFA1AEBBED000E24F81 /* StateMachine */,
 				B16467B31AEBA94E00CC78DD /* DataBase */,
 				2676F2621AEBA60A0092CF4A /* SeechKit */,
@@ -542,6 +545,7 @@
 				B164679D1AEBA06100CC78DD /* chat_send_message.png in Resources */,
 				B16467921AEBA06100CC78DD /* chatfrom_bg_normal.png in Resources */,
 				B16467931AEBA06100CC78DD /* chatto_bg_normal.png in Resources */,
+				9159CB101AEBC55200E24F81 /* ClothingData.plist in Resources */,
 				B164679A1AEBA06100CC78DD /* chat_ipunt_message.png in Resources */,
 				B164679C1AEBA06100CC78DD /* Chat_record_circle.png in Resources */,
 				2676F2721AEBA7E20092CF4A /* earcon_cancel.wav in Resources */,
