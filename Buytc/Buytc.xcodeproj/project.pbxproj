@@ -926,8 +926,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Buytc",
 					"$(PROJECT_DIR)/Buytc/CardIO",
-					"$(PROJECT_DIR)/Buytc/CardIO/dmz/cython_dmz/opencv/lib",
-					"$(PROJECT_DIR)/Buytc/CardIO/opencv_device/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "81ae3078-88cd-472f-8e11-2abed150b133";
@@ -959,8 +957,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Buytc",
 					"$(PROJECT_DIR)/Buytc/CardIO",
-					"$(PROJECT_DIR)/Buytc/CardIO/dmz/cython_dmz/opencv/lib",
-					"$(PROJECT_DIR)/Buytc/CardIO/opencv_device/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "81ae3078-88cd-472f-8e11-2abed150b133";
