@@ -236,11 +236,8 @@
 		2676F2371AEB91860092CF4A /* Buytc */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				B16467B31AEBA94E00CC78DD /* DataBase */,
-=======
 				2676F2621AEBA60A0092CF4A /* SeechKit */,
->>>>>>> 9f6b3d9e8b7eb79d28239f82242048c53c461bfe
 				B16467191AEB9F6B00CC78DD /* ChatView */,
 				2676F23C1AEB91860092CF4A /* AppDelegate.h */,
 				2676F23D1AEB91860092CF4A /* AppDelegate.m */,
