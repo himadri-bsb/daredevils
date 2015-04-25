@@ -102,6 +102,9 @@
     self.buyButton.layer.cornerRadius = 10.0f;
     self.buyButton.layer.borderWidth = 1.0f;
     [self.buyButton addTarget:self action:@selector(buyAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.buyButton setBackgroundColor:NAV_BAR_COLOR];
+    [self.buyButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 100, 0, 100)];
+    self.buyButton.layer.cornerRadius = 10;
     [self.visualEffectView addSubview:self.buyButton];
     
     
@@ -116,8 +119,8 @@
     
     UIView *effectView = self.visualEffectView;
     UIView *cardView = self.cardView;
-    UIImageView *imageview = self.imageView;
-    UILabel *productLabel = self.productNameLabel;
+    UIView *imageview = self.imageView;
+    UIView *productLabel = self.productNameLabel;
     UILabel *sizeLabel = self.sizeLabel;
     UILabel *priceLabel = self.priceLabel;
     UILabel *discountLabel = self.discountLabel;

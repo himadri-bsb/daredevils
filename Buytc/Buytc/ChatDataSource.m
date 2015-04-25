@@ -81,13 +81,21 @@
 - (void)addCard:(CardModel *)card {
     
     NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithCapacity:3];
-    [dataDict setObject:card.itemBrandName forKey:@"brandName"];
-    [dataDict setObject:card.imageUrl forKey:@"imageUrl"];
-    [dataDict setObject:card.price forKey:@"price"];
-    [dataDict setObject:card.size forKey:@"size"];
-    [dataDict setObject:card.disCount forKey:@"discount"];
-    [dataDict setObject:@(UUMessageFromOther) forKey:@"from"];
-    [dataDict setObject:@(UUMessageTypeCard) forKey:@"type"];
+    if (card.itemBrandName) {
+        [dataDict setValue:card.itemBrandName forKey:@"brandName"];
+    }
+    if (card.imageUrl) {
+        [dataDict setValue:card.imageUrl forKey:@"imageUrl"];
+    }
+    if (card.price) {
+        [dataDict setValue:card.price forKey:@"price"];
+    }
+    [dataDict setValue:card.size forKey:@"size"];
+    if(card.disCount) {
+        [dataDict setValue:card.disCount forKey:@"discount"];
+    }
+    [dataDict setValue:@(UUMessageFromOther) forKey:@"from"];
+    [dataDict setValue:@(UUMessageTypeCard) forKey:@"type"];
     
     [self.dataArray addObject:dataDict];
     //[self writeDataToMemory];
