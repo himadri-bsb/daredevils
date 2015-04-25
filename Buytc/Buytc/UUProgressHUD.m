@@ -60,10 +60,10 @@
         if (!edgeImageView)
             edgeImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Chat_record_circle"]];
         
-        self.subTitleLabel.center = CGPointMake([[UIScreen mainScreen] bounds].size.width/2,[[UIScreen mainScreen] bounds].size.height/2 + 30);
-        self.subTitleLabel.text = @"Slide up to cancel";
+        self.subTitleLabel.center = CGPointMake([[UIScreen mainScreen] bounds].size.width/2,[[UIScreen mainScreen] bounds].size.height/2);
+        self.subTitleLabel.text = @"Recording";
         self.subTitleLabel.textAlignment = NSTextAlignmentCenter;
-        self.subTitleLabel.font = [UIFont boldSystemFontOfSize:14];
+        self.subTitleLabel.font = [UIFont boldSystemFontOfSize:18];
         self.subTitleLabel.textColor = [UIColor whiteColor];
         
         self.titleLabel.center = CGPointMake([[UIScreen mainScreen] bounds].size.width/2,[[UIScreen mainScreen] bounds].size.height/2 - 30);
@@ -77,6 +77,7 @@
         centerLabel.textAlignment = NSTextAlignmentCenter;
         centerLabel.font = [UIFont systemFontOfSize:30];
         centerLabel.textColor = [UIColor yellowColor];
+        centerLabel.hidden = YES;
 
         
         edgeImageView.frame = CGRectMake(0, 0, 154, 154);
@@ -84,7 +85,7 @@
         [self addSubview:edgeImageView];
         [self addSubview:centerLabel];
         [self addSubview:self.subTitleLabel];
-        [self addSubview:self.titleLabel];
+        //[self addSubview:self.titleLabel];
 
         if (myTimer)
             [myTimer invalidate];
