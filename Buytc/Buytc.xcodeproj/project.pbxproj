@@ -17,6 +17,10 @@
 		2676F2721AEBA7E20092CF4A /* earcon_cancel.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2676F26F1AEBA7E20092CF4A /* earcon_cancel.wav */; };
 		2676F2731AEBA7E20092CF4A /* earcon_done_listening.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2676F2701AEBA7E20092CF4A /* earcon_done_listening.wav */; };
 		2676F2741AEBA7E20092CF4A /* earcon_listening.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2676F2711AEBA7E20092CF4A /* earcon_listening.wav */; };
+		9159CB051AEBBED000E24F81 /* TKEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CAFC1AEBBED000E24F81 /* TKEvent.m */; };
+		9159CB061AEBBED000E24F81 /* TKState.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CAFE1AEBBED000E24F81 /* TKState.m */; };
+		9159CB071AEBBED000E24F81 /* TKStateMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CB001AEBBED000E24F81 /* TKStateMachine.m */; };
+		9159CB081AEBBED000E24F81 /* TKTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CB021AEBBED000E24F81 /* TKTransition.m */; };
 		B164672B1AEB9FB700CC78DD /* UUImageAvatarBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = B164671C1AEB9FB700CC78DD /* UUImageAvatarBrowser.m */; };
 		B164672C1AEB9FB700CC78DD /* UUAVAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B164671E1AEB9FB700CC78DD /* UUAVAudioPlayer.m */; };
 		B164672D1AEB9FB700CC78DD /* UUInputFunctionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B16467201AEB9FB700CC78DD /* UUInputFunctionView.m */; };
@@ -99,6 +103,16 @@
 		2676F26F1AEBA7E20092CF4A /* earcon_cancel.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = earcon_cancel.wav; sourceTree = "<group>"; };
 		2676F2701AEBA7E20092CF4A /* earcon_done_listening.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = earcon_done_listening.wav; sourceTree = "<group>"; };
 		2676F2711AEBA7E20092CF4A /* earcon_listening.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = earcon_listening.wav; sourceTree = "<group>"; };
+		9159CAFB1AEBBED000E24F81 /* TKEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKEvent.h; sourceTree = "<group>"; };
+		9159CAFC1AEBBED000E24F81 /* TKEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKEvent.m; sourceTree = "<group>"; };
+		9159CAFD1AEBBED000E24F81 /* TKState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKState.h; sourceTree = "<group>"; };
+		9159CAFE1AEBBED000E24F81 /* TKState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKState.m; sourceTree = "<group>"; };
+		9159CAFF1AEBBED000E24F81 /* TKStateMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKStateMachine.h; sourceTree = "<group>"; };
+		9159CB001AEBBED000E24F81 /* TKStateMachine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKStateMachine.m; sourceTree = "<group>"; };
+		9159CB011AEBBED000E24F81 /* TKTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTransition.h; sourceTree = "<group>"; };
+		9159CB021AEBBED000E24F81 /* TKTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTransition.m; sourceTree = "<group>"; };
+		9159CB031AEBBED000E24F81 /* TransitionKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TransitionKit-Prefix.pch"; sourceTree = "<group>"; };
+		9159CB041AEBBED000E24F81 /* TransitionKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionKit.h; sourceTree = "<group>"; };
 		B164671B1AEB9FB700CC78DD /* UUImageAvatarBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUImageAvatarBrowser.h; sourceTree = "<group>"; };
 		B164671C1AEB9FB700CC78DD /* UUImageAvatarBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUImageAvatarBrowser.m; sourceTree = "<group>"; };
 		B164671D1AEB9FB700CC78DD /* UUAVAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUAVAudioPlayer.h; sourceTree = "<group>"; };
@@ -236,6 +250,7 @@
 		2676F2371AEB91860092CF4A /* Buytc */ = {
 			isa = PBXGroup;
 			children = (
+				9159CAFA1AEBBED000E24F81 /* StateMachine */,
 				B16467B31AEBA94E00CC78DD /* DataBase */,
 				2676F2621AEBA60A0092CF4A /* SeechKit */,
 				B16467191AEB9F6B00CC78DD /* ChatView */,
@@ -290,6 +305,24 @@
 				2676F2691AEBA60A0092CF4A /* SpeechKit.framework */,
 			);
 			path = SeechKit;
+			sourceTree = "<group>";
+		};
+		9159CAFA1AEBBED000E24F81 /* StateMachine */ = {
+			isa = PBXGroup;
+			children = (
+				9159CAFB1AEBBED000E24F81 /* TKEvent.h */,
+				9159CAFC1AEBBED000E24F81 /* TKEvent.m */,
+				9159CAFD1AEBBED000E24F81 /* TKState.h */,
+				9159CAFE1AEBBED000E24F81 /* TKState.m */,
+				9159CAFF1AEBBED000E24F81 /* TKStateMachine.h */,
+				9159CB001AEBBED000E24F81 /* TKStateMachine.m */,
+				9159CB011AEBBED000E24F81 /* TKTransition.h */,
+				9159CB021AEBBED000E24F81 /* TKTransition.m */,
+				9159CB031AEBBED000E24F81 /* TransitionKit-Prefix.pch */,
+				9159CB041AEBBED000E24F81 /* TransitionKit.h */,
+			);
+			name = StateMachine;
+			path = Code;
 			sourceTree = "<group>";
 		};
 		B16467191AEB9F6B00CC78DD /* ChatView */ = {
@@ -547,19 +580,23 @@
 				B164675F1AEBA01400CC78DD /* MJRefreshBaseView.m in Sources */,
 				B16467B21AEBA7B400CC78DD /* ChatDataSource.m in Sources */,
 				B16467AD1AEBA27100CC78DD /* ChatViewController.m in Sources */,
+				9159CB051AEBBED000E24F81 /* TKEvent.m in Sources */,
 				B16467601AEBA01400CC78DD /* MJRefreshConst.m in Sources */,
 				B16467791AEBA03200CC78DD /* UIProgressView+AFNetworking.m in Sources */,
 				B164674C1AEBA00400CC78DD /* AFHTTPRequestOperationManager.m in Sources */,
 				B16467771AEBA03200CC78DD /* UIButton+AFNetworking.m in Sources */,
 				B164672B1AEB9FB700CC78DD /* UUImageAvatarBrowser.m in Sources */,
+				9159CB061AEBBED000E24F81 /* TKState.m in Sources */,
 				B164674E1AEBA00400CC78DD /* AFNetworkReachabilityManager.m in Sources */,
 				B16467371AEB9FE300CC78DD /* NSDate+Utils.m in Sources */,
 				B164672C1AEB9FB700CC78DD /* UUAVAudioPlayer.m in Sources */,
+				9159CB081AEBBED000E24F81 /* TKTransition.m in Sources */,
 				B164674F1AEBA00400CC78DD /* AFSecurityPolicy.m in Sources */,
 				B16467761AEBA03200CC78DD /* UIAlertView+AFNetworking.m in Sources */,
 				B16467301AEB9FB700CC78DD /* UUMessageContentButton.m in Sources */,
 				B16467511AEBA00400CC78DD /* AFURLRequestSerialization.m in Sources */,
 				B16467311AEB9FB700CC78DD /* UUMessageFrame.m in Sources */,
+				9159CB071AEBBED000E24F81 /* TKStateMachine.m in Sources */,
 				B16467521AEBA00400CC78DD /* AFURLResponseSerialization.m in Sources */,
 				2676F23E1AEB91860092CF4A /* AppDelegate.m in Sources */,
 				B164672E1AEB9FB700CC78DD /* UUMessage.m in Sources */,
