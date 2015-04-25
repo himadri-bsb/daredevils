@@ -19,6 +19,8 @@
 #import "DetailsCardView.h"
 #import "UIImageView+WebCache.h"
 #import "CardCell.h"
+#import "AFNetworking.h"
+#import "CardModel.h"
 
 @interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate, SKVocalizerDelegate, CardIOPaymentViewControllerDelegate>
 
@@ -61,7 +63,7 @@
     [self loadBaseViewsAndData];
 
     //TODO - Remove later
-    [self performSelector:@selector(scanCreditCard) withObject:@"A Quick Brown fox jumped over a lazy dog." afterDelay:2.0];
+    [self performSelector:@selector(loadDummyHttp) withObject:nil afterDelay:2.0];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -318,6 +320,48 @@
 - (void)userDidCancelPaymentViewController:(CardIOPaymentViewController *)paymentViewController {
     NSLog(@"User cancelled scan");
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Network
+- (void)loadDummyHttp {
+    NSString *string = @"http://developer.myntra.com/search/data/men-casual-shirts?f=colour_family_list%3Ablue%3A%3Asizes_facet%3A46%3A%3Abrands_filter_facet%3AAmerican%20Swan%3A%3Adiscounted_price%3A849%2C849&p=1&userQuery=false";
+    NSURL *url = [NSURL URLWithString:string];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [self loadHttpRequest:request];
+}
+
+- (void)loadHttpRequest:(NSURLRequest*)aRequest {
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:aRequest];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //Sucess
+        NSArray *results = responseObject[@"data"][@"results"][@"products"];
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        for (NSInteger index = 0; index < 5; index++) {
+            NSDictionary *dict = results[index];
+
+            CardModel *model = [[CardModel alloc] init];
+            model.itemBrandName = dict[@"product"];
+            model.imageUrl = dict[@"search_image"];
+            model.price = dict[@"price"];
+            model.size = dict[@"sizes"];
+            model.disCount = dict[@"dre_discount_label"];
+            [array addObject:model];
+
+        }
+        NSLog(@"");
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Http"
+                                                            message:[error localizedDescription]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }];
+
+    [operation start];
 }
 
 @end
