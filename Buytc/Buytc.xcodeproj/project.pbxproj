@@ -13,6 +13,10 @@
 		2676F2461AEB91860092CF4A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2676F2451AEB91860092CF4A /* Images.xcassets */; };
 		2676F2491AEB91860092CF4A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2676F2471AEB91860092CF4A /* LaunchScreen.xib */; };
 		2676F2551AEB91860092CF4A /* BuytcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2676F2541AEB91860092CF4A /* BuytcTests.m */; };
+		2676F26E1AEBA60A0092CF4A /* SpeechKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2676F2691AEBA60A0092CF4A /* SpeechKit.framework */; };
+		2676F2721AEBA7E20092CF4A /* earcon_cancel.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2676F26F1AEBA7E20092CF4A /* earcon_cancel.wav */; };
+		2676F2731AEBA7E20092CF4A /* earcon_done_listening.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2676F2701AEBA7E20092CF4A /* earcon_done_listening.wav */; };
+		2676F2741AEBA7E20092CF4A /* earcon_listening.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2676F2711AEBA7E20092CF4A /* earcon_listening.wav */; };
 		B164672B1AEB9FB700CC78DD /* UUImageAvatarBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = B164671C1AEB9FB700CC78DD /* UUImageAvatarBrowser.m */; };
 		B164672C1AEB9FB700CC78DD /* UUAVAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B164671E1AEB9FB700CC78DD /* UUAVAudioPlayer.m */; };
 		B164672D1AEB9FB700CC78DD /* UUInputFunctionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B16467201AEB9FB700CC78DD /* UUInputFunctionView.m */; };
@@ -90,6 +94,10 @@
 		2676F24E1AEB91860092CF4A /* BuytcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BuytcTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2676F2531AEB91860092CF4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2676F2541AEB91860092CF4A /* BuytcTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BuytcTests.m; sourceTree = "<group>"; };
+		2676F2691AEBA60A0092CF4A /* SpeechKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpeechKit.framework; sourceTree = "<group>"; };
+		2676F26F1AEBA7E20092CF4A /* earcon_cancel.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = earcon_cancel.wav; sourceTree = "<group>"; };
+		2676F2701AEBA7E20092CF4A /* earcon_done_listening.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = earcon_done_listening.wav; sourceTree = "<group>"; };
+		2676F2711AEBA7E20092CF4A /* earcon_listening.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = earcon_listening.wav; sourceTree = "<group>"; };
 		B164671B1AEB9FB700CC78DD /* UUImageAvatarBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUImageAvatarBrowser.h; sourceTree = "<group>"; };
 		B164671C1AEB9FB700CC78DD /* UUImageAvatarBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUImageAvatarBrowser.m; sourceTree = "<group>"; };
 		B164671D1AEB9FB700CC78DD /* UUAVAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUAVAudioPlayer.h; sourceTree = "<group>"; };
@@ -189,6 +197,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2676F26E1AEBA60A0092CF4A /* SpeechKit.framework in Frameworks */,
 				B16467A41AEBA07600CC78DD /* libmp3lame.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -224,6 +233,7 @@
 		2676F2371AEB91860092CF4A /* Buytc */ = {
 			isa = PBXGroup;
 			children = (
+				2676F2621AEBA60A0092CF4A /* SeechKit */,
 				B16467191AEB9F6B00CC78DD /* ChatView */,
 				2676F23C1AEB91860092CF4A /* AppDelegate.h */,
 				2676F23D1AEB91860092CF4A /* AppDelegate.m */,
@@ -265,6 +275,17 @@
 				2676F2531AEB91860092CF4A /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2676F2621AEBA60A0092CF4A /* SeechKit */ = {
+			isa = PBXGroup;
+			children = (
+				2676F26F1AEBA7E20092CF4A /* earcon_cancel.wav */,
+				2676F2701AEBA7E20092CF4A /* earcon_done_listening.wav */,
+				2676F2711AEBA7E20092CF4A /* earcon_listening.wav */,
+				2676F2691AEBA60A0092CF4A /* SpeechKit.framework */,
+			);
+			path = SeechKit;
 			sourceTree = "<group>";
 		};
 		B16467191AEB9F6B00CC78DD /* ChatView */ = {
@@ -469,12 +490,15 @@
 				2676F2491AEB91860092CF4A /* LaunchScreen.xib in Resources */,
 				B16467971AEBA06100CC78DD /* chat_animation1.png in Resources */,
 				B164679B1AEBA06100CC78DD /* chat_message_back.png in Resources */,
+				2676F2731AEBA7E20092CF4A /* earcon_done_listening.wav in Resources */,
 				B164675E1AEBA01400CC78DD /* MJRefresh.bundle in Resources */,
+				2676F2741AEBA7E20092CF4A /* earcon_listening.wav in Resources */,
 				B164679D1AEBA06100CC78DD /* chat_send_message.png in Resources */,
 				B16467921AEBA06100CC78DD /* chatfrom_bg_normal.png in Resources */,
 				B16467931AEBA06100CC78DD /* chatto_bg_normal.png in Resources */,
 				B164679A1AEBA06100CC78DD /* chat_ipunt_message.png in Resources */,
 				B164679C1AEBA06100CC78DD /* Chat_record_circle.png in Resources */,
+				2676F2721AEBA7E20092CF4A /* earcon_cancel.wav in Resources */,
 				B164678F1AEBA06100CC78DD /* headImage.jpeg in Resources */,
 				B16467AE1AEBA27100CC78DD /* ChatViewController.xib in Resources */,
 				B16467961AEBA06100CC78DD /* chat_animation_white3.png in Resources */,
@@ -658,6 +682,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Buytc/SeechKit",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Buytc/PrefixHeader.pch";
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = (
@@ -682,6 +710,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Buytc/SeechKit",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Buytc/PrefixHeader.pch";
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = (

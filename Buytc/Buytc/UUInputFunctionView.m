@@ -6,18 +6,20 @@
 //  Copyright (c) 2014年 uyiuyao. All rights reserved.
 //
 
+
+
 #import "UUInputFunctionView.h"
-//#import "Mp3Recorder.h"
 #import "UUProgressHUD.h"
-@interface UUInputFunctionView ()<UITextViewDelegate>
+#import <SpeechKit/SpeechKit.h>
+
+@interface UUInputFunctionView ()<UITextViewDelegate, SKRecognizerDelegate>
 {
     BOOL isbeginVoiceRecord;
-    //Mp3Recorder *MP3;
-    NSInteger playTime;
-    NSTimer *playTimer;
-    
+
     UILabel *placeHold;
 }
+
+@property (nonatomic, strong) SKRecognizer *voiceRecognizer;
 @end
 
 @implementation UUInputFunctionView
@@ -94,29 +96,88 @@
 #pragma mark - 录音touch事件
 - (void)beginRecordVoice:(UIButton *)button
 {
-    //[MP3 startRecord];
-    playTime = 0;
-    playTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countVoiceTime) userInfo:nil repeats:YES];
-    [UUProgressHUD show];
+    SKEndOfSpeechDetection detectionType = SKLongEndOfSpeechDetection;
+    NSString* recoType = SKDictationRecognizerType;
+    NSString* langType = @"en_US";
+    self.voiceRecognizer = [[SKRecognizer alloc] initWithType:recoType
+                                                    detection:detectionType
+                                                     language:langType
+                                                     delegate:self];
 }
 
 - (void)endRecordVoice:(UIButton *)button
 {
-    if (playTimer) {
-        //[MP3 stopRecord];
-        [playTimer invalidate];
-        playTimer = nil;
-    }
+
 }
 
 - (void)cancelRecordVoice:(UIButton *)button
 {
-    if (playTimer) {
-        //[MP3 cancelRecord];
-        [playTimer invalidate];
-        playTimer = nil;
+    
+}
+
+
+#pragma mark -
+#pragma mark SKRecognizerDelegate methods
+
+- (void)recognizerDidBeginRecording:(SKRecognizer *)recognizer {
+    NSLog(@"Speechkit Recording started.");
+    [self.btnVoiceRecord setTitle:@"Recording..." forState:UIControlStateNormal];
+}
+
+- (void)recognizerDidFinishRecording:(SKRecognizer *)recognizer
+{
+    NSLog(@"Speechkit Recording finished.");
+    [self.btnVoiceRecord setTitle:@"Processing..." forState:UIControlStateNormal];
+}
+
+- (void)recognizer:(SKRecognizer *)recognizer didFinishWithResults:(SKRecognition *)results
+{
+    NSLog(@"Speechkit Got results.");
+    NSLog(@"Speechkit Session id [%@].", [SpeechKit sessionID]); // for debugging purpose: printing out the speechkit session id
+
+    long numOfResults = [results.results count];
+
+    if (numOfResults > 0) {
+        [self.delegate UUInputFunctionView:self sendMessage:[results firstResult]];
     }
-    [UUProgressHUD dismissWithError:@"Cancel"];
+
+    if (numOfResults > 1) {
+        //If needed do something with the alternative text
+    }
+
+    if (results.suggestion) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Suggestion"
+                                                        message:results.suggestion
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+- (void)recognizer:(SKRecognizer *)recognizer didFinishWithError:(NSError *)error suggestion:(NSString *)suggestion
+{
+    NSLog(@"Got error.");
+    NSLog(@"Session id [%@].", [SpeechKit sessionID]); // for debugging purpose: printing out the speechkit session id
+
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:[error localizedDescription]
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+
+    if (suggestion) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Suggestion"
+                                                        message:suggestion
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+
+    }
+
 }
 
 - (void)RemindDragExit:(UIButton *)button
@@ -130,20 +191,14 @@
 }
 
 
-- (void)countVoiceTime
-{
-    playTime ++;
-    if (playTime>=60) {
-        [self endRecordVoice:nil];
-    }
-}
+
 
 #pragma mark - Mp3RecorderDelegate
 
 //回调录音资料
 - (void)endConvertWithData:(NSData *)voiceData
 {
-    [self.delegate UUInputFunctionView:self sendVoice:voiceData time:playTime+1];
+    //[self.delegate UUInputFunctionView:self sendVoice:voiceData time:playTime+1];
     [UUProgressHUD dismissWithSuccess:@"Success"];
    
     //缓冲消失时间 (最好有block回调消失完成)
@@ -177,6 +232,8 @@
         [self.btnChangeVoiceState setBackgroundImage:[UIImage imageNamed:@"chat_voice_record"] forState:UIControlStateNormal];
         [self.TextViewInput becomeFirstResponder];
     }
+
+    [self beginRecordVoice:nil];
 }
 
 //发送消息（文字图片）
