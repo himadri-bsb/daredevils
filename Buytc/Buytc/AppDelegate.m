@@ -9,6 +9,13 @@
 #import "AppDelegate.h"
 #import "ChatViewController.h"
 #import "ChatDataSource.h"
+#import <SpeechKit/SpeechKit.h>
+
+const unsigned char SpeechKitApplicationKey[] =
+{
+    0x73, 0xc6, 0x6f, 0xb0, 0x11, 0x35, 0x7b, 0x88, 0x45, 0x72, 0x1d, 0x43, 0x50, 0x28, 0x44, 0x90, 0x26, 0x5e, 0xa6, 0x04, 0x64, 0x86, 0xa7, 0xcb, 0xc2, 0x2c, 0x15, 0xf7, 0x4b, 0xa2, 0x28, 0xbf, 0x69, 0x97, 0x6f, 0x7a, 0xcc, 0xea, 0x03, 0x11, 0x5c, 0x20, 0x54, 0xac, 0x48, 0x98, 0x3c, 0x6e, 0xf6, 0xe3, 0x73, 0x5b, 0x69, 0x1a, 0x26, 0x2b, 0x47, 0x3b, 0x22, 0x92, 0xdd, 0x4b, 0x51, 0x46
+
+};
 
 @interface AppDelegate ()
 
@@ -23,6 +30,21 @@
     
     ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
     [self.window setRootViewController:chatVC];
+
+    [SpeechKit setupWithID:@"NMDPTRIAL_himadrisj20120928234937"
+                      host:@"sandbox.nmdp.nuancemobility.net"
+                      port:443
+                    useSSL:NO
+                  delegate:nil];
+
+    // Set earcons to play
+    SKEarcon* earconStart	= [SKEarcon earconWithName:@"earcon_listening.wav"];
+    SKEarcon* earconStop	= [SKEarcon earconWithName:@"earcon_done_listening.wav"];
+    SKEarcon* earconCancel	= [SKEarcon earconWithName:@"earcon_cancel.wav"];
+
+    [SpeechKit setEarcon:earconStart forType:SKStartRecordingEarconType];
+    [SpeechKit setEarcon:earconStop forType:SKStopRecordingEarconType];
+    [SpeechKit setEarcon:earconCancel forType:SKCancelRecordingEarconType];
     
     return YES;
 }
