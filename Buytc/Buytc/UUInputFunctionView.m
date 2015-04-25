@@ -12,6 +12,7 @@
 #import "UUProgressHUD.h"
 #import <SpeechKit/SpeechKit.h>
 #import "UUMessageFrame.h"
+#import "UUProgressHUD.h"
 
 @interface UUInputFunctionView ()<UITextViewDelegate, SKRecognizerDelegate>
 {
@@ -81,7 +82,7 @@
         
         //输入框的提示语
         placeHold = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, 200, 30)];
-        placeHold.text = @"Input the contents here";
+        placeHold.text = @"Talk To Me For Buying";
         placeHold.textColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.8];
         [self.TextViewInput addSubview:placeHold];
         
@@ -98,7 +99,7 @@
 #pragma mark - 录音touch事件
 - (void)beginRecordVoice:(UIButton *)button
 {
-    SKEndOfSpeechDetection detectionType = SKLongEndOfSpeechDetection;
+    SKEndOfSpeechDetection detectionType = SKShortEndOfSpeechDetection;
     NSString* recoType = SKDictationRecognizerType;
     NSString* langType = @"en_US";
     self.voiceRecognizer = [[SKRecognizer alloc] initWithType:recoType
@@ -123,11 +124,17 @@
 
 - (void)recognizerDidBeginRecording:(SKRecognizer *)recognizer {
     NSLog(@"Speechkit Recording started.");
+    
+    [UUProgressHUD changeSubTitle:@"Recording..."];
+    [UUProgressHUD show];
+
     [self.btnVoiceRecord setTitle:@"Recording..." forState:UIControlStateNormal];
+
 }
 
 - (void)recognizerDidFinishRecording:(SKRecognizer *)recognizer
 {
+    [UUProgressHUD changeSubTitle:@"Processing..."];
     NSLog(@"Speechkit Recording finished.");
     [self.btnVoiceRecord setTitle:@"Processing..." forState:UIControlStateNormal];
 }
@@ -155,10 +162,15 @@
                                               otherButtonTitles:nil];
         [alert show];
     }
+    [UUProgressHUD dismissWithSuccess:@""];
+    [self toggleRecording];
 }
 
 - (void)recognizer:(SKRecognizer *)recognizer didFinishWithError:(NSError *)error suggestion:(NSString *)suggestion
 {
+    [UUProgressHUD dismissWithSuccess:@""];
+    [self toggleRecording];
+    
     NSLog(@"Got error.");
     NSLog(@"Session id [%@].", [SpeechKit sessionID]); // for debugging purpose: printing out the speechkit session id
 
@@ -224,17 +236,7 @@
 //改变输入与录音状态
 - (void)voiceRecord:(UIButton *)sender
 {
-    self.btnVoiceRecord.hidden = !self.btnVoiceRecord.hidden;
-    self.TextViewInput.hidden  = !self.TextViewInput.hidden;
-    isbeginVoiceRecord = !isbeginVoiceRecord;
-    if (isbeginVoiceRecord) {
-        [self.btnChangeVoiceState setBackgroundImage:[UIImage imageNamed:@"chat_ipunt_message"] forState:UIControlStateNormal];
-        [self.TextViewInput resignFirstResponder];
-    }else{
-        [self.btnChangeVoiceState setBackgroundImage:[UIImage imageNamed:@"chat_voice_record"] forState:UIControlStateNormal];
-        [self.TextViewInput becomeFirstResponder];
-    }
-
+    [self toggleRecording];
     [self beginRecordVoice:nil];
 }
 
@@ -252,6 +254,19 @@
     }
 }
 
+- (void)toggleRecording {
+    self.btnVoiceRecord.hidden = !self.btnVoiceRecord.hidden;
+    self.TextViewInput.hidden  = !self.TextViewInput.hidden;
+    isbeginVoiceRecord = !isbeginVoiceRecord;
+    if (isbeginVoiceRecord) {
+        [self.btnChangeVoiceState setBackgroundImage:[UIImage imageNamed:@"chat_ipunt_message"] forState:UIControlStateNormal];
+        [self.TextViewInput resignFirstResponder];
+    }else{
+        [self.btnChangeVoiceState setBackgroundImage:[UIImage imageNamed:@"chat_voice_record"] forState:UIControlStateNormal];
+        [self.TextViewInput becomeFirstResponder];
+    }
+
+}
 
 #pragma mark - TextViewDelegate
 
@@ -269,7 +284,8 @@
 - (void)changeSendBtnWithPhoto:(BOOL)isPhoto
 {
     self.isAbleToSendTextMessage = !isPhoto;
-    [self.btnSendMessage setTitle:isPhoto?@"":@"send" forState:UIControlStateNormal];
+    //UIImage *buttonimage = [UIImage imageNamed:@"sendicon_2x"];
+    [self.btnSendMessage setTitle:@"Send" forState:UIControlStateNormal];
     self.btnSendMessage.frame = RECT_CHANGE_width(self.btnSendMessage, isPhoto?30:35);
     UIImage *image = [UIImage imageNamed:isPhoto?@"Chat_take_picture":@"chat_send_message"];
     [self.btnSendMessage setBackgroundImage:image forState:UIControlStateNormal];
