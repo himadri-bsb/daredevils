@@ -63,7 +63,7 @@
     [self loadBaseViewsAndData];
 
     //TODO - Remove later
-    [self performSelector:@selector(loadDummyHttp) withObject:nil afterDelay:2.0];
+    //[self performSelector:@selector(loadDummyHttp) withObject:nil afterDelay:2.0];
 }
 
 - (void)viewDidAppear:(BOOL)animated
