@@ -23,6 +23,7 @@
 #import "CardModel.h"
 #import "StateMachineManager.h"
 #import "UUImageAvatarBrowser.h"
+#import "UUProgressHUD.h"
 
 @interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate, SKVocalizerDelegate, CardIOPaymentViewControllerDelegate,DetailsCardViewDelegate, StateMachineManagerDelegate>
 
@@ -33,6 +34,7 @@
 @property (nonatomic, strong) SKVocalizer *vocalizer;
 @property (nonatomic, assign)ChatMode chatMode;
 @property (nonatomic, copy) NSString *textToPlay;
+@property (nonatomic, strong) DetailsCardView *cardDetailsView;
 
 @end
 
@@ -49,8 +51,17 @@
     return self;
 }
 
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    //add notification
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tableViewScrollToBottom) name:UIKeyboardDidShowNotification object:nil];
     
     switch (self.chatMode) {
         case ChatModeBot:
@@ -66,20 +77,15 @@
     [self loadBaseViewsAndData];
     [[StateMachineManager sharedInstance] setChatDelegate:self];
 
-    //add notification
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tableViewScrollToBottom) name:UIKeyboardDidShowNotification object:nil];
+
 
     NSArray *greetingsText = @[@"Hey Jatin, how can I help you today?", @"Welcome back Jatin, I am ready to help you.", @"Good morning Jatin, what do you wanna buy today?", @"All the best for the demo today Jatin, let me help you get started"];
 
     NSUInteger randomIndex = arc4random() % [greetingsText count];
 
 
-    [self performSelector:@selector(displayText:) withObject:greetingsText[randomIndex] afterDelay:1.0];
-
-    //TODO - Remove later
-    //[self performSelector:@selector(displayText:) withObject:@"Jatin, Mohan, Himadri, Vijay" afterDelay:2.0];
+    //[self performSelector:@selector(displayText:) withObject:greetingsText[randomIndex] afterDelay:1.0];
+    [self scanCreditCard];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -91,7 +97,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 - (void)initBar
@@ -147,6 +152,9 @@
 
 -(void)keyboardChange:(NSNotification *)notification
 {
+    if (self.navigationController.visibleViewController != self) {
+        return;
+    }
     NSDictionary *userInfo = [notification userInfo];
     NSTimeInterval animationDuration;
     UIViewAnimationCurve animationCurve;
@@ -310,6 +318,7 @@
             
             [self.navigationController.view addSubview:detailView];
             [detailView setDelegate:self];
+            self.cardDetailsView = detailView;
             [UIView animateWithDuration:0.3 animations:^{
                 detailView.frame = self.view.bounds;
             } completion:^(BOOL finished) {
@@ -379,14 +388,44 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 
 
-#if 1
     NSString *cardDetails = [NSString stringWithFormat:@"Received card info. Number: %@, expiry: %02lu/%lu, cvv: %@.", info.redactedCardNumber, (unsigned long)info.expiryMonth, (unsigned long)info.expiryYear, info.cvv];
-    NSLog(cardDetails);
+    //NSLog(cardDetails);
 
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"CC Details" message:cardDetails delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
-#endif
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:@"Confirm Buy"
+                                          message:cardDetails
+                                          preferredStyle:UIAlertControllerStyleAlert];
 
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:@"Cancel"
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       //Do nothing
+
+                                   }];
+
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:@"OK"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   //Process payment
+                                   [UUProgressHUD changeSubTitle:@"Processing..."];
+                                   [UUProgressHUD show];
+                                   [self performSelector:@selector(paymentComplete) withObject:nil afterDelay:3.0];
+                               }];
+    
+    [alertController addAction:cancelAction];
+    [alertController addAction:okAction];
+
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)paymentComplete {
+    [UUProgressHUD dismissWithSuccess:@"Success"];
+    [self.cardDetailsView removeFromSuperview];
+    [self displayText:@"Congratulations on your purchase"];
 }
 
 - (void)userDidCancelPaymentViewController:(CardIOPaymentViewController *)paymentViewController {
@@ -509,7 +548,7 @@
 }
 
 - (void)didTapBuy:(id)sender {
-    
+    [self scanCreditCard];
 }
 
 @end
