@@ -21,8 +21,9 @@
 #import "CardCell.h"
 #import "AFNetworking.h"
 #import "CardModel.h"
+#import "StateMachineManager.h"
 
-@interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate, SKVocalizerDelegate, CardIOPaymentViewControllerDelegate>
+@interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate, SKVocalizerDelegate, CardIOPaymentViewControllerDelegate, StateMachineManagerDelegate>
 
 @property (strong, nonatomic) MJRefreshHeaderView *head;
 
@@ -30,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 @property (nonatomic, strong) SKVocalizer *vocalizer;
 @property (nonatomic, assign)ChatMode chatMode;
+@property (nonatomic, copy) NSString *textToPlay;
 
 @end
 
@@ -61,9 +63,10 @@
     [self initBar];
     [self addRefreshViews];
     [self loadBaseViewsAndData];
+    [[StateMachineManager sharedInstance] setChatDelegate:self];
 
     //TODO - Remove later
-    [self performSelector:@selector(loadDummyHttp) withObject:nil afterDelay:2.0];
+    //[self performSelector:@selector(displayText:) withObject:@"Jatin, Mohan, Himadri, Vijay" afterDelay:2.0];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -300,6 +303,10 @@
                                               otherButtonTitles:nil];        
         [alert show];
     }
+
+    if([self.textToPlay length]) {
+        [self UUInputFunctionView:nil sendMessage:self.textToPlay];
+    }
 }
 
 #pragma mark - Credit card detection
@@ -332,13 +339,6 @@
 }
 
 #pragma mark - Network
-- (void)loadDummyHttp {
-    NSString *string = @"http://developer.myntra.com/search/data/men-casual-shirts?f=colour_family_list%3Ablue%3A%3Asizes_facet%3A46%3A%3Abrands_filter_facet%3AAmerican%20Swan%3A%3Adiscounted_price%3A849%2C849&p=1&userQuery=false";
-    NSURL *url = [NSURL URLWithString:string];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    [self loadHttpRequest:request];
-}
-
 - (void)loadHttpRequest:(NSURLRequest*)aRequest {
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:aRequest];
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -377,6 +377,68 @@
     }];
 
     [operation start];
+}
+
+- (void) loadDummyHttp {
+    [self makeHttpCallWithBaseAPI:@"men-casual-shirts" parameterDictionary:@{@"discounted_price":@"849,849",
+                                                                             @"colour_family_list":@"blue"}];
+
+}
+
+#pragma mark - State Machine Manager Delegate
+- (void)displayText:(NSString *)textToDisplay {
+    self.textToPlay = textToDisplay;
+    [self sayText:self.textToPlay];
+}
+
+/** Example for complete API:
+ http://developer.myntra.com/search/data/men-casual-shirts?f=discounted_price%3A849%2C849%3A%3Acolour_family_list%3Ablue&p=1&userQuery=false
+ **/
+- (void)makeHttpCallWithBaseAPI:(NSString *)baseAPI parameterDictionary:(NSDictionary *)parameterDictionary {
+    NSString *filter = nil;
+    NSSet *supportedFilters = [NSSet setWithArray:@[kBrand,kColour,kPrice,kSize]];
+    if([parameterDictionary count]) {
+        for(NSString *key in [parameterDictionary allKeys]) {
+            if([supportedFilters containsObject:key]) {
+                if(!filter) {
+                    filter = [NSString stringWithFormat:@"f=%@:%@:",key,parameterDictionary[key]];
+                }
+                else {
+                    filter = [filter stringByAppendingString:[NSString stringWithFormat:@":%@:%@:",key,parameterDictionary[key]]];
+                }
+            }
+        }
+    }
+
+    NSString *newFilter = nil;
+    if([filter length]) {
+        newFilter = [filter substringToIndex:[filter length]-1];
+        newFilter = [self urlEncodeString:newFilter];
+    }
+
+    NSString *finalUrl = nil;
+    if(newFilter) {
+        finalUrl = [NSString stringWithFormat:@"http://developer.myntra.com/search/data/%@?%@%@",baseAPI,newFilter,@"&p=1&userQuery=false"];
+    }
+    else {
+        finalUrl = [NSString stringWithFormat:@"http://developer.myntra.com/search/data/%@?%@",baseAPI,@"&p=1&userQuery=false"];
+    }
+
+
+
+    NSURL *url = [NSURL URLWithString:finalUrl];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [self loadHttpRequest:request];
+}
+
+- (NSString *)urlEncodeString:(NSString *)str {
+    NSString* escaped_value = (__bridge_transfer NSString * ) CFURLCreateStringByAddingPercentEscapes(
+                                                                                  NULL, /* allocator */
+                                                                                  (CFStringRef)str,
+                                                                                  NULL, /* charactersToLeaveUnescaped */
+                                                                                  (CFStringRef)@":,",
+                                                                                  kCFStringEncodingUTF8);
+    return escaped_value;
 }
 
 @end
