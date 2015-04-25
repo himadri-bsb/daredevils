@@ -112,7 +112,7 @@
 }
 
 - (NSArray *)calculateStatesTraversedDuringUserReply:(NSString *)userReply {
-    NSDictionary *listDictionary = [NSDictionary dictionaryWithContentsOfFile:@"ClothingData"];
+    NSDictionary *listDictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ClothingData" ofType:@"plist"]];
     NSMutableArray *statesTraversedDuringParsingUserReply = [[NSMutableArray alloc] init];
     
     for (NSString *key in listDictionary.allKeys) {
