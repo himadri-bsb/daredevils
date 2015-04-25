@@ -16,6 +16,9 @@ static NSString *const kSize = @"sizes_facet";
 @protocol StateMachineManagerDelegate <NSObject>
 
 - (void)displayText:(NSString *)textToDisplay;
+/**
+ http://developer.myntra.com/search/data/men-casual-shirts?f=discounted_price%3A849%2C849%3A%3Aglobal_attr_article_type_facet%3AShirts%3A%3Abrands_filter_facet%3A883%20Police&p=1&userQuery=false
+ **/
 - (void)makeHttpCallWithBaseAPI:(NSString *)baseAPI parameterDictionary:(NSDictionary *)parameterDictionary;
 
 @end
