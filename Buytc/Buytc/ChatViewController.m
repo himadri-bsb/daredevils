@@ -312,7 +312,7 @@
             }
             
             if (messageDict[@"price"]) {
-                detailView.priceLabel.text = [NSString stringWithFormat:@"Price: %@", messageDict[@"price"]];
+                detailView.priceLabel.text = [NSString stringWithFormat:@"Rs.%@", messageDict[@"price"]];
             }
             
             

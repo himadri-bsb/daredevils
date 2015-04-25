@@ -14,7 +14,7 @@
 #define BG_VIEW_HORIZONTAL_PADING 20.0f
 #define BG_VIEW_BOTTOM_PADDING 100.0f
 
-@interface DetailsCardView()
+@interface DetailsCardView() <UIPickerViewDelegate>
 
 @property (nonatomic, strong) UIButton *likeButton;
 @property (nonatomic, strong) UIButton *dislikeButton;
@@ -22,6 +22,7 @@
 @property (nonatomic, strong) UIVisualEffectView *visualEffectView;
 @property (nonatomic, strong) UIButton *buyButton;
 @property (nonatomic, strong) UIButton *cancelButton;
+@property (nonatomic, strong) NSArray *pickerComponents;
 
 @end
 
@@ -318,8 +319,25 @@
 }
 
 - (void)buyAction:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(didTapBuy:)]) {
-        [self.delegate didTapBuy:self];
+    self.pickerComponents = [self.sizeLabel.text componentsSeparatedByString:@","];
+    if (self.pickerComponents.count > 1) {
+        UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.frame),
+                                                                                  CGRectGetMaxY(self.frame),
+                                                                                  CGRectGetWidth(self.frame),
+                                                                                  200.0f)];
+        pickerView.delegate = self;
+        pickerView.backgroundColor = [UIColor lightGrayColor];
+        [self addSubview:pickerView];
+        [UIView animateWithDuration:0.3 animations:^{
+           pickerView.frame = CGRectMake(CGRectGetMinX(pickerView.frame),
+                                         CGRectGetMaxY(self.frame)-180.0f,
+                                         CGRectGetWidth(pickerView.frame),
+                                         200.0f);
+        }];
+    } else {
+        if ([self.delegate respondsToSelector:@selector(didTapBuy:)]) {
+            [self.delegate didTapBuy:self];
+        }
     }
 }
 
@@ -329,5 +347,34 @@
     }
 }
 
+#pragma mark - UIPickerViewDelegate
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return self.pickerComponents.count;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView
+             titleForRow:(NSInteger)row
+            forComponent:(NSInteger)component {
+    return [self.pickerComponents objectAtIndex:row];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    [UIView animateWithDuration:0.3 animations:^{
+        pickerView.frame = CGRectMake(CGRectGetMinX(pickerView.frame),
+                                      CGRectGetMaxY(self.frame),
+                                      CGRectGetWidth(pickerView.frame),
+                                      CGRectGetHeight(pickerView.frame));
+        if ([self.delegate respondsToSelector:@selector(didTapBuy:)]) {
+            [self.delegate didTapBuy:self];
+        }
+    } completion:^(BOOL finished) {
+        [pickerView removeFromSuperview];
+    }];
+}
 
 @end
