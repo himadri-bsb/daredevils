@@ -180,6 +180,14 @@
 }
 
 
+- (void)sendBotTextMessage:(NSString*)aText {
+    NSDictionary *dic = @{@"strContent":aText,
+                          @"type": @(UUMessageTypeText),
+                          @"from":@(UUMessageFromOther)
+                          };
+    [self dealTheFunctionData:dic];
+}
+
 #pragma mark - InputFunctionViewDelegate
 - (void)UUInputFunctionView:(UUInputFunctionView *)funcView sendMessage:(NSString *)message
 {
@@ -305,7 +313,7 @@
     }
 
     if([self.textToPlay length]) {
-        [self UUInputFunctionView:nil sendMessage:self.textToPlay];
+        [self sendBotTextMessage:self.textToPlay];
     }
 }
 
