@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Sizes</key>
+	<array>
+		<string>XL</string>
+		<string>L</string>
+		<string>S</string>
+		<string>M</string>
+	</array>
 	<key>Type of clothing</key>
 	<array>
 		<string>Pant</string>
@@ -12,31 +19,26 @@
 	</array>
 	<key>Brands </key>
 	<array>
-		<string>Campus Sutra</string>
-		<string>Roadster</string>
+		<string>Ed Hardy</string>
+		<string>American Swan</string>
+		<string>20Dresses</string>
+		<string>Lee Cooper</string>
 		<string>Levis</string>
-	</array>
-	<key>Category</key>
-	<array>
-		<string>Clothing</string>
-		<string>Footwear</string>
-		<string>Formal</string>
-		<string>Accessories</string>
-		<string>Grooming</string>
 	</array>
 	<key>Gender</key>
 	<array>
-		<string>Male</string>
-		<string>Female</string>
+		<string>men</string>
+		<string>women</string>
 	</array>
 	<key>Color</key>
 	<array>
-		<string>Red</string>
-		<string>Green</string>
-		<string>Blue</string>
-		<string>Yellow</string>
-		<string>Black</string>
-		<string>White</string>
+		<string>any colour</string>
+		<string>red</string>
+		<string>green</string>
+		<string>blue</string>
+		<string>yellow</string>
+		<string>black</string>
+		<string>white</string>
 	</array>
 </dict>
 </plist>
