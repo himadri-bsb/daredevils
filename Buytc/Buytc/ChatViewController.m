@@ -24,7 +24,7 @@
 #import "StateMachineManager.h"
 #import "UUImageAvatarBrowser.h"
 
-@interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate, SKVocalizerDelegate, CardIOPaymentViewControllerDelegate,DetailsCardViewDelegate>
+@interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate, SKVocalizerDelegate, CardIOPaymentViewControllerDelegate,DetailsCardViewDelegate, StateMachineManagerDelegate>
 
 @property (strong, nonatomic) MJRefreshHeaderView *head;
 
@@ -66,6 +66,18 @@
     [self loadBaseViewsAndData];
     [[StateMachineManager sharedInstance] setChatDelegate:self];
 
+    //add notification
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tableViewScrollToBottom) name:UIKeyboardDidShowNotification object:nil];
+
+    NSArray *greetingsText = @[@"Hey Jatin, how can I help you today?", @"Welcome back Jatin, I am ready to help you.", @"Good morning Jatin, what do you wanna buy today?", @"All the best for the demo today Jatin, let me help you get started"];
+
+    NSUInteger randomIndex = arc4random() % [greetingsText count];
+
+
+    [self performSelector:@selector(displayText:) withObject:greetingsText[randomIndex] afterDelay:1.0];
+
     //TODO - Remove later
     //[self performSelector:@selector(displayText:) withObject:@"Jatin, Mohan, Himadri, Vijay" afterDelay:2.0];
 }
@@ -73,11 +85,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    //add notification
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tableViewScrollToBottom) name:UIKeyboardDidShowNotification object:nil];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -197,6 +205,8 @@
     funcView.TextViewInput.text = @"";
     [funcView changeSendBtnWithPhoto:YES];
     [self dealTheFunctionData:dic];
+
+    [[StateMachineManager sharedInstance] userRepliedWithText:message];
 }
 
 - (void)UUInputFunctionView:(UUInputFunctionView *)funcView sendPicture:(UIImage *)image
@@ -357,6 +367,7 @@
 #pragma mark - Credit card detection
 - (void)scanCreditCard {
     CardIOPaymentViewController *scanViewController = [[CardIOPaymentViewController alloc] initWithPaymentDelegate:self];
+    scanViewController.hideCardIOLogo = YES;
     scanViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:scanViewController animated:YES completion:nil];
 }
