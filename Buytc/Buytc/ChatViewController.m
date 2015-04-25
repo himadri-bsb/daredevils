@@ -88,11 +88,11 @@
 
 - (void)initBar
 {
-    UISegmentedControl *segment = [[UISegmentedControl alloc]initWithItems:@[@"Mynt",@"Mynt CS"]];
-    [segment addTarget:self action:@selector(segmentChanged:) forControlEvents:UIControlEventValueChanged];
-    segment.selectedSegmentIndex = 0;
-    self.navigationItem.titleView = segment;
-    
+   // UISegmentedControl *segment = [[UISegmentedControl alloc]initWithItems:@[@"Mynt",@"Mynt CS"]];
+    //[segment addTarget:self action:@selector(segmentChanged:) forControlEvents:UIControlEventValueChanged];
+    //segment.selectedSegmentIndex = 0;
+    //self.navigationItem.titleView = segment;
+    self.title = @"Mynt Chat";
     self.navigationController.navigationBar.tintColor = NAV_BAR_COLOR;
     //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:nil action:nil];
     //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:nil];
