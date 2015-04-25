@@ -14,12 +14,15 @@
 #import "UUMessageFrame.h"
 #import "UUMessage.h"
 #import "ChatDataSource.h"
-@interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate>
+#import <SpeechKit/SpeechKit.h>
+
+@interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate, SKVocalizerDelegate>
 
 @property (strong, nonatomic) MJRefreshHeaderView *head;
 
 @property (weak, nonatomic) IBOutlet UITableView *chatTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
+@property (nonatomic, strong) SKVocalizer *vocalizer;
 
 @end
 
@@ -33,6 +36,9 @@
     [self initBar];
     [self addRefreshViews];
     [self loadBaseViewsAndData];
+
+    //TODO - Remove later
+    [self performSelector:@selector(sayText:) withObject:@"A Quick Brown fox jumped over a lazy dog." afterDelay:2.0];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -219,6 +225,35 @@
     // headIamgeIcon is clicked
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:cell.messageFrame.message.strName message:@"headImage clicked" delegate:nil cancelButtonTitle:@"sure" otherButtonTitles:nil];
     [alert show];
+}
+
+#pragma mark - Speech to Text
+- (void)sayText:(NSString*)aText {
+    self.vocalizer = [[SKVocalizer alloc] initWithLanguage:@"en_US" delegate:self];
+    [self.vocalizer speakString:aText];
+}
+
+#pragma mark -
+#pragma mark SKVocalizerDelegate methods
+
+- (void)vocalizer:(SKVocalizer *)vocalizer willBeginSpeakingString:(NSString *)text {
+
+}
+
+- (void)vocalizer:(SKVocalizer *)vocalizer willSpeakTextAtCharacter:(NSUInteger)index ofString:(NSString *)text {
+    NSLog(@"Session id [%@].", [SpeechKit sessionID]); // for debugging purpose: printing out the speechkit session id
+}
+
+- (void)vocalizer:(SKVocalizer *)vocalizer didFinishSpeakingString:(NSString *)text withError:(NSError *)error {
+    NSLog(@"Session id [%@].", [SpeechKit sessionID]); // for debugging purpose: printing out the speechkit session id
+    if (error !=nil) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:[error localizedDescription]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];        
+        [alert show];
+    }
 }
 
 @end
