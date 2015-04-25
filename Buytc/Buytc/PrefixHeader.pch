@@ -18,5 +18,5 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "ACMacros.h"
-
+#define NAV_BAR_COLOR [UIColor colorWithRed:62.0f/255.0f green:180.0f/255.0f blue:230.0f/255.0f alpha:1.0f]
 #endif

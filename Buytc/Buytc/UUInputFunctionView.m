@@ -40,7 +40,8 @@
         self.btnSendMessage.frame = CGRectMake(Main_Screen_Width-40, 5, 30, 30);
         self.isAbleToSendTextMessage = NO;
         [self.btnSendMessage setTitle:@"" forState:UIControlStateNormal];
-        [self.btnSendMessage setBackgroundImage:[UIImage imageNamed:@"Chat_take_picture"] forState:UIControlStateNormal];
+        [self.btnSendMessage setBackgroundImage:[[UIImage imageNamed:@"Chat_take_picture"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        self.btnSendMessage.tintColor = NAV_BAR_COLOR;
         self.btnSendMessage.titleLabel.font = [UIFont systemFontOfSize:14];
         [self.btnSendMessage addTarget:self action:@selector(sendMessage:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.btnSendMessage];
@@ -49,7 +50,8 @@
         self.btnChangeVoiceState = [UIButton buttonWithType:UIButtonTypeCustom];
         self.btnChangeVoiceState.frame = CGRectMake(5, 5, 30, 30);
         isbeginVoiceRecord = NO;
-        [self.btnChangeVoiceState setBackgroundImage:[UIImage imageNamed:@"chat_voice_record"] forState:UIControlStateNormal];
+        [self.btnChangeVoiceState setBackgroundImage:[[UIImage imageNamed:@"chat_voice_record"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        self.btnVoiceRecord.tintColor = NAV_BAR_COLOR;
         self.btnChangeVoiceState.titleLabel.font = [UIFont systemFontOfSize:14];
         [self.btnChangeVoiceState addTarget:self action:@selector(voiceRecord:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.btnChangeVoiceState];
@@ -58,7 +60,8 @@
         self.btnVoiceRecord = [UIButton buttonWithType:UIButtonTypeCustom];
         self.btnVoiceRecord.frame = CGRectMake(70, 5, Main_Screen_Width-70*2, 30);
         self.btnVoiceRecord.hidden = YES;
-        [self.btnVoiceRecord setBackgroundImage:[UIImage imageNamed:@"chat_message_back"] forState:UIControlStateNormal];
+        [self.btnVoiceRecord setBackgroundImage:[[UIImage imageNamed:@"chat_message_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        self.btnVoiceRecord.tintColor = NAV_BAR_COLOR;
         [self.btnVoiceRecord setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [self.btnVoiceRecord setTitleColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
         [self.btnVoiceRecord setTitle:@"Hold to Talk" forState:UIControlStateNormal];
@@ -76,7 +79,7 @@
         self.TextViewInput.layer.masksToBounds = YES;
         self.TextViewInput.delegate = self;
         self.TextViewInput.layer.borderWidth = 1;
-        self.TextViewInput.layer.borderColor = [[[UIColor lightGrayColor] colorWithAlphaComponent:0.4] CGColor];
+        self.TextViewInput.layer.borderColor = NAV_BAR_COLOR.CGColor;
         self.TextViewInput.font = ChatContentFont;
         [self addSubview:self.TextViewInput];
         
@@ -287,7 +290,7 @@
     //UIImage *buttonimage = [UIImage imageNamed:@"sendicon_2x"];
     [self.btnSendMessage setTitle:@"Send" forState:UIControlStateNormal];
     self.btnSendMessage.frame = RECT_CHANGE_width(self.btnSendMessage, isPhoto?30:35);
-    UIImage *image = [UIImage imageNamed:isPhoto?@"Chat_take_picture":@"chat_send_message"];
+    UIImage *image = [[UIImage imageNamed:isPhoto?@"Chat_take_picture":@"chat_send_message"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [self.btnSendMessage setBackgroundImage:image forState:UIControlStateNormal];
 }
 
