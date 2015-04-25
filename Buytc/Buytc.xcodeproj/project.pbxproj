@@ -43,7 +43,7 @@
 		9159CB071AEBBED000E24F81 /* TKStateMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CB001AEBBED000E24F81 /* TKStateMachine.m */; };
 		9159CB081AEBBED000E24F81 /* TKTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CB021AEBBED000E24F81 /* TKTransition.m */; };
 		9159CB101AEBC55200E24F81 /* ClothingData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9159CB0F1AEBC55200E24F81 /* ClothingData.plist */; };
-		9159CB131AEBD2F900E24F81 /* StateMachineManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CB121AEBD2F900E24F81 /* StateMachineManager.m */; };
+		9159CB131AEBD2F900E24F81 /* StateMachineManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CB121AEBD2F900E24F81 /* StateMachineManager.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B164672B1AEB9FB700CC78DD /* UUImageAvatarBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = B164671C1AEB9FB700CC78DD /* UUImageAvatarBrowser.m */; };
 		B164672C1AEB9FB700CC78DD /* UUAVAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B164671E1AEB9FB700CC78DD /* UUAVAudioPlayer.m */; };
 		B164672D1AEB9FB700CC78DD /* UUInputFunctionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B16467201AEB9FB700CC78DD /* UUInputFunctionView.m */; };
