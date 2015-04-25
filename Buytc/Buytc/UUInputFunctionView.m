@@ -7,12 +7,12 @@
 //
 
 #import "UUInputFunctionView.h"
-#import "Mp3Recorder.h"
+//#import "Mp3Recorder.h"
 #import "UUProgressHUD.h"
-@interface UUInputFunctionView ()<UITextViewDelegate,Mp3RecorderDelegate>
+@interface UUInputFunctionView ()<UITextViewDelegate>
 {
     BOOL isbeginVoiceRecord;
-    Mp3Recorder *MP3;
+    //Mp3Recorder *MP3;
     NSInteger playTime;
     NSTimer *playTimer;
     
@@ -29,7 +29,7 @@
     
     self = [super initWithFrame:frame];
     if (self) {
-        MP3 = [[Mp3Recorder alloc]initWithDelegate:self];
+       // MP3 = [[Mp3Recorder alloc]initWithDelegate:self];
         self.backgroundColor = [UIColor whiteColor];
         //发送消息
         self.btnSendMessage = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -94,7 +94,7 @@
 #pragma mark - 录音touch事件
 - (void)beginRecordVoice:(UIButton *)button
 {
-    [MP3 startRecord];
+    //[MP3 startRecord];
     playTime = 0;
     playTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countVoiceTime) userInfo:nil repeats:YES];
     [UUProgressHUD show];
@@ -103,7 +103,7 @@
 - (void)endRecordVoice:(UIButton *)button
 {
     if (playTimer) {
-        [MP3 stopRecord];
+        //[MP3 stopRecord];
         [playTimer invalidate];
         playTimer = nil;
     }
@@ -112,7 +112,7 @@
 - (void)cancelRecordVoice:(UIButton *)button
 {
     if (playTimer) {
-        [MP3 cancelRecord];
+        //[MP3 cancelRecord];
         [playTimer invalidate];
         playTimer = nil;
     }

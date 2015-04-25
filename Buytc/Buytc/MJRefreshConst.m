@@ -6,6 +6,8 @@
 //  Copyright (c) 2014年 itcast. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
+
 const CGFloat MJRefreshViewHeight = 64.0;
 const CGFloat MJRefreshAnimationDuration = 0.25;
 

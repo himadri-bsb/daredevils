@@ -12,6 +12,8 @@
 #define MJLog(...)
 #endif
 
+#import <AVFoundation/AVFoundation.h>
+
 // 文字颜色
 #define MJRefreshLabelTextColor [UIColor colorWithRed:150/255.0 green:150/255.0 blue:150/255.0 alpha:1.0]
 
