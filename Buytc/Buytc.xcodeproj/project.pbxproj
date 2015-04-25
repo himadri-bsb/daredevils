@@ -17,6 +17,8 @@
 		2676F2721AEBA7E20092CF4A /* earcon_cancel.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2676F26F1AEBA7E20092CF4A /* earcon_cancel.wav */; };
 		2676F2731AEBA7E20092CF4A /* earcon_done_listening.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2676F2701AEBA7E20092CF4A /* earcon_done_listening.wav */; };
 		2676F2741AEBA7E20092CF4A /* earcon_listening.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2676F2711AEBA7E20092CF4A /* earcon_listening.wav */; };
+		26B292041AEBD08800720AF4 /* libCardIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B292031AEBD08800720AF4 /* libCardIO.a */; };
+		26B292061AEBD10D00720AF4 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B292051AEBD10D00720AF4 /* libstdc++.dylib */; };
 		9159CB051AEBBED000E24F81 /* TKEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CAFC1AEBBED000E24F81 /* TKEvent.m */; };
 		9159CB061AEBBED000E24F81 /* TKState.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CAFE1AEBBED000E24F81 /* TKState.m */; };
 		9159CB071AEBBED000E24F81 /* TKStateMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CB001AEBBED000E24F81 /* TKStateMachine.m */; };
@@ -104,6 +106,16 @@
 		2676F26F1AEBA7E20092CF4A /* earcon_cancel.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = earcon_cancel.wav; sourceTree = "<group>"; };
 		2676F2701AEBA7E20092CF4A /* earcon_done_listening.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = earcon_done_listening.wav; sourceTree = "<group>"; };
 		2676F2711AEBA7E20092CF4A /* earcon_listening.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = earcon_listening.wav; sourceTree = "<group>"; };
+		26B291FB1AEBD08800720AF4 /* CardIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardIO.h; sourceTree = "<group>"; };
+		26B291FC1AEBD08800720AF4 /* CardIOCreditCardInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardIOCreditCardInfo.h; sourceTree = "<group>"; };
+		26B291FD1AEBD08800720AF4 /* CardIODetectionMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardIODetectionMode.h; sourceTree = "<group>"; };
+		26B291FE1AEBD08800720AF4 /* CardIOPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardIOPaymentViewController.h; sourceTree = "<group>"; };
+		26B291FF1AEBD08800720AF4 /* CardIOPaymentViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardIOPaymentViewControllerDelegate.h; sourceTree = "<group>"; };
+		26B292001AEBD08800720AF4 /* CardIOUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardIOUtilities.h; sourceTree = "<group>"; };
+		26B292011AEBD08800720AF4 /* CardIOView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardIOView.h; sourceTree = "<group>"; };
+		26B292021AEBD08800720AF4 /* CardIOViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardIOViewDelegate.h; sourceTree = "<group>"; };
+		26B292031AEBD08800720AF4 /* libCardIO.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCardIO.a; sourceTree = "<group>"; };
+		26B292051AEBD10D00720AF4 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		9159CAFB1AEBBED000E24F81 /* TKEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKEvent.h; sourceTree = "<group>"; };
 		9159CAFC1AEBBED000E24F81 /* TKEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKEvent.m; sourceTree = "<group>"; };
 		9159CAFD1AEBBED000E24F81 /* TKState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKState.h; sourceTree = "<group>"; };
@@ -216,7 +228,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26B292061AEBD10D00720AF4 /* libstdc++.dylib in Frameworks */,
 				2676F26E1AEBA60A0092CF4A /* SpeechKit.framework in Frameworks */,
+				26B292041AEBD08800720AF4 /* libCardIO.a in Frameworks */,
 				B16467A41AEBA07600CC78DD /* libmp3lame.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -234,6 +248,7 @@
 		2676F22C1AEB91860092CF4A = {
 			isa = PBXGroup;
 			children = (
+				26B292051AEBD10D00720AF4 /* libstdc++.dylib */,
 				2676F2371AEB91860092CF4A /* Buytc */,
 				2676F2511AEB91860092CF4A /* BuytcTests */,
 				2676F2361AEB91860092CF4A /* Products */,
@@ -253,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				9159CB0F1AEBC55200E24F81 /* ClothingData.plist */,
+				26B291FA1AEBD08800720AF4 /* CardIO */,
 				9159CAFA1AEBBED000E24F81 /* StateMachine */,
 				B16467B31AEBA94E00CC78DD /* DataBase */,
 				2676F2621AEBA60A0092CF4A /* SeechKit */,
@@ -308,6 +324,22 @@
 				2676F2691AEBA60A0092CF4A /* SpeechKit.framework */,
 			);
 			path = SeechKit;
+			sourceTree = "<group>";
+		};
+		26B291FA1AEBD08800720AF4 /* CardIO */ = {
+			isa = PBXGroup;
+			children = (
+				26B291FB1AEBD08800720AF4 /* CardIO.h */,
+				26B291FC1AEBD08800720AF4 /* CardIOCreditCardInfo.h */,
+				26B291FD1AEBD08800720AF4 /* CardIODetectionMode.h */,
+				26B291FE1AEBD08800720AF4 /* CardIOPaymentViewController.h */,
+				26B291FF1AEBD08800720AF4 /* CardIOPaymentViewControllerDelegate.h */,
+				26B292001AEBD08800720AF4 /* CardIOUtilities.h */,
+				26B292011AEBD08800720AF4 /* CardIOView.h */,
+				26B292021AEBD08800720AF4 /* CardIOViewDelegate.h */,
+				26B292031AEBD08800720AF4 /* libCardIO.a */,
+			);
+			path = CardIO;
 			sourceTree = "<group>";
 		};
 		9159CAFA1AEBBED000E24F81 /* StateMachine */ = {
@@ -747,6 +779,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"Buytc/ChatViews/**",
+					"Buytc/**",
 				);
 				INFOPLIST_FILE = Buytc/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -754,6 +787,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Buytc",
+					"$(PROJECT_DIR)/Buytc/CardIO",
+					"$(PROJECT_DIR)/Buytc/CardIO/dmz/cython_dmz/opencv/lib",
+					"$(PROJECT_DIR)/Buytc/CardIO/opencv_device/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "81ae3078-88cd-472f-8e11-2abed150b133";
@@ -776,6 +812,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"Buytc/ChatViews/**",
+					"Buytc/**",
 				);
 				INFOPLIST_FILE = Buytc/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -783,6 +820,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Buytc",
+					"$(PROJECT_DIR)/Buytc/CardIO",
+					"$(PROJECT_DIR)/Buytc/CardIO/dmz/cython_dmz/opencv/lib",
+					"$(PROJECT_DIR)/Buytc/CardIO/opencv_device/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "81ae3078-88cd-472f-8e11-2abed150b133";

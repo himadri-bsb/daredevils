@@ -15,8 +15,9 @@
 #import "UUMessage.h"
 #import "ChatDataSource.h"
 #import <SpeechKit/SpeechKit.h>
+#import "CardIO.h"
 
-@interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate, SKVocalizerDelegate>
+@interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate, SKVocalizerDelegate, CardIOPaymentViewControllerDelegate>
 
 @property (strong, nonatomic) MJRefreshHeaderView *head;
 
@@ -38,7 +39,7 @@
     [self loadBaseViewsAndData];
 
     //TODO - Remove later
-    [self performSelector:@selector(sayText:) withObject:@"A Quick Brown fox jumped over a lazy dog." afterDelay:2.0];
+    [self performSelector:@selector(scanCreditCard) withObject:@"A Quick Brown fox jumped over a lazy dog." afterDelay:2.0];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -254,6 +255,35 @@
                                               otherButtonTitles:nil];        
         [alert show];
     }
+}
+
+#pragma mark - Credit card detection
+- (void)scanCreditCard {
+    CardIOPaymentViewController *scanViewController = [[CardIOPaymentViewController alloc] initWithPaymentDelegate:self];
+    scanViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentViewController:scanViewController animated:YES completion:nil];
+}
+
+#pragma mark - CardIOPaymentViewControllerDelegate
+- (void)userDidProvideCreditCardInfo:(CardIOCreditCardInfo *)info inPaymentViewController:(CardIOPaymentViewController *)paymentViewController {
+    NSLog(@"Scan succeeded with info: %@", info);
+    // Do whatever needs to be done to deliver the purchased items.
+    [self dismissViewControllerAnimated:YES completion:nil];
+
+
+#if 1
+    NSString *cardDetails = [NSString stringWithFormat:@"Received card info. Number: %@, expiry: %02lu/%lu, cvv: %@.", info.redactedCardNumber, (unsigned long)info.expiryMonth, (unsigned long)info.expiryYear, info.cvv];
+    NSLog(cardDetails);
+
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"CC Details" message:cardDetails delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+#endif
+
+}
+
+- (void)userDidCancelPaymentViewController:(CardIOPaymentViewController *)paymentViewController {
+    NSLog(@"User cancelled scan");
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
