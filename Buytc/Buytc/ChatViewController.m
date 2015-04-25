@@ -170,16 +170,16 @@
     
     //adjust ChatTableView's height
     if (notification.name == UIKeyboardWillShowNotification) {
-        self.bottomConstraint.constant = keyboardEndFrame.size.height+40;
+        self.bottomConstraint.constant = keyboardEndFrame.size.height+55;
     }else{
-        self.bottomConstraint.constant = 40;
+        self.bottomConstraint.constant = 55;
     }
     
     [self.view layoutIfNeeded];
     
     //adjust UUInputFunctionView's originPoint
     CGRect newFrame = IFView.frame;
-    newFrame.origin.y = keyboardEndFrame.origin.y - newFrame.size.height;
+    newFrame.origin.y = keyboardEndFrame.origin.y - newFrame.size.height-10;
     IFView.frame = newFrame;
     
     [UIView commitAnimations];
