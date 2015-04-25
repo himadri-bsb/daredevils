@@ -18,7 +18,7 @@
 #import "CardIO.h"
 #import "DetailsCardView.h"
 #import "UIImageView+WebCache.h"
-
+#import "CardCell.h"
 
 @interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate, SKVocalizerDelegate, CardIOPaymentViewControllerDelegate>
 
@@ -72,14 +72,6 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardChange:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tableViewScrollToBottom) name:UIKeyboardDidShowNotification object:nil];
-    
-//    DetailsCardView *cardView = [[DetailsCardView alloc] initWithFrame:self.view.frame];
-//    cardView.productNameLabel.text = @"Blue Jeans";
-//    cardView.sizeLabel.text = @"Size: 36";
-//    cardView.priceLabel.text = @"Rs. 500";
-//    cardView.discountLabel.text = @"50% off";
-//    cardView.imageView.image = [UIImage imageNamed:@"tempImg"];
-//    [self.view addSubview:cardView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -221,26 +213,37 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UUMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
-    if (cell == nil) {
-        cell = [[UUMessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellID"];
-        cell.delegate = self;
-    }
+//    UUMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
+//    if (cell == nil) {
+//        cell = [[UUMessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellID"];
+//        cell.delegate = self;
+//    }
+//    
+//    UUMessageFrame * messageFrame = [[UUMessageFrame alloc] init];
+//    UUMessage *message = [[UUMessage alloc] init];
+//    [message setWithDict:[[ChatDataSource sharedDataSource] dataArray][indexPath.row]];
+//    [messageFrame setMessage:message];
+//    [cell setMessageFrame:messageFrame];
+//    return cell;
     
-    UUMessageFrame * messageFrame = [[UUMessageFrame alloc] init];
-    UUMessage *message = [[UUMessage alloc] init];
-    [message setWithDict:[[ChatDataSource sharedDataSource] dataArray][indexPath.row]];
-    [messageFrame setMessage:message];
-    [cell setMessageFrame:messageFrame];
+    CardCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CardCell"];
+    if (cell == nil) {
+        cell = [[CardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CardCell"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    [cell.cardImageView sd_setImageWithURL:[NSURL URLWithString:@"http://myntra.myntassets.com/image/style/properties/142338/Kook-N-Keech-Disney-Men-Black-Mickey-T-shirt_1_473001cb64df1a49ef6e74fa969b2d3e.jpg"] placeholderImage:[UIImage imageNamed:@"placeholder-small"]];
+    cell.sizeLabel.text = @"Size: 36";
+    cell.priceLabel.text = @"Rs. 500";
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UUMessageFrame * messageFrame = [[UUMessageFrame alloc] init];
-    UUMessage *message = [[UUMessage alloc] init];
-    [message setWithDict:[[ChatDataSource sharedDataSource] dataArray][indexPath.row]];
-    [messageFrame setMessage:message];
-    return [messageFrame cellHeight];
+//    UUMessageFrame * messageFrame = [[UUMessageFrame alloc] init];
+//    UUMessage *message = [[UUMessage alloc] init];
+//    [message setWithDict:[[ChatDataSource sharedDataSource] dataArray][indexPath.row]];
+//    [messageFrame setMessage:message];
+//    return [messageFrame cellHeight];
+    return 280.0f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
