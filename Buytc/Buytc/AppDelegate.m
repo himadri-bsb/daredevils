@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ChatViewController.h"
+#import "ChatDataSource.h"
 
 @interface AppDelegate ()
 
@@ -18,8 +19,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [ChatDataSource sharedDataSource];
+    
     ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
     [self.window setRootViewController:chatVC];
+    
     return YES;
 }
 
