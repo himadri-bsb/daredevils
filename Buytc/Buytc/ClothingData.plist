@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Prices</key>
+	<array>
+		<string>559,1329</string>
+		<string>898,1185</string>
+		<string>479-1139</string>
+		<string>758,1045</string>
+	</array>
 	<key>Sizes</key>
 	<array>
 		<string>XL</string>

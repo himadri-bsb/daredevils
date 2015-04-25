@@ -24,6 +24,7 @@
     if (self = [super init]) {
         _currentState = StateMachineManager_StateTypeNone;
         _statesToTraverse = [[NSMutableArray alloc] initWithObjects:@(1), @(2), @(3), @(4), @(5), @(6), nil];
+        _parameterDictionary = [[NSMutableDictionary alloc] init];
     }
     
     return self;
@@ -79,7 +80,7 @@
             break;
         case StateMachineManager_StateTypeSize:
         {
-            [self.chatDelegate displayText:@"What's your size?"];
+            [self.chatDelegate displayText:@"Can i know your size?"];
             self.currentState = StateMachineManager_StateTypeCompletion;
         }
             break;
@@ -115,8 +116,10 @@
         
         if ([key isEqualToString:kPListSizes]) {
             
-            if ([self doesAnyKeyExistInUserReply:userReply inArray:listDictionary[key] forParamDictKey:kSize baseAPIKey:nil]) {
+            if ([self parseForNumberInUserReply:userReply forParamDictKey:kSize]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypeSize)];
+            } else if ([self doesAnyKeyExistInUserReply:userReply inArray:listDictionary[key] forParamDictKey:kSize baseAPIKey:nil]) {
+                [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypeSize)];                
             }
 
         } else if ([key isEqualToString:kPListTypeOfClothing]) {
@@ -145,7 +148,9 @@
             
         } else if ([key isEqualToString:kPListPrices]) {
             
-            if ([self doesAnyKeyExistInUserReply:userReply inArray:listDictionary[key] forParamDictKey:kPrice baseAPIKey:nil]) {
+            if ([self parseForNumberInUserReply:userReply forParamDictKey:kPrice]) {
+                [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypePrice)];
+            } else if ([self doesAnyKeyExistInUserReply:userReply inArray:listDictionary[key] forParamDictKey:kPrice baseAPIKey:nil]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypePrice)];
             }
             
@@ -155,6 +160,25 @@
     }
     
     return statesTraversedDuringParsingUserReply;
+}
+
+- (BOOL)parseForNumberInUserReply:(NSString *)userReply forParamDictKey:(NSString *)paramDictKey {
+    NSRange range = [userReply rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]];
+    if (range.location == NSNotFound) {
+        return NO;
+    }
+    
+    NSInteger numberSubString = [userReply substringWithRange:range].integerValue;
+    
+    if ([paramDictKey isEqualToString:kPrice] && numberSubString < 100) {
+        [self.parameterDictionary setValue:[userReply substringWithRange:range] forKey:paramDictKey];
+        return YES;
+    } else if ([paramDictKey isEqualToString:kSize]){
+        [self.parameterDictionary setValue:[userReply substringWithRange:range] forKey:paramDictKey];
+        return YES;
+    }
+
+    return NO;
 }
 
 - (BOOL)doesAnyKeyExistInUserReply:(NSString *)userReply inArray:(NSArray *)array forParamDictKey:(NSString *)paramDictKey baseAPIKey:(NSString *)baseAPIKey {
@@ -191,6 +215,16 @@
     }
     
     return stateType;
+}
+
+- (NSString *)completeBaseAPI {
+    if ([self.baseAPIKeyStyle isEqualToString:@"Shirt"]) {
+        _completeBaseAPI = @"men-casual-shirt";
+    } else {
+        _completeBaseAPI = [NSString stringWithFormat:@"%@-%@", self.baseAPIKeyGender, self.baseAPIKeyStyle];
+    }
+    
+    return _completeBaseAPI;
 }
 
 @end
