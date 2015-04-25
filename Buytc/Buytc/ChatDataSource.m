@@ -9,6 +9,7 @@
 #import "ChatDataSource.h"
 #import "UUMessage.h"
 #import "UUMessageFrame.h"
+#import "CardModel.h"
 
 @interface ChatDataSource ()
 @property (nonatomic,strong) NSString *filePath;
@@ -68,6 +69,21 @@
     [dataDic setObject:URLStr forKey:@"strIcon"];
     
     [self.dataArray addObject:dataDic];
+    [self writeDataToMemory];
+}
+
+- (void)addCard:(CardModel *)card {
+    
+    NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithCapacity:3];
+    [dataDict setObject:card.itemBrandName forKey:@"brandName"];
+    [dataDict setObject:card.imageUrl forKey:@"imageUrl"];
+    [dataDict setObject:card.price forKey:@"price"];
+    [dataDict setObject:card.size forKey:@"size"];
+    [dataDict setObject:card.disCount forKey:@"discount"];
+    [dataDict setObject:@(UUMessageFromOther) forKey:@"from"];
+    [dataDict setObject:@(UUMessageTypeCard) forKey:@"type"];
+    
+    [self.dataArray addObject:dataDict];
     [self writeDataToMemory];
 }
 
