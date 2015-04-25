@@ -17,6 +17,8 @@
 #import <SpeechKit/SpeechKit.h>
 #import "CardIO.h"
 #import "DetailsCardView.h"
+#import "UIImageView+WebCache.h"
+
 
 @interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate, SKVocalizerDelegate, CardIOPaymentViewControllerDelegate>
 
@@ -95,7 +97,7 @@
     
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:nil action:nil];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:nil];
+    //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:nil];
 }
 - (void)segmentChanged:(UISegmentedControl *)segment
 {
