@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		012103081AEBB859000E0FE2 /* DetailsCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 012103071AEBB859000E0FE2 /* DetailsCardView.m */; };
 		0121030B1AEBDE5F000E0FE2 /* CardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0121030A1AEBDE5F000E0FE2 /* CardCell.m */; };
-		0121030D1AEBE581000E0FE2 /* tempImg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0121030C1AEBE581000E0FE2 /* tempImg@2x.png */; };
+		26732BF81AEC01F3002386C5 /* CardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 26732BF71AEC01F3002386C5 /* CardModel.m */; };
 		2676F23B1AEB91860092CF4A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2676F23A1AEB91860092CF4A /* main.m */; };
 		2676F23E1AEB91860092CF4A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2676F23D1AEB91860092CF4A /* AppDelegate.m */; };
 		2676F2441AEB91860092CF4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2676F2421AEB91860092CF4A /* Main.storyboard */; };
@@ -115,7 +115,8 @@
 		012103071AEBB859000E0FE2 /* DetailsCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsCardView.m; sourceTree = "<group>"; };
 		012103091AEBDE5F000E0FE2 /* CardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCell.h; sourceTree = "<group>"; };
 		0121030A1AEBDE5F000E0FE2 /* CardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCell.m; sourceTree = "<group>"; };
-		0121030C1AEBE581000E0FE2 /* tempImg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tempImg@2x.png"; sourceTree = "<group>"; };
+		26732BF61AEC01F3002386C5 /* CardModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardModel.h; sourceTree = "<group>"; };
+		26732BF71AEC01F3002386C5 /* CardModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardModel.m; sourceTree = "<group>"; };
 		2676F2351AEB91860092CF4A /* Buytc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Buytc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2676F2391AEB91860092CF4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2676F23A1AEB91860092CF4A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -305,6 +306,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		26732BF51AEC01E0002386C5 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				26732BF61AEC01F3002386C5 /* CardModel.h */,
+				26732BF71AEC01F3002386C5 /* CardModel.m */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		2676F22C1AEB91860092CF4A = {
 			isa = PBXGroup;
 			children = (
@@ -327,6 +337,7 @@
 		2676F2371AEB91860092CF4A /* Buytc */ = {
 			isa = PBXGroup;
 			children = (
+				26732BF51AEC01E0002386C5 /* Network */,
 				268CFEB91AEBFAB20042205C /* SDWebImage */,
 				9159CB0F1AEBC55200E24F81 /* ClothingData.plist */,
 				26B291FA1AEBD08800720AF4 /* CardIO */,
@@ -554,7 +565,6 @@
 		B164677C1AEBA04300CC78DD /* Photo */ = {
 			isa = PBXGroup;
 			children = (
-				0121030C1AEBE581000E0FE2 /* tempImg@2x.png */,
 				B164677D1AEBA06100CC78DD /* headImage.jpeg */,
 				B164677E1AEBA06100CC78DD /* 0.jpeg */,
 				B164677F1AEBA06100CC78DD /* 1.jpeg */,
@@ -673,7 +683,6 @@
 				B16467991AEBA06100CC78DD /* chat_animation3.png in Resources */,
 				B16467941AEBA06100CC78DD /* chat_animation_white1.png in Resources */,
 				B16467951AEBA06100CC78DD /* chat_animation_white2.png in Resources */,
-				0121030D1AEBE581000E0FE2 /* tempImg@2x.png in Resources */,
 				2676F2441AEB91860092CF4A /* Main.storyboard in Resources */,
 				B16467A01AEBA06100CC78DD /* chatfrom_doctor_icon.png in Resources */,
 				B16467981AEBA06100CC78DD /* chat_animation2.png in Resources */,
@@ -759,6 +768,7 @@
 				268CFEDE1AEBFAB20042205C /* SDWebImageCompat.m in Sources */,
 				B16467521AEBA00400CC78DD /* AFURLResponseSerialization.m in Sources */,
 				2676F23E1AEB91860092CF4A /* AppDelegate.m in Sources */,
+				26732BF81AEC01F3002386C5 /* CardModel.m in Sources */,
 				B164672E1AEB9FB700CC78DD /* UUMessage.m in Sources */,
 				B16467741AEBA03200CC78DD /* AFNetworkActivityIndicatorManager.m in Sources */,
 				9159CB131AEBD2F900E24F81 /* StateMachineManager.m in Sources */,
