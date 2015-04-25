@@ -122,7 +122,10 @@
                                                                 toItem:detailsBgView
                                                              attribute:NSLayoutAttributeTop
                                                              multiplier:1.0f constant:1.0f]];
-    nameLabel.preferredMaxLayoutWidth = 236.0f;
+    [detailsBgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[nameLabel(<=180@751)]"
+                                                                         options:0
+                                                                         metrics:nil
+                                                                            views:viewsDict]];
     
     [detailsBgView addConstraint:[NSLayoutConstraint constraintWithItem:sizeLabel
                                                               attribute:NSLayoutAttributeLeft

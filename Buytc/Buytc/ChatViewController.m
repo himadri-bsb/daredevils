@@ -319,8 +319,10 @@
             [self.navigationController.view addSubview:detailView];
             [detailView setDelegate:self];
             self.cardDetailsView = detailView;
+            self.cardDetailsView.frame = self.view.bounds;
+            self.cardDetailsView.alpha = 0.0f;
             [UIView animateWithDuration:0.3 animations:^{
-                detailView.frame = self.view.bounds;
+                self.cardDetailsView.alpha = 1.0f;
             } completion:^(BOOL finished) {
                 
             }];
@@ -536,8 +538,12 @@
     return escaped_value;
 }
 
-- (void)didTapCancel:(id)sender {
-    [sender removeFromSuperview];
+- (void)didTapCancel:(DetailsCardView *)sender {
+    [UIView animateWithDuration:0.3 animations:^{
+        sender.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        [sender removeFromSuperview];
+    }];
 }
 
 - (void)didTapLike:(id)sender {
