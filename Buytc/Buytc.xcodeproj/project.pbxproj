@@ -70,6 +70,7 @@
 		B16467AD1AEBA27100CC78DD /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B16467A91AEBA27100CC78DD /* ChatViewController.m */; };
 		B16467AE1AEBA27100CC78DD /* ChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B16467AA1AEBA27100CC78DD /* ChatViewController.xib */; };
 		B16467AF1AEBA27100CC78DD /* ChatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B16467AC1AEBA27100CC78DD /* ChatModel.m */; };
+		B16467B21AEBA7B400CC78DD /* ChatDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = B16467B11AEBA7B400CC78DD /* ChatDataSource.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -190,6 +191,8 @@
 		B16467AA1AEBA27100CC78DD /* ChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatViewController.xib; sourceTree = "<group>"; };
 		B16467AB1AEBA27100CC78DD /* ChatModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatModel.h; sourceTree = "<group>"; };
 		B16467AC1AEBA27100CC78DD /* ChatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatModel.m; sourceTree = "<group>"; };
+		B16467B01AEBA7B400CC78DD /* ChatDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatDataSource.h; sourceTree = "<group>"; };
+		B16467B11AEBA7B400CC78DD /* ChatDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatDataSource.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,7 +236,11 @@
 		2676F2371AEB91860092CF4A /* Buytc */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
+				B16467B31AEBA94E00CC78DD /* DataBase */,
+=======
 				2676F2621AEBA60A0092CF4A /* SeechKit */,
+>>>>>>> 9f6b3d9e8b7eb79d28239f82242048c53c461bfe
 				B16467191AEB9F6B00CC78DD /* ChatView */,
 				2676F23C1AEB91860092CF4A /* AppDelegate.h */,
 				2676F23D1AEB91860092CF4A /* AppDelegate.m */,
@@ -397,6 +404,15 @@
 			name = Photo;
 			sourceTree = "<group>";
 		};
+		B16467B31AEBA94E00CC78DD /* DataBase */ = {
+			isa = PBXGroup;
+			children = (
+				B16467B01AEBA7B400CC78DD /* ChatDataSource.h */,
+				B16467B11AEBA7B400CC78DD /* ChatDataSource.m */,
+			);
+			name = DataBase;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -532,6 +548,7 @@
 				B16467621AEBA01400CC78DD /* MJRefreshHeaderView.m in Sources */,
 				B16467501AEBA00400CC78DD /* AFURLConnectionOperation.m in Sources */,
 				B164675F1AEBA01400CC78DD /* MJRefreshBaseView.m in Sources */,
+				B16467B21AEBA7B400CC78DD /* ChatDataSource.m in Sources */,
 				B16467AD1AEBA27100CC78DD /* ChatViewController.m in Sources */,
 				B16467601AEBA01400CC78DD /* MJRefreshConst.m in Sources */,
 				B16467791AEBA03200CC78DD /* UIProgressView+AFNetworking.m in Sources */,
@@ -694,13 +711,14 @@
 					"Buytc/ChatViews/**",
 				);
 				INFOPLIST_FILE = Buytc/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Buytc",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "81ae3078-88cd-472f-8e11-2abed150b133";
 			};
 			name = Debug;
 		};
@@ -722,13 +740,14 @@
 					"Buytc/ChatViews/**",
 				);
 				INFOPLIST_FILE = Buytc/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Buytc",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "81ae3078-88cd-472f-8e11-2abed150b133";
 			};
 			name = Release;
 		};

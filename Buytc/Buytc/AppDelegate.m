@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ChatViewController.h"
+#import "ChatDataSource.h"
 #import <SpeechKit/SpeechKit.h>
 
 const unsigned char SpeechKitApplicationKey[] =
@@ -25,6 +26,8 @@ const unsigned char SpeechKitApplicationKey[] =
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [ChatDataSource sharedDataSource];
+    
     ChatViewController *chatVC = [[ChatViewController alloc] initWithNibName:@"ChatViewController" bundle:nil];
     [self.window setRootViewController:chatVC];
 

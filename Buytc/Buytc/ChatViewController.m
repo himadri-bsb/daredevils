@@ -13,11 +13,10 @@
 #import "ChatModel.h"
 #import "UUMessageFrame.h"
 #import "UUMessage.h"
-
+#import "ChatDataSource.h"
 @interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @property (strong, nonatomic) MJRefreshHeaderView *head;
-@property (strong, nonatomic) ChatModel *chatModel;
 
 @property (weak, nonatomic) IBOutlet UITableView *chatTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
@@ -65,43 +64,36 @@
 }
 - (void)segmentChanged:(UISegmentedControl *)segment
 {
-    self.chatModel.isGroupChat = segment.selectedSegmentIndex;
-    [self.chatModel.dataSource removeAllObjects];
-    [self.chatModel populateRandomDataSource];
     [self.chatTableView reloadData];
 }
 
 - (void)addRefreshViews
 {
-    __weak typeof(self) weakSelf = self;
-    
-    //load more
-    int pageNum = 3;
-    
-    _head = [MJRefreshHeaderView header];
-    _head.scrollView = self.chatTableView;
-    _head.beginRefreshingBlock = ^(MJRefreshBaseView *refreshView) {
-        
-        [weakSelf.chatModel addRandomItemsToDataSource:pageNum];
-        
-        if (weakSelf.chatModel.dataSource.count > pageNum) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:pageNum inSection:0];
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [weakSelf.chatTableView reloadData];
-                [weakSelf.chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
-            });
-        }
-        [weakSelf.head endRefreshing];
-    };
+//    __weak typeof(self) weakSelf = self;
+//    
+//    //load more
+//    int pageNum = 3;
+//    
+//    _head = [MJRefreshHeaderView header];
+//    _head.scrollView = self.chatTableView;
+//    _head.beginRefreshingBlock = ^(MJRefreshBaseView *refreshView) {
+//        
+//        [weakSelf.chatModel addRandomItemsToDataSource:pageNum];
+//        
+//        if (weakSelf.chatModel.dataSource.count > pageNum) {
+//            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:pageNum inSection:0];
+//            
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                [weakSelf.chatTableView reloadData];
+//                [weakSelf.chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+//            });
+//        }
+//        [weakSelf.head endRefreshing];
+//    };
 }
 
 - (void)loadBaseViewsAndData
 {
-    self.chatModel = [[ChatModel alloc]init];
-    self.chatModel.isGroupChat = NO;
-    [self.chatModel populateRandomDataSource];
-    
     IFView = [[UUInputFunctionView alloc]initWithSuperVC:self];
     IFView.delegate = self;
     [self.view addSubview:IFView];
@@ -146,10 +138,10 @@
 //tableView Scroll to bottom
 - (void)tableViewScrollToBottom
 {
-    if (self.chatModel.dataSource.count==0)
+    if ([[ChatDataSource sharedDataSource] dataArray].count==0)
         return;
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.chatModel.dataSource.count-1 inSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[[ChatDataSource sharedDataSource] dataArray].count-1 inSection:0];
     [self.chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
@@ -181,14 +173,14 @@
 
 - (void)dealTheFunctionData:(NSDictionary *)dic
 {
-    [self.chatModel addSpecifiedItem:dic];
+    [[ChatDataSource sharedDataSource] addSpecifiedItem:dic];
     [self.chatTableView reloadData];
     [self tableViewScrollToBottom];
 }
 
 #pragma mark - tableView delegate & datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.chatModel.dataSource.count;
+    return [[ChatDataSource sharedDataSource] dataArray].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -197,12 +189,21 @@
         cell = [[UUMessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellID"];
         cell.delegate = self;
     }
-    [cell setMessageFrame:self.chatModel.dataSource[indexPath.row]];
+    
+    UUMessageFrame * messageFrame = [[UUMessageFrame alloc] init];
+    UUMessage *message = [[UUMessage alloc] init];
+    [message setWithDict:[[ChatDataSource sharedDataSource] dataArray][indexPath.row]];
+    [messageFrame setMessage:message];
+    [cell setMessageFrame:messageFrame];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return [self.chatModel.dataSource[indexPath.row] cellHeight];
+    UUMessageFrame * messageFrame = [[UUMessageFrame alloc] init];
+    UUMessage *message = [[UUMessage alloc] init];
+    [message setWithDict:[[ChatDataSource sharedDataSource] dataArray][indexPath.row]];
+    [messageFrame setMessage:message];
+    return [messageFrame cellHeight];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
