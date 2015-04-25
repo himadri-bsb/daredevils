@@ -30,7 +30,7 @@
 		<string>men</string>
 		<string>women</string>
 	</array>
-	<key>Color</key>
+	<key>Colour</key>
 	<array>
 		<string>any colour</string>
 		<string>red</string>
