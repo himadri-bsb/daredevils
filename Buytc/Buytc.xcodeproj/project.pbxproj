@@ -43,6 +43,7 @@
 		9159CB071AEBBED000E24F81 /* TKStateMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CB001AEBBED000E24F81 /* TKStateMachine.m */; };
 		9159CB081AEBBED000E24F81 /* TKTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CB021AEBBED000E24F81 /* TKTransition.m */; };
 		9159CB101AEBC55200E24F81 /* ClothingData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9159CB0F1AEBC55200E24F81 /* ClothingData.plist */; };
+		9159CB131AEBD2F900E24F81 /* StateMachineManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9159CB121AEBD2F900E24F81 /* StateMachineManager.m */; };
 		B164672B1AEB9FB700CC78DD /* UUImageAvatarBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = B164671C1AEB9FB700CC78DD /* UUImageAvatarBrowser.m */; };
 		B164672C1AEB9FB700CC78DD /* UUAVAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B164671E1AEB9FB700CC78DD /* UUAVAudioPlayer.m */; };
 		B164672D1AEB9FB700CC78DD /* UUInputFunctionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B16467201AEB9FB700CC78DD /* UUInputFunctionView.m */; };
@@ -184,6 +185,8 @@
 		9159CB031AEBBED000E24F81 /* TransitionKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TransitionKit-Prefix.pch"; sourceTree = "<group>"; };
 		9159CB041AEBBED000E24F81 /* TransitionKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionKit.h; sourceTree = "<group>"; };
 		9159CB0F1AEBC55200E24F81 /* ClothingData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ClothingData.plist; sourceTree = "<group>"; };
+		9159CB111AEBD2F900E24F81 /* StateMachineManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateMachineManager.h; sourceTree = "<group>"; };
+		9159CB121AEBD2F900E24F81 /* StateMachineManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateMachineManager.m; sourceTree = "<group>"; };
 		B164671B1AEB9FB700CC78DD /* UUImageAvatarBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUImageAvatarBrowser.h; sourceTree = "<group>"; };
 		B164671C1AEB9FB700CC78DD /* UUImageAvatarBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUImageAvatarBrowser.m; sourceTree = "<group>"; };
 		B164671D1AEB9FB700CC78DD /* UUAVAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUAVAudioPlayer.h; sourceTree = "<group>"; };
@@ -457,6 +460,8 @@
 				9159CB021AEBBED000E24F81 /* TKTransition.m */,
 				9159CB031AEBBED000E24F81 /* TransitionKit-Prefix.pch */,
 				9159CB041AEBBED000E24F81 /* TransitionKit.h */,
+				9159CB111AEBD2F900E24F81 /* StateMachineManager.h */,
+				9159CB121AEBD2F900E24F81 /* StateMachineManager.m */,
 			);
 			name = StateMachine;
 			path = Code;
@@ -756,6 +761,7 @@
 				2676F23E1AEB91860092CF4A /* AppDelegate.m in Sources */,
 				B164672E1AEB9FB700CC78DD /* UUMessage.m in Sources */,
 				B16467741AEBA03200CC78DD /* AFNetworkActivityIndicatorManager.m in Sources */,
+				9159CB131AEBD2F900E24F81 /* StateMachineManager.m in Sources */,
 				B164674D1AEBA00400CC78DD /* AFHTTPSessionManager.m in Sources */,
 				268CFEE31AEBFAB20042205C /* SDWebImagePrefetcher.m in Sources */,
 				B16467751AEBA03200CC78DD /* UIActivityIndicatorView+AFNetworking.m in Sources */,
