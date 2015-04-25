@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Prices</key>
+	<array>
+		<string>559,1329</string>
+		<string>898,1185</string>
+		<string>479-1139</string>
+		<string>758,1045</string>
+	</array>
 	<key>Sizes</key>
 	<array>
 		<string>XL</string>
@@ -11,11 +18,26 @@
 	</array>
 	<key>Type of clothing</key>
 	<array>
-		<string>Pant</string>
-		<string>Top</string>
-		<string>Jeans</string>
-		<string>T-Shirt</string>
-		<string>Shirt</string>
+		<dict>
+			<key>Pant</key>
+			<string>casual-shirts</string>
+		</dict>
+		<dict>
+			<key>Top</key>
+			<string>dresses</string>
+		</dict>
+		<dict>
+			<key>Jeans</key>
+			<string>jeans</string>
+		</dict>
+		<dict>
+			<key>T-Shirt</key>
+			<string>casual-shirts</string>
+		</dict>
+		<dict>
+			<key>Shirt</key>
+			<string>casual-shirts</string>
+		</dict>
 	</array>
 	<key>Brands </key>
 	<array>
@@ -30,7 +52,7 @@
 		<string>men</string>
 		<string>women</string>
 	</array>
-	<key>Color</key>
+	<key>Colour</key>
 	<array>
 		<string>any colour</string>
 		<string>red</string>

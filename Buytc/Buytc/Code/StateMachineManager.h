@@ -8,11 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString *const kBrand = @"brands_filter_face";
+static NSString *const kBrand = @"brands_filter_facet";
 static NSString *const kColour = @"colour_family_list";
 static NSString *const kPrice = @"discounted_price";
 static NSString *const kSize = @"sizes_facet";
 
+static NSString *const kPListSizes = @"Sizes";
+static NSString *const kPListTypeOfClothing = @"Type of clothing";
+static NSString *const kPListBrands = @"Brands";
+static NSString *const kPListGender = @"Gender";
+static NSString *const kPListColour = @"Colour";
+static NSString *const kPListPrices = @"Prices";
 
 @protocol StateMachineManagerDelegate <NSObject>
 
@@ -33,6 +39,7 @@ typedef NS_ENUM(NSUInteger, StateMachine_StateType) {
     StateMachineManager_StateTypeBrands,
     StateMachineManager_StateTypePrice,
     StateMachineManager_StateTypeColor,
+    StateMachineManager_StateTypeSize,
     StateMachineManager_StateTypeCompletion,
 };
 
@@ -42,10 +49,12 @@ typedef NS_ENUM(NSUInteger, StateMachine_StateType) {
 @property (nonatomic, assign) StateMachine_StateType currentState;
 @property (nonatomic, strong) NSMutableArray *statesToTraverse;
 @property (nonatomic, strong) NSMutableDictionary *parameterDictionary;
-@property (nonatomic, strong) NSString *baseAPI;
+@property (nonatomic, strong) NSString *baseAPIKeyGender;
+@property (nonatomic, strong) NSString *baseAPIKeyStyle;
 
 + (StateMachineManager *)sharedInstance;
 - (void)resetStateMachine;
 - (void)userRepliedWithText:(NSString *)reply;
+- (NSString *)completeBaseAPI;
 
 @end
