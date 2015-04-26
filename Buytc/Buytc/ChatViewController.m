@@ -444,6 +444,11 @@
             NSArray *results = responseObject[@"data"][@"results"][@"products"];
             NSMutableArray *array = [[NSMutableArray alloc] init];
             [results enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) {
+                //Show max 5 images
+                if (index == 5) {
+                    *stop = YES;
+                }
+                
                 NSDictionary *dict = results[index];
 
                 CardModel *model = [[CardModel alloc] init];
