@@ -444,9 +444,9 @@
         //Sucess
         NSArray *results = responseObject[@"data"][@"results"][@"products"];
         NSMutableArray *array = [[NSMutableArray alloc] init];
-        for (NSInteger index = 0; index < 5; index++) {
+        [results enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) {
             NSDictionary *dict = results[index];
-
+            
             CardModel *model = [[CardModel alloc] init];
             model.itemBrandName = dict[@"product"];
             model.imageUrl = dict[@"search_image"];
@@ -456,6 +456,12 @@
             [array addObject:model];
             
             [[ChatDataSource sharedDataSource] addCard:model];
+        }];
+        
+        //Show a message when the result count is zero
+        if (![results count]) {
+            NSString *sorryText = @"Sorry i am unable to find any results. :(";
+            [self performSelector:@selector(displayText:) withObject:sorryText afterDelay:0.0];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{

@@ -39,7 +39,7 @@
 			<string>casual-shirts</string>
 		</dict>
 	</array>
-	<key>Brands </key>
+	<key>Brands</key>
 	<array>
 		<string>Ed Hardy</string>
 		<string>American Swan</string>
@@ -49,8 +49,22 @@
 	</array>
 	<key>Gender</key>
 	<array>
-		<string>men</string>
-		<string>women</string>
+		<dict>
+			<key>female</key>
+			<string>women</string>
+		</dict>
+		<dict>
+			<key>women</key>
+			<string>women</string>
+		</dict>
+		<dict>
+			<key>male</key>
+			<string>men</string>
+		</dict>
+		<dict>
+			<key>men</key>
+			<string>men</string>
+		</dict>
 	</array>
 	<key>Colour</key>
 	<array>
