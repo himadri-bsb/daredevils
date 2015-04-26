@@ -11,8 +11,6 @@
 #import "ChatDataSource.h"
 #import <SpeechKit/SpeechKit.h>
 
-#define DEMO 0
-
 
 #if DEMO
 const unsigned char SpeechKitApplicationKey[] =
