@@ -62,17 +62,18 @@
 {
     NSMutableDictionary *dataDic = [NSMutableDictionary dictionaryWithDictionary:dic];
     
-    NSString *URLStr = @"http://img0.bdstatic.com/img/image/shouye/xinshouye/mingxing16.jpg";
     if([dataDic objectForKey:@"from"]) {
         [dataDic setObject:[dataDic objectForKey:@"from"] forKey:@"from"];
+        [dataDic setObject:@"Mynt" forKey:@"strName"];
+
     }
     else {
         [dataDic setObject:@(UUMessageFromMe) forKey:@"from"];
+        [dataDic setObject:@"Me" forKey:@"strName"];
+
     }
 
     [dataDic setObject:[[NSDate date] description] forKey:@"strTime"];
-    [dataDic setObject:@"Me" forKey:@"strName"];
-    [dataDic setObject:URLStr forKey:@"strIcon"];
     
     [self.dataArray addObject:dataDic];
     //[self writeDataToMemory];

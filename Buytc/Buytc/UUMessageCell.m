@@ -53,7 +53,7 @@
         self.btnHeadImage = [UIButton buttonWithType:UIButtonTypeCustom];
         self.btnHeadImage.layer.cornerRadius = 20;
         self.btnHeadImage.layer.masksToBounds = YES;
-        [self.btnHeadImage addTarget:self action:@selector(btnHeadImageClick:)  forControlEvents:UIControlEventTouchUpInside];
+        //[self.btnHeadImage addTarget:self action:@selector(btnHeadImageClick:)  forControlEvents:UIControlEventTouchUpInside];
         [headImageBackView addSubview:self.btnHeadImage];
         
         // 3、创建头像下标
@@ -163,9 +163,7 @@
     if (message.from == UUMessageFromMe) {
         [self.btnHeadImage setBackgroundImage:[UIImage imageNamed:@"jatin"] forState:UIControlStateNormal];
     } else {
-        [self.btnHeadImage setBackgroundImageForState:UIControlStateNormal
-                                              withURL:[NSURL URLWithString:message.strIcon]
-                                     placeholderImage:[UIImage imageNamed:@"headImage.jpeg"]];;
+        [self.btnHeadImage setBackgroundImage:[UIImage imageNamed:@"mynt_2s.png"] forState:UIControlStateNormal];
     }
     
     // 3、设置下标
