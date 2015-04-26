@@ -11,6 +11,7 @@
 	</array>
 	<key>Sizes</key>
 	<array>
+		<string>XXL</string>
 		<string>XL</string>
 		<string>L</string>
 		<string>S</string>
@@ -18,6 +19,10 @@
 	</array>
 	<key>Type of clothing</key>
 	<array>
+		<dict>
+			<key>Trousers</key>
+			<string>jeans</string>
+		</dict>
 		<dict>
 			<key>dress</key>
 			<string>dresses</string>
@@ -45,6 +50,7 @@
 	</array>
 	<key>Brands</key>
 	<array>
+		<string>Mango</string>
 		<string>Ed Hardy</string>
 		<string>American Swan</string>
 		<string>20Dresses</string>
@@ -68,12 +74,28 @@
 	<key>Gender</key>
 	<array>
 		<dict>
+			<key>wife</key>
+			<string>women</string>
+		</dict>
+		<dict>
+			<key>girlfriend</key>
+			<string>women</string>
+		</dict>
+		<dict>
 			<key>female</key>
 			<string>women</string>
 		</dict>
 		<dict>
 			<key>women</key>
 			<string>women</string>
+		</dict>
+		<dict>
+			<key>boyfriend</key>
+			<string>men</string>
+		</dict>
+		<dict>
+			<key>husband</key>
+			<string>men</string>
 		</dict>
 		<dict>
 			<key>male</key>
