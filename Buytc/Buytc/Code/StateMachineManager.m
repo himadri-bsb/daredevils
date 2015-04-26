@@ -23,7 +23,8 @@
 - (instancetype)init {
     if (self = [super init]) {
         _currentState = StateMachineManager_StateTypeNone;
-        _statesToTraverse = [[NSMutableArray alloc] initWithObjects:@(1), @(2), @(3), @(4), @(5), @(6), nil];
+        //Not using price the key at 4
+        _statesToTraverse = [[NSMutableArray alloc] initWithObjects:@(1), @(2), @(3), @(5), @(6), nil];
         _parameterDictionary = [[NSMutableDictionary alloc] init];
     }
     
@@ -69,14 +70,15 @@
         case StateMachineManager_StateTypeColor:
         {
             [self.chatDelegate displayText:@"What colour would you like to get? If any?"];
-            self.currentState = StateMachineManager_StateTypePrice;
-        }
-            break;
-        case StateMachineManager_StateTypePrice:
-        {
-            [self.chatDelegate displayText:@"Do you have a maximum price in mind?"];
+//            self.currentState = StateMachineManager_StateTypePrice;
             self.currentState = StateMachineManager_StateTypeSize;
         }
+            break;
+//        case StateMachineManager_StateTypePrice:
+//        {
+//            [self.chatDelegate displayText:@"Do you have a maximum price in mind?"];
+//            self.currentState = StateMachineManager_StateTypeSize;
+//        }
             break;
         case StateMachineManager_StateTypeSize:
         {
@@ -100,11 +102,12 @@
     [self.parameterDictionary removeAllObjects];
     self.baseAPIKeyGender = nil;
     self.baseAPIKeyStyle = nil;
-    self.statesToTraverse = [[NSMutableArray alloc] initWithObjects:@(1), @(2), @(3), @(4), @(5), @(6), nil];
+    //Not using price the key at 4
+    self.statesToTraverse = [[NSMutableArray alloc] initWithObjects:@(1), @(2), @(3), @(5), @(6), nil];
 }
 
 - (void)userRepliedWithText:(NSString *)reply {
-    if ([reply isEqualToString:@"Cancel"] || [reply isEqualToString:@"Done"] || [reply isEqualToString:@"Bye"]) {
+    if ([reply localizedCaseInsensitiveContainsString:@"Cancel"] || [reply localizedCaseInsensitiveContainsString:@"Done"] || [reply localizedCaseInsensitiveContainsString:@"Bye"]) {
         [self resetStateMachine];
     } else {
         [self manageStatesForUserReply:reply];
@@ -117,7 +120,7 @@
     
     for (NSString *key in listDictionary.allKeys) {
         
-        if ([key isEqualToString:kPListSizes]) {
+        if ([key localizedCaseInsensitiveContainsString:kPListSizes]) {
             
             if ([self parseForNumberInUserReply:userReply forParamDictKey:kSize]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypeSize)];
@@ -125,40 +128,43 @@
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypeSize)];                
             }
 
-        } else if ([key isEqualToString:kPListTypeOfClothing]) {
+        } else if ([key localizedCaseInsensitiveContainsString:kPListTypeOfClothing]) {
             
             if ([self doesAnyKeyExistInUserReply:userReply inCollection:listDictionary[key] forParamDictKey:nil baseAPIKey:@"style"]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypeClothingType)];
             }
             
-        } else if ([key isEqualToString:kPListBrands]) {
+        } else if ([key localizedCaseInsensitiveContainsString:kPListBrands]) {
             
             if ([self doesAnyKeyExistInUserReply:userReply inCollection:listDictionary[key] forParamDictKey:kBrand baseAPIKey:nil]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypeBrands)];
             }
             
-        } else if ([key isEqualToString:kPListGender]) {
+        } else if ([key localizedCaseInsensitiveContainsString:kPListGender]) {
             
             if ([self doesAnyKeyExistInUserReply:userReply inCollection:listDictionary[key] forParamDictKey:nil baseAPIKey:@"gender"]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypeGender)];
             }
             
-        } else if ([key isEqualToString:kPListColour]) {
+        } else if ([key localizedCaseInsensitiveContainsString:kPListColour]) {
             
             if ([self doesAnyKeyExistInUserReply:userReply inCollection:listDictionary[key] forParamDictKey:kColour baseAPIKey:nil]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypeColor)];
             }
             
-        } else if ([key isEqualToString:kPListPrices]) {
-            
-            if ([self parseForNumberInUserReply:userReply forParamDictKey:kPrice]) {
-                [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypePrice)];
-            } else if ([self doesAnyKeyExistInUserReply:userReply inCollection:listDictionary[key] forParamDictKey:kPrice baseAPIKey:nil]) {
-                [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypePrice)];
-            }
-            
-        } else {
-            NSAssert(YES, @"key should be one of the specified key names");
+        }
+//        else if ([key localizedCaseInsensitiveContainsString:kPListPrices]) {
+//            
+//            if ([self parseForNumberInUserReply:userReply forParamDictKey:kPrice]) {
+//                [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypePrice)];
+//            } else if ([self doesAnyKeyExistInUserReply:userReply inCollection:listDictionary[key] forParamDictKey:kPrice baseAPIKey:nil]) {
+//                [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypePrice)];
+//            }
+//            
+//        }
+        else {
+            //Do nothing
+//            NSAssert(YES, @"key should be one of the specified key names");
         }
     }
     
@@ -166,20 +172,22 @@
 }
 
 - (BOOL)parseForNumberInUserReply:(NSString *)userReply forParamDictKey:(NSString *)paramDictKey {
-    NSRange range = [userReply rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]];
-    if (range.location == NSNotFound) {
+    
+    NSString *trimmedUserReply = [userReply stringByReplacingOccurrencesOfString:@"[^0-9]" withString:@"" options:1024 range:NSMakeRange(0, [userReply length])];
+    NSUInteger numberSubString = [trimmedUserReply integerValue];
+    if (numberSubString == 0) {
         return NO;
     }
     
-    NSInteger numberSubString = [userReply substringWithRange:range].integerValue;
     
-    if ([paramDictKey isEqualToString:kPrice] && numberSubString < 100) {
-        [self.parameterDictionary setValue:[userReply substringWithRange:range] forKey:paramDictKey];
-        return YES;
-    } else if ([paramDictKey isEqualToString:kSize]){
-        [self.parameterDictionary setValue:[userReply substringWithRange:range] forKey:paramDictKey];
+    if ([paramDictKey localizedCaseInsensitiveContainsString:kSize] && numberSubString < 100) {
+        [self.parameterDictionary setValue:@(numberSubString) forKey:paramDictKey];
         return YES;
     }
+//    } else if ([paramDictKey localizedCaseInsensitiveContainsString:kPrice]){
+//        [self.parameterDictionary setValue:@(numberSubString) forKey:paramDictKey];
+//        return YES;
+//    }
 
     return NO;
 }
@@ -192,12 +200,13 @@
      else over an array
     **/
     
-    if ([baseAPIKey isEqualToString:@"style"]) {
+    if ([baseAPIKey localizedCaseInsensitiveContainsString:@"style"]) {
         
-        for (NSString *str in ((NSDictionary *)collection).allKeys) {
-            if ([userReply containsString:str]) {
+        for (NSDictionary *dict in collection) {
+            NSString *key = [dict allKeys].firstObject;
+            if ([userReply localizedCaseInsensitiveContainsString:key]) {
                 doesExist = YES;
-                self.baseAPIKeyStyle = [collection valueForKey:str];
+                self.baseAPIKeyStyle = [dict valueForKey:key];
                 break;
             }
         }
@@ -205,16 +214,12 @@
     } else {
         
         for (NSString *str in collection) {
-            if ([userReply containsString:str]) {
+            if ([userReply localizedCaseInsensitiveContainsString:str]) {
                 doesExist = YES;
                 if (paramDictKey) {
                     [self.parameterDictionary setValue:str forKey:paramDictKey];
                 } else {
-                    if ([baseAPIKey isEqualToString:@"style"]) {
-                        self.baseAPIKeyStyle = str;
-                    } else {
-                        self.baseAPIKeyGender =str;
-                    }
+                    self.baseAPIKeyGender = str;
                 }
                 
                 break;
