@@ -346,6 +346,7 @@
 
 #pragma mark - Speech to Text
 - (void)sayText:(NSString*)aText {
+    [self.vocalizer cancel];
     self.vocalizer = [[SKVocalizer alloc] initWithLanguage:@"en_US" delegate:self];
     [self.vocalizer speakString:aText];
 }
@@ -362,15 +363,6 @@
 }
 
 - (void)vocalizer:(SKVocalizer *)vocalizer didFinishSpeakingString:(NSString *)text withError:(NSError *)error {
-    NSLog(@"Session id [%@].", [SpeechKit sessionID]); // for debugging purpose: printing out the speechkit session id
-    if (error !=nil) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:[error localizedDescription]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];        
-        [alert show];
-    }
 }
 
 #pragma mark - Credit card detection
