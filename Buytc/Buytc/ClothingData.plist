@@ -20,6 +20,10 @@
 	<key>Type of clothing</key>
 	<array>
 		<dict>
+			<key>Trousers</key>
+			<string>jeans</string>
+		</dict>
+		<dict>
 			<key>dress</key>
 			<string>dresses</string>
 		</dict>
@@ -70,8 +74,8 @@
 	<key>Gender</key>
 	<array>
 		<dict>
-			<key>boyfriend</key>
-			<string>men</string>
+			<key>wife</key>
+			<string>women</string>
 		</dict>
 		<dict>
 			<key>girlfriend</key>
@@ -84,6 +88,14 @@
 		<dict>
 			<key>women</key>
 			<string>women</string>
+		</dict>
+		<dict>
+			<key>boyfriend</key>
+			<string>men</string>
+		</dict>
+		<dict>
+			<key>husband</key>
+			<string>men</string>
 		</dict>
 		<dict>
 			<key>male</key>
