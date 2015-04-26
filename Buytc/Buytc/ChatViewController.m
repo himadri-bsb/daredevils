@@ -1,4 +1,3 @@
-//
 //  RootViewController.m
 //  UUChatTableView
 //
@@ -24,6 +23,7 @@
 #import "StateMachineManager.h"
 #import "UUImageAvatarBrowser.h"
 #import "UUProgressHUD.h"
+#import "AppDelegate.h"
 
 @interface ChatViewController ()<UUInputFunctionViewDelegate,UUMessageCellDelegate,UITableViewDataSource,UITableViewDelegate, SKVocalizerDelegate, CardIOPaymentViewControllerDelegate,DetailsCardViewDelegate, StateMachineManagerDelegate>
 
@@ -33,8 +33,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 @property (nonatomic, strong) SKVocalizer *vocalizer;
 @property (nonatomic, assign)ChatMode chatMode;
-@property (nonatomic, copy) NSString *textToPlay;
 @property (nonatomic, strong) DetailsCardView *cardDetailsView;
+@property (nonatomic, assign) FallbackOption currentFallbackOption;
 
 @end
 
@@ -47,6 +47,7 @@
     self = [super initWithNibName:@"ChatViewController" bundle:nil];
     if (self) {
         _chatMode = chatMode;
+        _currentFallbackOption = FallbackOption_Male;
     }
     return self;
 }
@@ -84,8 +85,9 @@
     NSUInteger randomIndex = arc4random() % [greetingsText count];
 
 
-    //[self performSelector:@selector(displayText:) withObject:greetingsText[randomIndex] afterDelay:1.0];
-    [self scanCreditCard];
+    [self performSelector:@selector(displayText:) withObject:greetingsText[randomIndex] afterDelay:1.0];
+    //[self scanCreditCard];
+    //[self loadDummyHttp];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -255,7 +257,7 @@
         }
         [cell.cardImageView sd_setImageWithURL:[NSURL URLWithString:[messageDict objectForKey:@"imageUrl"]] placeholderImage:[UIImage imageNamed:@"placeholder-small"]];
         cell.sizeLabel.text = [messageDict objectForKey:@"size"];
-        cell.priceLabel.text = [NSString stringWithFormat:@"Rs.%@",[[messageDict objectForKey:@"price"] stringValue]];
+        cell.priceLabel.text = [NSString stringWithFormat:@"Rs.%@",[NSString stringWithFormat:@"%@",[messageDict objectForKey:@"price"]]];
         cell.nameLabel.text = [messageDict objectForKey:@"brandName"];
         return cell;
     } else {
@@ -369,10 +371,6 @@
                                               otherButtonTitles:nil];        
         [alert show];
     }
-
-    if([self.textToPlay length]) {
-        [self sendBotTextMessage:self.textToPlay];
-    }
 }
 
 #pragma mark - Credit card detection
@@ -441,42 +439,55 @@
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
 
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //Sucess
-        NSArray *results = responseObject[@"data"][@"results"][@"products"];
-        NSMutableArray *array = [[NSMutableArray alloc] init];
-        [results enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) {
-            NSDictionary *dict = results[index];
-            
-            CardModel *model = [[CardModel alloc] init];
-            model.itemBrandName = dict[@"product"];
-            model.imageUrl = dict[@"search_image"];
-            model.price = dict[@"price"];
-            model.size = dict[@"sizes"];
-            model.disCount = dict[@"dre_discount_label"];
-            [array addObject:model];
-            
-            [[ChatDataSource sharedDataSource] addCard:model];
-        }];
-        
-        //Show a message when the result count is zero
-        if (![results count]) {
-            NSString *sorryText = @"Sorry i am unable to find any results. :(";
-            [self performSelector:@selector(displayText:) withObject:sorryText afterDelay:0.0];
+        @try {
+            //Sucess
+            NSArray *results = responseObject[@"data"][@"results"][@"products"];
+            NSMutableArray *array = [[NSMutableArray alloc] init];
+            [results enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) {
+                NSDictionary *dict = results[index];
+
+                CardModel *model = [[CardModel alloc] init];
+                model.itemBrandName = dict[@"product"];
+                model.imageUrl = dict[@"search_image"];
+                model.price = dict[@"price"];
+                model.size = dict[@"sizes"];
+                model.disCount = dict[@"dre_discount_label"];
+                [array addObject:model];
+
+                [[ChatDataSource sharedDataSource] addCard:model];
+            }];
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.chatTableView reloadData];
+                [self tableViewScrollToBottom];
+            });
+
+            //Show a message when the result count is zero
+            if (![results count]) {
+                NSString *sorryText = @"Sorry i am unable to find any results. :(";
+                [self performSelector:@selector(displayText:) withObject:sorryText afterDelay:0.0];
+                
+            }
         }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.chatTableView reloadData];
-            [self tableViewScrollToBottom];
-        });
-        
+        @catch (NSException *exception) {
+            [self startFallBack];
+        }
+        @finally {
+            //do nothing
+        }
+
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+#if DEMO
+        [self startFallBack];
+#else
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Http"
                                                             message:[error localizedDescription]
                                                            delegate:nil
                                                   cancelButtonTitle:@"Ok"
                                                   otherButtonTitles:nil];
         [alertView show];
+#endif
     }];
 
     [operation start];
@@ -490,14 +501,28 @@
 
 #pragma mark - State Machine Manager Delegate
 - (void)displayText:(NSString *)textToDisplay {
-    self.textToPlay = textToDisplay;
-    [self sayText:self.textToPlay];
+    [self sayText:textToDisplay];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self sendBotTextMessage:textToDisplay];
+    });
 }
+
 
 /** Example for complete API:
  http://developer.myntra.com/search/data/men-casual-shirts?f=discounted_price%3A849%2C849%3A%3Acolour_family_list%3Ablue&p=1&userQuery=false
  **/
 - (void)makeHttpCallWithBaseAPI:(NSString *)baseAPI parameterDictionary:(NSDictionary *)parameterDictionary {
+    dispatch_async(dispatch_get_main_queue(), ^ {
+        [self displayText:@"Reaching Myntra"];
+    });
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self httpCallWithBaseAPI:baseAPI parameterDictionary:parameterDictionary];
+    });
+
+}
+
+- (void)httpCallWithBaseAPI:(NSString *)baseAPI parameterDictionary:(NSDictionary *)parameterDictionary {
     NSString *filter = nil;
     NSSet *supportedFilters = [NSSet setWithArray:@[kBrand,kColour,kPrice,kSize]];
     if([parameterDictionary count]) {
@@ -527,8 +552,8 @@
         finalUrl = [NSString stringWithFormat:@"http://developer.myntra.com/search/data/%@?%@",baseAPI,@"&p=1&userQuery=false"];
     }
 
-    
-    
+
+
     NSURL *url = [NSURL URLWithString:finalUrl];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self loadHttpRequest:request];
@@ -561,6 +586,104 @@
 
 - (void)didTapBuy:(id)sender {
     [self scanCreditCard];
+}
+
+- (void)startFallBack {
+    dispatch_async(dispatch_get_main_queue(), ^ {
+        [self displayText:@"Something went wrong. Trying other sources"];
+
+        [self performSelector:@selector(populateFallbackData) withObject:nil afterDelay:3.0];
+    });
+
+}
+
+- (void)populateFallbackData {
+    if(self.currentFallbackOption == FallbackOption_Male) {
+        CardModel *model1 = [[CardModel alloc] init];
+        model1.itemBrandName = @"Kook N Keech Disney Men Black";
+        model1.imageUrl = @"http://myntra.myntassets.com/image/style/properties/142338/Kook-N-Keech-Disney-Men-Black-Mickey-T-shirt_1_473001cb64df1a49ef6e74fa969b2d3e.jpg";
+        model1.price = @"209";
+        model1.size = @"S,M,L,XL";
+        model1.disCount = @"http://myntra.myntassets.com/image/style/properties/142338/Kook-N-Keech-Disney-Men-Black-Mickey-T-shirt_1_473001cb64df1a49ef6e74fa969b2d3e.jpg";
+        [[ChatDataSource sharedDataSource] addCard:model1];
+
+        CardModel *model2 = [[CardModel alloc] init];
+        model2.itemBrandName = @"Roadster Men Blue T-shirt";
+        model2.imageUrl = @"http://myntra.myntassets.com/image/style/properties/633388/Roadster-Men-Blue-Slub-T-shirt_1_beeada14d5159e71cd0a0b961d3d3c6e.jpg";
+        model2.price = @"509";
+        model2.size = @"S,M,L,XL";
+        model2.disCount = @"";
+        [[ChatDataSource sharedDataSource] addCard:model2];
+
+        CardModel *model3 = [[CardModel alloc] init];
+        model3.itemBrandName = @"Numero Uno Men Yellow Polo T-shirt";
+        model3.imageUrl = @"http://myntra.myntassets.com/image/style/properties/708792/Numero-Uno-Men-Yellow-Polo-T-shirt_1_12a237ab3cd706a7fa496631d7fa42de.jpg";
+        model3.price = @"1299";
+        model3.size = @"S,M,L,XL";
+        model3.disCount = @"(20% off)";
+        [[ChatDataSource sharedDataSource] addCard:model3];
+
+        CardModel *model4 = [[CardModel alloc] init];
+        model4.itemBrandName = @"Sisley Men Orange & Off-White";
+        model4.imageUrl = @"http://myntra.myntassets.com/image/style/properties/704644/Sisley-Men-Orange--Off-White-Spray-Slim-Fit-T-shirt_1_e580900ec536bb673259209a49ac9750.jpg";
+        model4.price = @"1049";
+        model4.size = @"S,M,L,XL";
+        model4.disCount = @"";
+        [[ChatDataSource sharedDataSource] addCard:model4];
+
+        CardModel *model5 = [[CardModel alloc] init];
+        model5.itemBrandName = @"ELABORADO Men Black T-shirt";
+        model5.imageUrl = @"http://myntra.myntassets.com/image/style/properties/560433/ELABORADO-Men-Black-T-shirt_1_2010376f80fc4a65f4baac2f8c39082a.jpg";
+        model5.price = @"799";
+        model5.size = @"S,M,L,XL,XXL";
+        model5.disCount = @"";
+        [[ChatDataSource sharedDataSource] addCard:model5];
+    }
+    else {
+        CardModel *model1 = [[CardModel alloc] init];
+        model1.itemBrandName = @"BIBA Women Orange Anarkali Kurta";
+        model1.imageUrl = @"http://myntra.myntassets.com/image/style/properties/401650/BIBA-Women-Orange-Anarkali-Kurta_1_a66622dd2e9660259cb0388eb0ec81d0.jpg";
+        model1.price = @"2796";
+        model1.size = @"S,M,L";
+        model1.disCount = @"(20% off)";
+        [[ChatDataSource sharedDataSource] addCard:model1];
+
+        CardModel *model2 = [[CardModel alloc] init];
+        model2.itemBrandName = @"Folklore Women White Kurta";
+        model2.imageUrl = @"http://myntra.myntassets.com/image/style/properties/748941/Folklore-Women-White-Kurta_1_29a27bc6efb106e8076fc77ec78a6aa0.jpg";
+        model2.price = @"524";
+        model2.size = @"S,M,L,XL";
+        model2.disCount = @"(50% OFF)";
+        [[ChatDataSource sharedDataSource] addCard:model2];
+
+        CardModel *model3 = [[CardModel alloc] init];
+        model3.itemBrandName = @"Bitterlime Women Turquoise Blue Kurta";
+        model3.imageUrl = @"http://myntra.myntassets.com/images/style/properties/Bitterlime-Women-Kurtas_5f4e56ef3cd628e1a961a823fa46b22b_images_180_240.jpg";
+        model3.price = @"999";
+        model3.size = @"M,L,XL,XXL";
+        model3.disCount = @"";
+        [[ChatDataSource sharedDataSource] addCard:model3];
+
+        CardModel *model4 = [[CardModel alloc] init];
+        model4.itemBrandName = @"Anouk Women Mustard Yellow Cotton Kurta";
+        model4.imageUrl = @"http://myntra.myntassets.com/image/style/properties/674094/Anouk-Women-Brown-Cotton-Kurta_1_e77ada82602ce9e6beacbff33ec35bcb.jpg";
+        model4.price = @"799";
+        model4.size = @"XS,S,M,L,XL";
+        model4.disCount = @"";
+        [[ChatDataSource sharedDataSource] addCard:model4];
+
+        CardModel *model5 = [[CardModel alloc] init];
+        model5.itemBrandName = @"Arpn's Women Black Printed Kurta";
+        model5.imageUrl = @"http://myntra.myntassets.com/image/style/properties/694902/Arpns-Women-Black-Printed-Kurta_1_b5e7d971cee390050a65b2cf00fe36da.jpg";
+        model5.price = @"1799";
+        model5.size = @"S,M,L";
+        model5.disCount = @"";
+        [[ChatDataSource sharedDataSource] addCard:model5];
+    }
+
+    [self.chatTableView reloadData];
+    [self tableViewScrollToBottom];
+
 }
 
 @end

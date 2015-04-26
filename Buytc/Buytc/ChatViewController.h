@@ -13,6 +13,13 @@ typedef NS_ENUM(NSInteger, ChatMode) {
     ChatModeOneToOne
 };
 
+
+typedef NS_ENUM(NSInteger, FallbackOption) {
+    FallbackOption_Male = 0,
+    FallbackOption_Female,
+};
+
+
 @interface ChatViewController : UIViewController
 - (instancetype)initWithMode:(ChatMode)chatMode;
 @end
