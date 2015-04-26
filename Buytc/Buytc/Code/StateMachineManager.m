@@ -231,6 +231,12 @@
         }
         
     } else {
+        
+        //Make brand choosing optional
+        if ([paramDictKey isEqualToString:kBrand] && [userReply caseInsensitiveCompare:@"No"] == NSOrderedSame) {
+            return YES;
+        }
+        
         for (NSString *str in collection) {
             if ([userReply localizedCaseInsensitiveContainsString:str]) {
                 doesExist = YES;

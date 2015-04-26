@@ -11,6 +11,7 @@
 	</array>
 	<key>Sizes</key>
 	<array>
+		<string>XXL</string>
 		<string>XL</string>
 		<string>L</string>
 		<string>S</string>
@@ -45,6 +46,7 @@
 	</array>
 	<key>Brands</key>
 	<array>
+		<string>Mango</string>
 		<string>Ed Hardy</string>
 		<string>American Swan</string>
 		<string>20Dresses</string>
@@ -67,6 +69,14 @@
 	</array>
 	<key>Gender</key>
 	<array>
+		<dict>
+			<key>boyfriend</key>
+			<string>men</string>
+		</dict>
+		<dict>
+			<key>girlfriend</key>
+			<string>women</string>
+		</dict>
 		<dict>
 			<key>female</key>
 			<string>women</string>
