@@ -49,8 +49,22 @@
 	</array>
 	<key>Gender</key>
 	<array>
-		<string>women</string>
-		<string>men</string>
+		<dict>
+			<key>female</key>
+			<string>women</string>
+		</dict>
+		<dict>
+			<key>women</key>
+			<string>women</string>
+		</dict>
+		<dict>
+			<key>male</key>
+			<string>men</string>
+		</dict>
+		<dict>
+			<key>men</key>
+			<string>men</string>
+		</dict>
 	</array>
 	<key>Colour</key>
 	<array>

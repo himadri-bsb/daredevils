@@ -200,13 +200,18 @@
      else over an array
     **/
     
-    if ([baseAPIKey localizedCaseInsensitiveContainsString:@"style"]) {
+    if ([baseAPIKey localizedCaseInsensitiveContainsString:@"style"] || [baseAPIKey localizedCaseInsensitiveContainsString:@"gender"]) {
         
         for (NSDictionary *dict in collection) {
             NSString *key = [dict allKeys].firstObject;
             if ([userReply localizedCaseInsensitiveContainsString:key]) {
                 doesExist = YES;
-                self.baseAPIKeyStyle = [dict valueForKey:key];
+                if ([baseAPIKey localizedCaseInsensitiveContainsString:@"gender"]) {
+                    self.baseAPIKeyGender = [dict valueForKey:key];
+                } else {
+                    self.baseAPIKeyStyle = [dict valueForKey:key];
+                }
+
                 break;
             }
         }
@@ -218,8 +223,6 @@
                 doesExist = YES;
                 if (paramDictKey) {
                     [self.parameterDictionary setValue:str forKey:paramDictKey];
-                } else {
-                    self.baseAPIKeyGender = str;
                 }
                 
                 break;
