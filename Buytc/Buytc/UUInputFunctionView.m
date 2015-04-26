@@ -36,14 +36,14 @@
        // MP3 = [[Mp3Recorder alloc]initWithDelegate:self];
         self.backgroundColor = [UIColor whiteColor];
         //发送消息
-        self.btnSendMessage = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.btnSendMessage = [UIButton buttonWithType:UIButtonTypeSystem];
         self.btnSendMessage.frame = CGRectMake(Main_Screen_Width-50, 5, 40, 45);
         self.isAbleToSendTextMessage = NO;
         [self.btnSendMessage setTitle:@"Send" forState:UIControlStateNormal];
 //        [self.btnSendMessage setBackgroundImage:[[UIImage imageNamed:@"Chat_take_picture"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
         [self.btnSendMessage setTitleColor:NAV_BAR_COLOR forState:UIControlStateNormal];
         //self.btnSendMessage.tintColor = NAV_BAR_COLOR;
-        self.btnSendMessage.titleLabel.font = [UIFont systemFontOfSize:14];
+        self.btnSendMessage.titleLabel.font = [UIFont systemFontOfSize:16];
         [self.btnSendMessage addTarget:self action:@selector(sendMessage:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.btnSendMessage];
         

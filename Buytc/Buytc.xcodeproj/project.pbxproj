@@ -98,6 +98,7 @@
 		B16467AE1AEBA27100CC78DD /* ChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B16467AA1AEBA27100CC78DD /* ChatViewController.xib */; };
 		B16467AF1AEBA27100CC78DD /* ChatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B16467AC1AEBA27100CC78DD /* ChatModel.m */; };
 		B16467B21AEBA7B400CC78DD /* ChatDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = B16467B11AEBA7B400CC78DD /* ChatDataSource.m */; };
+		B16ED3141AEC7377008EC5DE /* mynt_2s.png in Resources */ = {isa = PBXBuildFile; fileRef = B16ED3131AEC7377008EC5DE /* mynt_2s.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -282,6 +283,7 @@
 		B16467AC1AEBA27100CC78DD /* ChatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatModel.m; sourceTree = "<group>"; };
 		B16467B01AEBA7B400CC78DD /* ChatDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatDataSource.h; sourceTree = "<group>"; };
 		B16467B11AEBA7B400CC78DD /* ChatDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatDataSource.m; sourceTree = "<group>"; };
+		B16ED3131AEC7377008EC5DE /* mynt_2s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mynt_2s.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -565,6 +567,7 @@
 		B164677C1AEBA04300CC78DD /* Photo */ = {
 			isa = PBXGroup;
 			children = (
+				B16ED3131AEC7377008EC5DE /* mynt_2s.png */,
 				0121030E1AEC1E7F000E0FE2 /* chat_voice_record@2x.png */,
 				B164677D1AEBA06100CC78DD /* headImage.jpeg */,
 				B164677E1AEBA06100CC78DD /* 0.jpeg */,
@@ -699,6 +702,7 @@
 				B164679C1AEBA06100CC78DD /* Chat_record_circle.png in Resources */,
 				2676F2721AEBA7E20092CF4A /* earcon_cancel.wav in Resources */,
 				B164678F1AEBA06100CC78DD /* headImage.jpeg in Resources */,
+				B16ED3141AEC7377008EC5DE /* mynt_2s.png in Resources */,
 				B16467AE1AEBA27100CC78DD /* ChatViewController.xib in Resources */,
 				0121030F1AEC1E7F000E0FE2 /* chat_voice_record@2x.png in Resources */,
 				B16467961AEBA06100CC78DD /* chat_animation_white3.png in Resources */,
