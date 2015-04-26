@@ -517,12 +517,13 @@
  http://developer.myntra.com/search/data/men-casual-shirts?f=discounted_price%3A849%2C849%3A%3Acolour_family_list%3Ablue&p=1&userQuery=false
  **/
 - (void)makeHttpCallWithBaseAPI:(NSString *)baseAPI parameterDictionary:(NSDictionary *)parameterDictionary {
+    NSDictionary *parDictCopy = [parameterDictionary copy];
     dispatch_async(dispatch_get_main_queue(), ^ {
         [self displayText:@"Reaching Myntra"];
     });
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self httpCallWithBaseAPI:baseAPI parameterDictionary:parameterDictionary];
+        [self httpCallWithBaseAPI:baseAPI parameterDictionary:parDictCopy];
     });
 
 }
@@ -562,6 +563,7 @@
     NSURL *url = [NSURL URLWithString:finalUrl];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self loadHttpRequest:request];
+    NSLog(@"Request URL = %@", request.URL);
 }
 
 - (NSString *)urlEncodeString:(NSString *)str {

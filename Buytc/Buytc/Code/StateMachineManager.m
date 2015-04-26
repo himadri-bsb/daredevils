@@ -218,7 +218,6 @@
         }
         
     } else {
-        
         for (NSString *str in collection) {
             if ([userReply localizedCaseInsensitiveContainsString:str]) {
                 doesExist = YES;
@@ -229,7 +228,6 @@
                 break;
             }
         }
-        
     }
     
     return doesExist;
