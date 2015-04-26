@@ -49,7 +49,8 @@
     
     self.nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.nameLabel setFont:[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:14.0f]];
+    [self.nameLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0f]];
+    self.nameLabel.numberOfLines = 2;
     self.nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self.detailsBgView addSubview:self.nameLabel];
     
@@ -105,7 +106,7 @@
                                                                      options:0
                                                                      metrics:nil
                                                                         views:viewsDict]];
-    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[detailsBgView(==40.0)]-(1)-|"
+    [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[detailsBgView(==60.0)]-(1)-|"
                                                                       options:0
                                                                       metrics:nil
                                                                    views:viewsDict]];

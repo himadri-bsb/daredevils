@@ -75,7 +75,7 @@
        // [self addSubview:self.btnVoiceRecord];
         
         //输入框
-        self.TextViewInput = [[UITextView alloc]initWithFrame:CGRectMake(2, 5, Main_Screen_Width-55, 45)];
+        self.TextViewInput = [[UITextView alloc]initWithFrame:CGRectMake(10, 5, Main_Screen_Width-70, 45)];
         self.TextViewInput.layer.cornerRadius = 4;
         self.TextViewInput.layer.masksToBounds = YES;
         self.TextViewInput.delegate = self;
