@@ -82,7 +82,7 @@
             break;
         case StateMachineManager_StateTypeSize:
         {
-            [self.chatDelegate displayText:@"Can i know your size?"];
+            [self.chatDelegate displayText:@"Can i know your clothing size?"];
             self.currentState = StateMachineManager_StateTypeCompletion;
         }
             break;
@@ -108,6 +108,7 @@
 
 - (void)userRepliedWithText:(NSString *)reply {
     if ([reply localizedCaseInsensitiveContainsString:@"Cancel"] || [reply localizedCaseInsensitiveContainsString:@"Done"] || [reply localizedCaseInsensitiveContainsString:@"Bye"]) {
+        [self.chatDelegate displayText:@"It is always nice talking to you, Jatin"];
         [self resetStateMachine];
     } else {
         [self manageStatesForUserReply:reply];
@@ -124,7 +125,7 @@
             
             if ([self parseForNumberInUserReply:userReply forParamDictKey:kSize]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypeSize)];
-            } else if ([self doesAnyKeyExistInUserReply:userReply inCollection:listDictionary[key] forParamDictKey:kSize baseAPIKey:nil]) {
+            } else if ([self parseForSizeInUserReply:userReply inCollection:listDictionary[key] forParamDictKey:kSize]) {
                 [statesTraversedDuringParsingUserReply addObject:@(StateMachineManager_StateTypeSize)];                
             }
 
@@ -192,6 +193,19 @@
     return NO;
 }
 
+- (BOOL)parseForSizeInUserReply:(NSString *)userReply inCollection:(id)collection forParamDictKey:(NSString *)paramDictKey {
+    
+    for (NSString *string in collection) {
+        if ([userReply isEqualToString:string]) {
+            [self.parameterDictionary setValue:userReply forKey:paramDictKey];
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+
 - (BOOL)doesAnyKeyExistInUserReply:(NSString *)userReply inCollection:(id)collection forParamDictKey:(NSString *)paramDictKey baseAPIKey:(NSString *)baseAPIKey {
     BOOL doesExist = NO;
     
@@ -217,7 +231,6 @@
         }
         
     } else {
-        
         for (NSString *str in collection) {
             if ([userReply localizedCaseInsensitiveContainsString:str]) {
                 doesExist = YES;
@@ -228,7 +241,6 @@
                 break;
             }
         }
-        
     }
     
     return doesExist;

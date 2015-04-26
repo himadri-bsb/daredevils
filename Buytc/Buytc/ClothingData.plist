@@ -19,8 +19,12 @@
 	<key>Type of clothing</key>
 	<array>
 		<dict>
+			<key>dress</key>
+			<string>dresses</string>
+		</dict>
+		<dict>
 			<key>Pant</key>
-			<string>casual-shirts</string>
+			<string>jeans</string>
 		</dict>
 		<dict>
 			<key>Top</key>
