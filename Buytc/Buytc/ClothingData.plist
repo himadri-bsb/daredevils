@@ -105,6 +105,10 @@
 			<key>men</key>
 			<string>men</string>
 		</dict>
+		<dict>
+			<key>brother</key>
+			<string>men</string>
+		</dict>
 	</array>
 	<key>Colour</key>
 	<array>

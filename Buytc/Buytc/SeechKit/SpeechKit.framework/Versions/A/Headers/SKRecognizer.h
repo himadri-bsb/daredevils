@@ -44,6 +44,11 @@ extern NSString * const SKSearchRecognizerType;
 extern NSString * const SKDictationRecognizerType;
 
 /*!
+ @abstract TV optimized recognition.
+ */
+extern NSString * const SKTvRecognizerType;
+
+/*!
  @abstract Type for recognizer end-of-speech detection model.
  */
 typedef NSUInteger SKEndOfSpeechDetection;

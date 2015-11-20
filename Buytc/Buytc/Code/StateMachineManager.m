@@ -108,7 +108,7 @@
 
 - (void)userRepliedWithText:(NSString *)reply {
     if ([reply localizedCaseInsensitiveContainsString:@"Cancel"] || [reply localizedCaseInsensitiveContainsString:@"Done"] || [reply localizedCaseInsensitiveContainsString:@"Bye"]) {
-        [self.chatDelegate displayText:@"It is always nice talking to you, Jatin"];
+        [self.chatDelegate displayText:@"It is always nice talking to you, Himadri"];
         [self resetStateMachine];
     } else {
         [self manageStatesForUserReply:reply];

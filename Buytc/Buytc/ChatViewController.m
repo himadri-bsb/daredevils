@@ -80,7 +80,7 @@
 
 
 
-    NSArray *greetingsText = @[@"Hey Jatin, how can I help you today?", @"Welcome back Jatin, I am ready to help you.", @"Good morning Jatin, what do you wanna buy today?", @"All the best for the demo today Jatin, let me help you get started"];
+    NSArray *greetingsText = @[@"Hey Himadri, how can I help you today?", @"Welcome back Himadri, I am ready to help you.", @"Good morning Himadri, what do you wanna buy today?", @"All the best for the demo today Himadri, let me help you get started"];
 
     NSUInteger randomIndex = arc4random() % [greetingsText count];
 
@@ -417,7 +417,7 @@
 - (void)paymentComplete {
     [UUProgressHUD dismissWithSuccess:@"Success"];
     [self.cardDetailsView removeFromSuperview];
-    [self displayText:@"Congratulations on your purchase"];
+    [self displayText:@"Congratulations on your purchase Himadri"];
 }
 
 - (void)userDidCancelPaymentViewController:(CardIOPaymentViewController *)paymentViewController {
